@@ -125,14 +125,59 @@ section{padding:100px 0}
 
 /* CATÁLOGO DE BICIS */
 .bikes{background:var(--bg)}
-.filters{margin-bottom:40px}
-.filter-label{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
-.cat-filter{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:22px}
-.brand-filter .cat-chip.active{background:var(--red);border-color:var(--red)}
-.cat-chip{padding:10px 20px;border-radius:999px;border:1.5px solid var(--line);background:#fff;color:var(--text);font-size:13px;font-weight:600;cursor:pointer;transition:.2s;font-family:inherit}
-.cat-chip:hover{border-color:var(--ink)}
-.cat-chip.active{background:var(--ink);border-color:var(--ink);color:#fff}
-.bike-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px}
+/* --- Catálogo tipo tienda: sidebar + buscador + filtros --- */
+.shop{display:grid;grid-template-columns:258px 1fr;gap:34px;align-items:start}
+.shop-side{position:sticky;top:88px;background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:8px 20px 20px;max-height:calc(100vh - 108px);overflow-y:auto}
+.side-head{display:flex;align-items:center;justify-content:space-between;padding:16px 0 4px}
+.side-head b{font-family:'Wix Madefor Display',sans-serif;font-size:16px;color:var(--ink);text-transform:uppercase;letter-spacing:-.01em}
+.side-close{display:none;background:none;border:none;font-size:26px;line-height:1;color:var(--muted);cursor:pointer;padding:0 4px}
+.fgroup{padding:16px 0;border-top:1px solid var(--line)}
+.fgroup-t{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.cat-list{display:flex;flex-direction:column;gap:2px}
+.cat-item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px;border-radius:10px;border:none;background:none;font-family:inherit;font-size:14px;font-weight:600;color:var(--text);cursor:pointer;transition:.15s;text-align:left;width:100%}
+.cat-item:hover{background:var(--bg)}
+.cat-item.active{background:var(--ink);color:#fff}
+.cat-item .c{font-size:12px;font-weight:700;color:var(--muted)}
+.cat-item.active .c{color:rgba(255,255,255,.72)}
+.chk{display:flex;align-items:center;gap:10px;padding:7px 4px;cursor:pointer;font-size:14px;font-weight:600;color:var(--text);user-select:none;position:relative}
+.chk input{position:absolute;opacity:0;width:0;height:0}
+.chk .box{width:19px;height:19px;border-radius:6px;border:1.7px solid var(--line);display:grid;place-items:center;flex-shrink:0;transition:.15s;background:#fff}
+.chk .box svg{width:12px;height:12px;stroke:#fff;stroke-width:3;fill:none;opacity:0;transition:.15s}
+.chk input:checked+.box{background:var(--red);border-color:var(--red)}
+.chk input:checked+.box svg{opacity:1}
+.chk input:focus-visible+.box{box-shadow:0 0 0 3px rgba(14,179,190,.35)}
+.chk .lbl{flex:1}
+.chk .c{font-size:12px;font-weight:700;color:var(--muted)}
+.chk.off{opacity:.38;cursor:default}
+.rng{position:relative;height:26px;margin:2px 2px 0}
+.rng-track{position:absolute;left:0;right:0;top:11px;height:4px;border-radius:4px;background:var(--line)}
+.rng-fill{position:absolute;top:11px;height:4px;border-radius:4px;background:var(--red)}
+.rng input{position:absolute;top:0;left:0;width:100%;height:26px;margin:0;background:none;pointer-events:none;-webkit-appearance:none;appearance:none}
+.rng input::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:#fff;border:2px solid var(--red);box-shadow:0 1px 4px rgba(14,17,22,.25);cursor:pointer;pointer-events:auto}
+.rng input::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:#fff;border:2px solid var(--red);box-shadow:0 1px 4px rgba(14,17,22,.25);cursor:pointer;pointer-events:auto;border-width:2px}
+.rng-vals{display:flex;justify-content:space-between;margin-top:9px;font-size:13.5px;font-weight:700;color:var(--ink)}
+.f-clear{margin-top:14px;width:100%;padding:11px;border-radius:10px;border:1.5px solid var(--line);background:#fff;font-family:inherit;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;transition:.2s}
+.f-clear:hover{border-color:var(--ink);color:var(--ink)}
+.shop-toolbar{display:flex;align-items:center;gap:14px;margin-bottom:26px;flex-wrap:wrap}
+.search{position:relative;flex:1;min-width:220px}
+.search>svg{position:absolute;left:16px;top:50%;transform:translateY(-50%);width:18px;height:18px;stroke:var(--muted);fill:none;stroke-width:2;pointer-events:none}
+.search input{width:100%;padding:14px 42px 14px 46px;border-radius:12px;border:1.5px solid var(--line);background:#fff;font-family:inherit;font-size:15px;color:var(--text);transition:.2s}
+.search input:focus{outline:none;border-color:var(--red);box-shadow:0 0 0 3px rgba(14,179,190,.16)}
+.search .clr{position:absolute;right:10px;top:50%;transform:translateY(-50%);width:26px;height:26px;border:none;background:var(--bg);border-radius:50%;color:var(--muted);cursor:pointer;font-size:15px;line-height:1;display:none}
+.search.has .clr{display:grid;place-items:center}
+.sort-wrap{display:flex;align-items:center;gap:8px}
+.sort-wrap>label{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.sort{padding:12px 14px;border-radius:12px;border:1.5px solid var(--line);background:#fff;font-family:inherit;font-size:14px;font-weight:600;color:var(--text);cursor:pointer}
+.sort:focus{outline:none;border-color:var(--red)}
+.result-count{font-size:13px;font-weight:700;color:var(--muted);white-space:nowrap}
+.result-count b{color:var(--ink)}
+.filt-toggle{display:none;align-items:center;gap:8px;padding:13px 18px;border-radius:12px;border:1.5px solid var(--ink);background:var(--ink);color:#fff;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer}
+.filt-toggle svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2}
+.filt-badge{background:var(--red);color:#fff;border-radius:999px;padding:1px 8px;font-size:12px;font-weight:800}
+.shop-backdrop{display:none}
+.no-results{text-align:center;padding:56px 20px;border:1.5px dashed var(--line);border-radius:18px;color:var(--muted);font-size:15px}
+.no-results b{display:block;font-family:'Wix Madefor Display',sans-serif;font-size:21px;color:var(--ink);margin-bottom:8px;text-transform:uppercase}
+.bike-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
 .bike-card{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;transition:.3s}
 .bike-card:hover{border-color:var(--ink);transform:translateY(-6px);box-shadow:0 22px 50px rgba(14,17,22,.12)}
 .bike-imgwrap{position:relative;background:#fff;aspect-ratio:16/11;display:grid;place-items:center;padding:18px 22px;border-bottom:1px solid var(--line)}
@@ -386,6 +431,16 @@ footer{background:var(--ink);color:#fff;padding:70px 0 30px}
   .foot-grid{grid-template-columns:1fr 1fr;gap:32px}
   section{padding:74px 0}
 }
+@media(max-width:900px){
+  .shop{grid-template-columns:1fr;gap:0}
+  .shop-side{position:fixed;top:0;right:0;left:auto;bottom:0;width:min(340px,86vw);height:100%;max-height:100%;border-radius:0;border:none;z-index:700;transform:translateX(102%);transition:transform .32s cubic-bezier(.16,1,.3,1);box-shadow:-20px 0 60px rgba(14,17,22,.28);padding:8px 22px 26px}
+  .shop-side.open{transform:none}
+  .side-close{display:block}
+  .filt-toggle{display:inline-flex}
+  .shop-backdrop{display:block;position:fixed;inset:0;background:rgba(8,10,13,.5);z-index:690;opacity:0;visibility:hidden;transition:.3s}
+  .shop-backdrop.open{opacity:1;visibility:visible}
+  .search{flex-basis:100%;order:-1}
+}
 @media(max-width:560px){
   .wrap{padding:0 20px}
   .hero-inner{padding:0 20px 60px}
@@ -478,29 +533,91 @@ setTimeout(hideLoader,3500);
     <div class="sec-head reveal">
       <span class="eyebrow">Nuestras bicicletas</span>
       <h2>Las bicis que <em>vendemos</em></h2>
-      <p>Una selección de las bicis disponibles en tienda — CUBE, FOCUS y AMFLOW — de la iniciación a la alta competición. Filtra por marca o disciplina y pídenos info o reserva la tuya.</p>
+      <p>Una selección de las bicis disponibles en tienda — CUBE, FOCUS y AMFLOW — de la iniciación a la alta competición. Busca por nombre o filtra por categoría, marca, precio, material o motor hasta dar con la tuya.</p>
     </div>
 
-    <div class="filters reveal">
-      <div class="filter-label">Marca</div>
-      <div class="cat-filter brand-filter">
-        <button class="cat-chip active" data-b="all">Todas las marcas</button>
-        <button class="cat-chip" data-b="cube">CUBE</button>
-        <button class="cat-chip" data-b="focus">FOCUS</button>
-        <button class="cat-chip" data-b="amflow">AMFLOW</button>
-      </div>
-      <div class="filter-label">Tipo</div>
-      <div class="cat-filter">
-        <button class="cat-chip active" data-f="all">Todas</button>
-        <button class="cat-chip" data-f="e">Eléctricas</button>
-        <button class="cat-chip" data-f="mtb">Montaña</button>
-        <button class="cat-chip" data-f="road">Carretera & Gravel</button>
-      </div>
-    </div>
+    <div class="shop reveal">
+      <div class="shop-backdrop" id="shopBackdrop"></div>
+      <aside class="shop-side" id="shopSide" aria-label="Filtros de búsqueda">
+        <div class="side-head">
+          <b>Filtros</b>
+          <button type="button" class="side-close" id="sideClose" aria-label="Cerrar filtros">&times;</button>
+        </div>
 
-    <div class="bike-grid" id="bikeGrid">
+        <div class="fgroup">
+          <div class="fgroup-t">Categoría</div>
+          <div class="cat-list" id="catList">
+            <button type="button" class="cat-item active" data-cat-f="all">Todas las bicis <span class="c" data-count="all"></span></button>
+            <button type="button" class="cat-item" data-cat-f="carretera">Carretera <span class="c" data-count="carretera"></span></button>
+            <button type="button" class="cat-item" data-cat-f="gravel">Gravel <span class="c" data-count="gravel"></span></button>
+            <button type="button" class="cat-item" data-cat-f="montana">Montaña / MTB <span class="c" data-count="montana"></span></button>
+            <button type="button" class="cat-item" data-cat-f="electrica">Eléctricas <span class="c" data-count="electrica"></span></button>
+            <button type="button" class="cat-item" data-cat-f="infantil">Infantiles <span class="c" data-count="infantil"></span></button>
+          </div>
+        </div>
 
-      <article class="bike-card reveal" data-cat="road" data-brand="cube">
+        <div class="fgroup">
+          <div class="fgroup-t">Precio</div>
+          <div class="rng" id="rng">
+            <div class="rng-track"></div>
+            <div class="rng-fill" id="rngFill"></div>
+            <input type="range" id="rngMin" min="0" max="10000" step="50" value="0" aria-label="Precio mínimo">
+            <input type="range" id="rngMax" min="0" max="10000" step="50" value="10000" aria-label="Precio máximo">
+          </div>
+          <div class="rng-vals"><span id="rngMinV">0 €</span><span id="rngMaxV">10.000 €</span></div>
+        </div>
+
+        <div class="fgroup">
+          <div class="fgroup-t">Marca</div>
+          <label class="chk"><input type="checkbox" class="f-brand" value="cube"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="lbl">CUBE</span><span class="c" data-count-brand="cube"></span></label>
+          <label class="chk"><input type="checkbox" class="f-brand" value="focus"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="lbl">FOCUS</span><span class="c" data-count-brand="focus"></span></label>
+          <label class="chk"><input type="checkbox" class="f-brand" value="amflow"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="lbl">AMFLOW</span><span class="c" data-count-brand="amflow"></span></label>
+        </div>
+
+        <div class="fgroup">
+          <div class="fgroup-t">Material</div>
+          <label class="chk"><input type="checkbox" class="f-mat" value="carbono"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="lbl">Carbono</span><span class="c" data-count-mat="carbono"></span></label>
+          <label class="chk"><input type="checkbox" class="f-mat" value="aluminio"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="lbl">Aluminio</span><span class="c" data-count-mat="aluminio"></span></label>
+        </div>
+
+        <div class="fgroup">
+          <div class="fgroup-t">Motor (eléctricas)</div>
+          <label class="chk"><input type="checkbox" class="f-motor" value="bosch"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="lbl">Bosch</span><span class="c" data-count-motor="bosch"></span></label>
+          <label class="chk"><input type="checkbox" class="f-motor" value="dji"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="lbl">DJI Avinox</span><span class="c" data-count-motor="dji"></span></label>
+          <label class="chk"><input type="checkbox" class="f-motor" value="fazua"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="lbl">Fazua</span><span class="c" data-count-motor="fazua"></span></label>
+        </div>
+
+        <div class="fgroup">
+          <div class="fgroup-t">Ofertas</div>
+          <label class="chk"><input type="checkbox" id="fOffer"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="lbl">Solo en oferta</span><span class="c" data-count-offer></span></label>
+        </div>
+
+        <button type="button" class="f-clear" id="fClear">Limpiar filtros</button>
+      </aside>
+
+      <div class="shop-main">
+        <div class="shop-toolbar">
+          <div class="search" id="searchWrap">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+            <input type="search" id="searchInput" placeholder="Busca: gravel, niño, carbono, Bosch, CUBE…" autocomplete="off" aria-label="Buscar bicicletas">
+            <button type="button" class="clr" id="searchClear" aria-label="Borrar búsqueda">&times;</button>
+          </div>
+          <button type="button" class="filt-toggle" id="filtToggle"><svg viewBox="0 0 24 24"><path d="M3 5h18M6 12h12M10 19h4"/></svg> Filtros <span class="filt-badge" id="filtBadge" hidden>0</span></button>
+          <span class="result-count"><b id="resCount">18</b> bicis</span>
+          <div class="sort-wrap">
+            <label for="sortSel">Ordenar</label>
+            <select class="sort" id="sortSel">
+              <option value="destacado">Destacadas</option>
+              <option value="price-asc">Precio: de menor a mayor</option>
+              <option value="price-desc">Precio: de mayor a menor</option>
+              <option value="name">Nombre (A-Z)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="bike-grid" id="bikeGrid">
+
+      <article class="bike-card reveal" data-cat="road" data-brand="cube" data-disc="carretera" data-mat="carbono" data-price="5599" data-offer="0" data-kw="aero uci ultegra di2 road">
         <div class="bike-imgwrap">
           <span class="bike-cat">Carretera</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
@@ -513,7 +630,7 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="road" data-brand="cube">
+      <article class="bike-card reveal" data-cat="road" data-brand="cube" data-disc="carretera" data-mat="carbono" data-price="4099" data-offer="0" data-kw="aero sram force axs road">
         <div class="bike-imgwrap">
           <span class="bike-cat">Carretera</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
@@ -526,7 +643,7 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="road" data-brand="cube">
+      <article class="bike-card reveal" data-cat="road" data-brand="cube" data-disc="carretera" data-mat="carbono" data-price="3899" data-offer="0" data-kw="aero ultegra di2 road">
         <div class="bike-imgwrap">
           <span class="bike-cat">Carretera</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
@@ -539,7 +656,7 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="road" data-brand="cube">
+      <article class="bike-card reveal" data-cat="road" data-brand="cube" data-disc="carretera" data-mat="carbono" data-price="3099" data-offer="0" data-kw="endurance fondo ultegra road">
         <div class="bike-imgwrap">
           <span class="bike-cat">Endurance</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
@@ -552,7 +669,7 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="road" data-brand="cube">
+      <article class="bike-card reveal" data-cat="road" data-brand="cube" data-disc="gravel" data-mat="aluminio" data-price="1549" data-offer="0" data-kw="gravel grx bikepacking aventura">
         <div class="bike-imgwrap">
           <span class="bike-cat">Gravel</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
@@ -565,7 +682,7 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="mtb" data-brand="cube">
+      <article class="bike-card reveal" data-cat="mtb" data-brand="cube" data-disc="montana" data-mat="carbono" data-price="4699" data-offer="0" data-kw="mtb montana doble suspension xc cross country">
         <div class="bike-imgwrap">
           <span class="bike-cat">MTB Doble</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
@@ -578,7 +695,7 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="mtb" data-brand="cube">
+      <article class="bike-card reveal" data-cat="mtb" data-brand="cube" data-disc="montana infantil" data-mat="aluminio" data-price="339" data-offer="0" data-kw="mtb montana junior infantil nino nina peque 20">
         <div class="bike-imgwrap">
           <span class="bike-cat">MTB Junior</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
@@ -591,7 +708,7 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="mtb" data-brand="cube">
+      <article class="bike-card reveal" data-cat="mtb" data-brand="cube" data-disc="montana infantil" data-mat="aluminio" data-price="309" data-offer="0" data-kw="mtb montana junior infantil nino nina peque 16">
         <div class="bike-imgwrap">
           <span class="bike-cat">MTB Junior</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
@@ -604,7 +721,7 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="cube">
+      <article class="bike-card reveal" data-cat="e" data-brand="cube" data-disc="electrica" data-mat="carbono" data-motor="bosch" data-price="5099" data-offer="0" data-kw="emtb electrica ebike enduro allmountain bosch">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-MTB</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
@@ -617,7 +734,7 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="cube">
+      <article class="bike-card reveal" data-cat="e" data-brand="cube" data-disc="electrica" data-mat="aluminio" data-motor="bosch" data-price="2649" data-offer="0" data-kw="etrekking electrica ebike paseo ciudad urbana allround bosch">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-Trekking</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
@@ -630,7 +747,7 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="amflow">
+      <article class="bike-card reveal" data-cat="e" data-brand="amflow" data-disc="electrica" data-mat="carbono" data-motor="dji" data-price="9999" data-offer="0" data-kw="emtb electrica ebike amflow dji avinox">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-MTB</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
@@ -643,7 +760,7 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="amflow">
+      <article class="bike-card reveal" data-cat="e" data-brand="amflow" data-disc="electrica" data-mat="carbono" data-motor="dji" data-price="6499" data-offer="0" data-kw="emtb electrica ebike amflow dji avinox">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-MTB</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
@@ -656,7 +773,7 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="road" data-brand="focus">
+      <article class="bike-card reveal" data-cat="road" data-brand="focus" data-disc="carretera" data-mat="carbono" data-price="3999" data-offer="1" data-kw="aero 105 di2 road oferta rebaja">
         <div class="bike-imgwrap">
           <span class="bike-cat">Carretera</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
@@ -669,7 +786,7 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="mtb" data-brand="focus">
+      <article class="bike-card reveal" data-cat="mtb" data-brand="focus" data-disc="montana" data-mat="carbono" data-price="3791" data-offer="1" data-kw="mtb montana doble trail oferta rebaja">
         <div class="bike-imgwrap">
           <span class="bike-cat">MTB Doble</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
@@ -682,7 +799,7 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="mtb" data-brand="focus">
+      <article class="bike-card reveal" data-cat="mtb" data-brand="focus" data-disc="montana" data-mat="aluminio" data-price="2549" data-offer="1" data-kw="mtb montana doble trail oferta rebaja">
         <div class="bike-imgwrap">
           <span class="bike-cat">MTB Doble</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
@@ -695,7 +812,7 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="road" data-brand="focus">
+      <article class="bike-card reveal" data-cat="road" data-brand="focus" data-disc="gravel" data-mat="aluminio" data-price="1799" data-offer="1" data-kw="gravel aventura grx oferta rebaja">
         <div class="bike-imgwrap">
           <span class="bike-cat">Gravel</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
@@ -708,7 +825,7 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="focus">
+      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica" data-mat="carbono" data-motor="fazua" data-price="9774" data-offer="1" data-kw="emtb electrica ebike ligera light fazua oferta rebaja">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-MTB Light</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
@@ -721,7 +838,7 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="focus">
+      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica" data-mat="carbono" data-motor="fazua" data-price="9349" data-offer="1" data-kw="emtb electrica ebike ligera light xc fazua oferta rebaja">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-MTB Light</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
@@ -734,9 +851,17 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-    </div>
+        </div><!-- /bike-grid -->
 
-    <p class="bikes-note reveal">Y muchos más modelos CUBE, FOCUS y AMFLOW en tienda. ¿No encuentras el tuyo? <a href="#cita">Escríbenos y te lo conseguimos →</a></p>
+        <div class="no-results" id="noResults" hidden>
+          <b>No hay bicis con esos filtros</b>
+          Prueba a quitar algún filtro o ampliar el rango de precio.
+          <div><button type="button" class="btn btn-dark" id="noResClear" style="margin-top:16px">Limpiar filtros</button></div>
+        </div>
+
+        <p class="bikes-note reveal">Y muchos más modelos CUBE, FOCUS y AMFLOW en tienda. ¿No encuentras el tuyo? <a href="#cita">Escríbenos y te lo conseguimos →</a></p>
+      </div><!-- /shop-main -->
+    </div><!-- /shop -->
   </div>
 </section>
 
@@ -1132,21 +1257,124 @@ coForm.addEventListener('submit',function(e){
   co.scrollTop=0;
 });
 
-/* Filtro de bicicletas: marca + tipo combinados */
-var catChips=document.querySelectorAll('.cat-chip[data-f]'),brandChips=document.querySelectorAll('.cat-chip[data-b]'),cards=document.querySelectorAll('#bikeGrid .bike-card');
-var curCat='all',curBrand='all';
-function applyFilters(){cards.forEach(function(card){
-  var ok=(curCat==='all'||card.dataset.cat===curCat)&&(curBrand==='all'||card.dataset.brand===curBrand);
-  card.style.display=ok?'':'none';
-})}
-catChips.forEach(function(c){c.addEventListener('click',function(){
-  catChips.forEach(function(x){x.classList.remove('active')});c.classList.add('active');
-  curCat=c.dataset.f;applyFilters();
-})});
-brandChips.forEach(function(c){c.addEventListener('click',function(){
-  brandChips.forEach(function(x){x.classList.remove('active')});c.classList.add('active');
-  curBrand=c.dataset.b;applyFilters();
-})});
+/* ===== Catálogo: buscador + filtros tipo tienda ===== */
+(function(){
+  var grid=document.getElementById('bikeGrid');
+  if(!grid)return;
+  var cards=[].slice.call(grid.querySelectorAll('.bike-card'));
+  var PMAX=10000;
+  var norm=function(s){return (s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'')};
+  var eur=function(n){return String(n).replace(/\B(?=(\d{3})+(?!\d))/g,'.')+' €'};
+
+  /* índice por tarjeta */
+  cards.forEach(function(c,i){
+    var nameEl=c.querySelector('.bike-name'),subEl=c.querySelector('.bike-sub');
+    var name=nameEl?nameEl.textContent:'',sub=subEl?subEl.textContent:'';
+    c._price=parseInt(c.dataset.price,10)||0;
+    c._brand=c.dataset.brand||'';
+    c._disc=(c.dataset.disc||'').split(' ');
+    c._mat=c.dataset.mat||'';
+    c._motor=c.dataset.motor||'';
+    c._offer=c.dataset.offer==='1';
+    c._order=i;
+    c._hay=norm([name,sub,c._brand,c.dataset.disc,c._mat,c._motor,c.dataset.kw].join(' '));
+  });
+
+  var st={q:'',cat:'all',brand:{},mat:{},motor:{},offer:false,pmin:0,pmax:PMAX,sort:'destacado'};
+  var setHas=function(o){var n=0;for(var k in o)if(o[k])n++;return n};
+
+  function pass(c,skip){
+    if(skip!=='q'&&st.q){var t=st.q.split(/\s+/);for(var i=0;i<t.length;i++){if(t[i]&&c._hay.indexOf(t[i])<0)return false}}
+    if(skip!=='cat'&&st.cat!=='all'&&c._disc.indexOf(st.cat)<0)return false;
+    if(skip!=='brand'&&setHas(st.brand)&&!st.brand[c._brand])return false;
+    if(skip!=='mat'&&setHas(st.mat)&&!st.mat[c._mat])return false;
+    if(skip!=='motor'&&setHas(st.motor)&&(!c._motor||!st.motor[c._motor]))return false;
+    if(skip!=='offer'&&st.offer&&!c._offer)return false;
+    if(skip!=='price'&&(c._price<st.pmin||c._price>st.pmax))return false;
+    return true;
+  }
+  function count(dim,test){var n=0;cards.forEach(function(c){if(pass(c,dim)&&test(c))n++});return n}
+  function toggleOff(span,n){var lab=span.closest('.chk');if(!lab)return;var inp=lab.querySelector('input');lab.classList.toggle('off',n===0&&!(inp&&inp.checked))}
+
+  function updateCounts(){
+    document.querySelectorAll('[data-count]').forEach(function(el){var v=el.getAttribute('data-count');
+      el.textContent=v==='all'?count('cat',function(){return true}):count('cat',function(c){return c._disc.indexOf(v)>=0});});
+    document.querySelectorAll('[data-count-brand]').forEach(function(el){var v=el.getAttribute('data-count-brand');var n=count('brand',function(c){return c._brand===v});el.textContent=n;toggleOff(el,n)});
+    document.querySelectorAll('[data-count-mat]').forEach(function(el){var v=el.getAttribute('data-count-mat');var n=count('mat',function(c){return c._mat===v});el.textContent=n;toggleOff(el,n)});
+    document.querySelectorAll('[data-count-motor]').forEach(function(el){var v=el.getAttribute('data-count-motor');var n=count('motor',function(c){return c._motor===v});el.textContent=n;toggleOff(el,n)});
+    var off=document.querySelector('[data-count-offer]');if(off){var n=count('offer',function(c){return c._offer});off.textContent=n;toggleOff(off,n)}
+  }
+
+  var elCount=document.getElementById('resCount'),elNo=document.getElementById('noResults'),badge=document.getElementById('filtBadge');
+  function activeCount(){return (st.cat!=='all'?1:0)+setHas(st.brand)+setHas(st.mat)+setHas(st.motor)+(st.offer?1:0)+((st.pmin>0||st.pmax<PMAX)?1:0)+(st.q?1:0)}
+  function updateBadge(){if(!badge)return;var n=activeCount();badge.textContent=n;badge.hidden=n===0}
+
+  function apply(){
+    var vis=[];
+    cards.forEach(function(c){var ok=pass(c,null);c.style.display=ok?'':'none';if(ok){vis.push(c);c.classList.add('in')}});
+    var s=st.sort,sorted=vis.slice();
+    if(s==='price-asc')sorted.sort(function(a,b){return a._price-b._price});
+    else if(s==='price-desc')sorted.sort(function(a,b){return b._price-a._price});
+    else if(s==='name')sorted.sort(function(a,b){return a.querySelector('.bike-name').textContent.localeCompare(b.querySelector('.bike-name').textContent,'es')});
+    else sorted.sort(function(a,b){return a._order-b._order});
+    var hidden=cards.filter(function(c){return vis.indexOf(c)<0}).sort(function(a,b){return a._order-b._order});
+    sorted.concat(hidden).forEach(function(c){grid.appendChild(c)});
+    if(elCount)elCount.textContent=vis.length;
+    if(elNo)elNo.hidden=vis.length>0;
+    updateCounts();updateBadge();
+  }
+
+  /* categoría */
+  document.querySelectorAll('.cat-item').forEach(function(b){b.addEventListener('click',function(){
+    document.querySelectorAll('.cat-item').forEach(function(x){x.classList.remove('active')});
+    b.classList.add('active');st.cat=b.getAttribute('data-cat-f');apply();
+  })});
+  /* checkboxes */
+  document.querySelectorAll('.f-brand').forEach(function(ch){ch.addEventListener('change',function(){st.brand[ch.value]=ch.checked;apply()})});
+  document.querySelectorAll('.f-mat').forEach(function(ch){ch.addEventListener('change',function(){st.mat[ch.value]=ch.checked;apply()})});
+  document.querySelectorAll('.f-motor').forEach(function(ch){ch.addEventListener('change',function(){st.motor[ch.value]=ch.checked;apply()})});
+  var offerCh=document.getElementById('fOffer');if(offerCh)offerCh.addEventListener('change',function(){st.offer=offerCh.checked;apply()});
+  /* buscador */
+  var sw=document.getElementById('searchWrap'),si=document.getElementById('searchInput'),sc=document.getElementById('searchClear');
+  si.addEventListener('input',function(){st.q=norm(si.value).trim();sw.classList.toggle('has',si.value.length>0);apply()});
+  sc.addEventListener('click',function(){si.value='';st.q='';sw.classList.remove('has');si.focus();apply()});
+  /* orden */
+  document.getElementById('sortSel').addEventListener('change',function(){st.sort=this.value;apply()});
+  /* precio (slider doble) */
+  var rmin=document.getElementById('rngMin'),rmax=document.getElementById('rngMax'),fill=document.getElementById('rngFill');
+  var rminV=document.getElementById('rngMinV'),rmaxV=document.getElementById('rngMaxV');
+  function priceUI(which){
+    var mn=parseInt(rmin.value,10),mx=parseInt(rmax.value,10);
+    if(mn>mx){if(which==='min'){mx=mn;rmax.value=mx}else{mn=mx;rmin.value=mn}}
+    st.pmin=mn;st.pmax=mx;
+    fill.style.left=(mn/PMAX*100)+'%';fill.style.width=((mx-mn)/PMAX*100)+'%';
+    rminV.textContent=eur(mn);rmaxV.textContent=mx>=PMAX?'10.000 €+':eur(mx);
+  }
+  rmin.addEventListener('input',function(){priceUI('min');apply()});
+  rmax.addEventListener('input',function(){priceUI('max');apply()});
+  /* limpiar */
+  function clearAll(){
+    st.q='';st.cat='all';st.brand={};st.mat={};st.motor={};st.offer=false;st.pmin=0;st.pmax=PMAX;
+    document.querySelectorAll('.cat-item').forEach(function(x){x.classList.toggle('active',x.getAttribute('data-cat-f')==='all')});
+    document.querySelectorAll('.f-brand,.f-mat,.f-motor').forEach(function(x){x.checked=false});
+    if(offerCh)offerCh.checked=false;
+    si.value='';sw.classList.remove('has');
+    rmin.value=0;rmax.value=PMAX;priceUI('min');
+    apply();
+  }
+  document.getElementById('fClear').addEventListener('click',clearAll);
+  var nrc=document.getElementById('noResClear');if(nrc)nrc.addEventListener('click',clearAll);
+  /* cajón de filtros en móvil */
+  var side=document.getElementById('shopSide'),back=document.getElementById('shopBackdrop');
+  function openSide(){side.classList.add('open');back.classList.add('open');document.body.style.overflow='hidden'}
+  function closeSide(){side.classList.remove('open');back.classList.remove('open');document.body.style.overflow=''}
+  var ft=document.getElementById('filtToggle');if(ft)ft.addEventListener('click',openSide);
+  var scl=document.getElementById('sideClose');if(scl)scl.addEventListener('click',closeSide);
+  if(back)back.addEventListener('click',closeSide);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&side.classList.contains('open'))closeSide()});
+  /* init */
+  priceUI('min');updateCounts();updateBadge();
+})();
 
 /* Lightbox galería */
 var lb=document.getElementById('lb'),lbImg=document.getElementById('lbImg');
