@@ -536,7 +536,7 @@ setTimeout(hideLoader,3500);
       <p>Una selección de las bicis disponibles en tienda — CUBE, FOCUS, AMFLOW y STEPPENWOLF — de la iniciación a la alta competición. Busca por nombre o filtra por categoría, marca, precio, material o motor hasta dar con la tuya.</p>
     </div>
 
-    <div class="shop reveal">
+    <div class="shop">
       <div class="shop-backdrop" id="shopBackdrop"></div>
       <aside class="shop-side" id="shopSide" aria-label="Filtros de búsqueda">
         <div class="side-head">
@@ -1507,7 +1507,7 @@ lb.addEventListener('click',function(e){if(e.target===lb)closeLb()});
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLb()});
 
 /* Scroll reveal */
-var io=new IntersectionObserver(function(ents){ents.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+var io=new IntersectionObserver(function(ents){ents.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:0,rootMargin:'0px 0px -60px 0px'});
 document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
 
 /* Fecha por defecto = mañana */
