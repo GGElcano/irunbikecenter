@@ -328,9 +328,21 @@ section{padding:100px 0}
 .cita-feat .ck{width:26px;height:26px;border-radius:50%;background:var(--red);display:grid;place-items:center;flex-shrink:0;color:#fff;font-size:13px;font-weight:700;margin-top:2px}
 .cita-feat b{display:block;font-size:15px}
 .cita-feat span{font-size:13.5px;color:rgba(255,255,255,.6)}
-.form{background:#fff;border-radius:20px;padding:36px 34px;color:var(--text)}
-.form h3{color:var(--ink);font-size:22px;margin-bottom:6px}
-.form .form-sub{font-size:13.5px;color:var(--muted);margin-bottom:22px}
+.cita-wa{background:#fff;border-radius:20px;padding:44px 38px;color:var(--text);text-align:center;display:flex;flex-direction:column;align-items:center;gap:0}
+.cita-wa .wa-badge{width:64px;height:64px;border-radius:50%;background:#25D366;display:grid;place-items:center;margin-bottom:20px}
+.cita-wa .wa-badge svg{width:32px;height:32px;stroke:#fff;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.cita-wa h3{color:var(--ink);font-size:24px;margin-bottom:10px}
+.cita-wa p{font-size:14.5px;color:var(--muted);line-height:1.6;max-width:360px;margin-bottom:24px}
+.wa-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;width:100%;background:#25D366;color:#fff;padding:16px 20px;border-radius:12px;font-size:15px;font-weight:700;letter-spacing:.02em;transition:.25s}
+.wa-btn:hover{background:#1EBE5A;transform:translateY(-1px)}
+.wa-btn svg{width:19px;height:19px;stroke:#fff;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.wa-alt{margin-top:18px;font-size:13.5px;color:var(--muted)}
+.wa-alt a{color:var(--ink);font-weight:700;font-size:17px}
+.wa-alt a:hover{color:var(--red)}
+.wa-hours{font-size:12px;color:var(--muted);margin-top:16px;line-height:1.7;border-top:1px solid var(--line);padding-top:16px;width:100%}
+.wa-fab{position:fixed;right:20px;bottom:20px;z-index:180;width:58px;height:58px;border-radius:50%;background:#25D366;display:grid;place-items:center;box-shadow:0 8px 24px rgba(8,10,13,.28);transition:.25s}
+.wa-fab:hover{background:#1EBE5A;transform:translateY(-2px) scale(1.04)}
+.wa-fab svg{width:28px;height:28px;stroke:#fff;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .f-row{display:grid;gap:14px;margin-bottom:14px}
 .f-row.c2{grid-template-columns:1fr 1fr}
 .f-field{display:flex;flex-direction:column;gap:6px}
@@ -342,8 +354,6 @@ section{padding:100px 0}
 .f-submit{width:100%;background:var(--red);color:#fff;padding:15px;border:none;border-radius:10px;font-family:inherit;font-size:14px;font-weight:700;letter-spacing:.02em;cursor:pointer;transition:.25s;margin-top:8px}
 .f-submit:hover:not(:disabled){background:var(--red-d)}
 .f-submit:disabled{opacity:.6;cursor:wait}
-.f-legal{font-size:11.5px;color:var(--muted);text-align:center;margin-top:12px}
-.f-legal a{color:var(--red);text-decoration:underline}
 .f-status{padding:14px 16px;border-radius:10px;font-size:14px;margin-bottom:16px;display:none;line-height:1.5}
 .f-status.show{display:block}
 .f-status.ok{background:#E9F7EE;color:#1E7E45;border:1px solid #9FD8B4}
@@ -1120,47 +1130,21 @@ setTimeout(hideLoader,3500);
       <div class="cita-left reveal">
         <span class="eyebrow">Pide cita</span>
         <h2>Tu bici, <em>a punto</em></h2>
-        <p>Reserva tu cita en el taller, pide info de una bici o asesoramiento de compra. Te confirmamos plazo y presupuesto sin compromiso.</p>
+        <p>Pide tu cita por WhatsApp: cuéntanos qué necesita tu bici o qué modelo te interesa y te confirmamos día, hora y presupuesto sin compromiso.</p>
         <div class="cita-feats">
           <div class="cita-feat"><div class="ck">✓</div><div><b>Taller con última tecnología</b><span>Reparación, mantenimiento y puesta a punto</span></div></div>
           <div class="cita-feat"><div class="ck">✓</div><div><b>Distribuidor oficial CUBE</b><span>Garantía de marca y recambios originales</span></div></div>
-          <div class="cita-feat"><div class="ck">✓</div><div><b>Respuesta rápida</b><span>Te llamamos para confirmar tu cita</span></div></div>
+          <div class="cita-feat"><div class="ck">✓</div><div><b>Respuesta rápida</b><span>Te confirmamos la cita por WhatsApp</span></div></div>
         </div>
       </div>
-      <form id="citaForm" class="form reveal" novalidate>
-        <h3>Solicita tu cita</h3>
-        <p class="form-sub">Rellena y nos ponemos en contacto contigo.</p>
-        <div class="f-status" id="citaStatus"></div>
-        <div class="f-row c2">
-          <div class="f-field"><label>Fecha</label><input name="fecha" type="date" required></div>
-          <div class="f-field"><label>Hora</label><select name="hora" required>
-            <option value="">Elige</option>
-            <option>09:30</option><option>10:00</option><option>10:30</option><option>11:00</option>
-            <option>11:30</option><option>12:00</option><option>12:30</option><option>13:00</option>
-            <option>15:30</option><option>16:00</option><option>16:30</option><option>17:00</option>
-            <option>17:30</option><option>18:00</option><option>18:30</option>
-          </select></div>
-        </div>
-        <div class="f-field" style="margin-bottom:14px"><label>Servicio</label><select name="servicio" required>
-          <option value="">¿Qué necesitas?</option>
-          <option>Info / reserva de una bici</option>
-          <option>Revisión / puesta a punto</option>
-          <option>Reparación de avería</option>
-          <option>Mantenimiento periódico</option>
-          <option>Montaje de bici nueva</option>
-          <option>Asesoramiento de compra</option>
-          <option>Oferta / -25%</option>
-          <option>Otro</option>
-        </select></div>
-        <div class="f-field" style="margin-bottom:14px"><label>Nombre y apellidos</label><input name="nombre" type="text" required></div>
-        <div class="f-row c2">
-          <div class="f-field"><label>Teléfono</label><input name="telefono" type="tel" placeholder="6XX XXX XXX" required></div>
-          <div class="f-field"><label>Email</label><input name="email" type="email" placeholder="tu@email.com" required></div>
-        </div>
-        <div class="f-field" style="margin-bottom:6px"><label>Modelo de bici y detalles</label><textarea name="notas" placeholder="Modelo que te interesa o qué le pasa a tu bici…"></textarea></div>
-        <button type="submit" class="f-submit" id="citaBtn">Pedir cita</button>
-        <p class="f-legal">Al enviar aceptas la <a href="#">política de privacidad</a>.</p>
-      </form>
+      <div class="cita-wa reveal">
+        <div class="wa-badge"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 21l2.2-5.3A8.5 8.5 0 1 1 21 11.5z"/></svg></div>
+        <h3>Pide cita por WhatsApp</h3>
+        <p>Mándanos un WhatsApp con lo que necesitas —revisión, avería, puesta a punto o info de una bici— y te respondemos enseguida.</p>
+        <a class="wa-btn" href="https://wa.me/34943306834?text=Hola%2C%20quiero%20pedir%20cita%20en%20el%20taller%20de%20Irun%20Bike%20Center." target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 21l2.2-5.3A8.5 8.5 0 1 1 21 11.5z"/></svg> Pedir cita por WhatsApp</a>
+        <div class="wa-alt">O si lo prefieres, llámanos<br><a href="tel:+34943306834">943 30 68 34</a></div>
+        <p class="wa-hours">L, M, J y V · 9:30–13:30 y 15:30–19:00<br>Miércoles · 9:30–16:00 · Sábado · 9:00–13:00</p>
+      </div>
     </div>
   </div>
 </section>
@@ -1261,7 +1245,7 @@ setTimeout(hideLoader,3500);
       <p class="pd-desc" id="pdDesc"></p>
       <div class="pd-ctas">
         <button type="button" class="btn btn-red" id="pdBuy"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg> Comprar online</button>
-        <button type="button" class="btn btn-dark" id="pdCita">Reservar / pedir info</button>
+        <button type="button" class="btn btn-dark" id="pdCita">Pedir información</button>
       </div>
       <a class="pd-wa" id="pdWa" target="_blank" rel="noopener"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 21l2.2-5.3A8.5 8.5 0 1 1 21 11.5z"/></svg> Pregúntanos por WhatsApp</a>
       <div class="pd-specs">
@@ -1277,6 +1261,8 @@ setTimeout(hideLoader,3500);
 <div class="lb" id="lb"><button class="lb-close" id="lbClose" aria-label="Cerrar">&times;</button><img id="lbImg" src="" alt=""></div>
 
 <!-- CHECKOUT COMPRA ONLINE -->
+<a class="wa-fab" href="https://wa.me/34943306834?text=Hola%2C%20quiero%20pedir%20cita%20en%20el%20taller%20de%20Irun%20Bike%20Center." target="_blank" rel="noopener" aria-label="Pedir cita por WhatsApp"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 21l2.2-5.3A8.5 8.5 0 1 1 21 11.5z"/></svg></a>
+
 <div class="co" id="checkout">
   <div class="co-box">
     <button type="button" class="co-close" id="coClose" aria-label="Cerrar">&times;</button>
@@ -1509,33 +1495,6 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLb()});
 /* Scroll reveal */
 var io=new IntersectionObserver(function(ents){ents.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:0,rootMargin:'0px 0px -60px 0px'});
 document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
-
-/* Fecha por defecto = mañana */
-var tm=new Date();tm.setDate(tm.getDate()+1);
-document.querySelectorAll('input[type=date]').forEach(function(i){i.min=new Date().toISOString().slice(0,10);i.value=tm.toISOString().slice(0,10)});
-
-/* Envío formulario cita */
-var ERP='https://gg-reservas-erp.josugarciandia.workers.dev/api/reservas';
-var KEY='ibc_citas';
-function saveLocal(d){try{var a=JSON.parse(localStorage.getItem(KEY)||'[]');a.unshift(d);localStorage.setItem(KEY,JSON.stringify(a))}catch(e){}}
-document.getElementById('citaForm').addEventListener('submit',function(e){
-  e.preventDefault();
-  var form=e.target,st=document.getElementById('citaStatus'),btn=document.getElementById('citaBtn');
-  var d=Object.fromEntries(new FormData(form).entries());
-  d.negocio='irun-bike-center';d.negocio_nombre='Irun Bike Center';d.origen='web';
-  if(!d.fecha||!d.hora||!d.servicio||!d.nombre||!d.telefono||!d.email){st.className='f-status show err';st.textContent='Faltan campos por rellenar.';return}
-  btn.disabled=true;var orig=btn.textContent;btn.textContent='Enviando…';st.classList.remove('show');
-  (async function(){
-    var saved=false,id=null;
-    try{var r=await fetch(ERP,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d),mode:'cors'});if(r.ok){var j=await r.json();id=j.id||(j.reserva&&j.reserva.id);saved=true}}catch(err){}
-    if(!saved){var ymd=new Date().toISOString().slice(0,10).replace(/-/g,'');var a=(function(){try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){return[]}})();id='IBC-'+ymd+'-'+String(a.length+1).padStart(3,'0');saveLocal(Object.assign({},d,{id:id,estado:'pendiente',created_at:new Date().toISOString(),_offline:true}))}
-    var ft=new Date(d.fecha+'T00:00:00').toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long'});
-    st.className='f-status show ok';
-    st.innerHTML='<b>¡Solicitud enviada!</b> Te contactaremos para confirmarla.<br>📌 '+(id||'')+' · '+(d.servicio||'Cita')+' el '+ft+' a las '+d.hora+'.<br>¿Dudas? Llámanos al <a href="tel:+34943306834" style="color:inherit;text-decoration:underline">943 30 68 34</a>.';
-    form.reset();btn.disabled=false;btn.textContent=orig;
-    document.querySelectorAll('input[type=date]').forEach(function(i){i.value=tm.toISOString().slice(0,10)});
-  })();
-});
 
 /* FICHA DETALLE DE BICI — fotos y especificaciones REALES (web oficial CUBE) */
 var CDN='https://file.cube.eu/azwesc1xfg346/media/';
