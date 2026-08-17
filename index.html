@@ -3188,7 +3188,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&pd.classLis
 document.getElementById('pdMain').addEventListener('click',function(){var s=document.getElementById('pdMainImg');lbImg.src=s.src;lbImg.alt=s.alt;lb.classList.add('open');document.body.style.overflow='hidden'});
 document.querySelectorAll('#bikeGrid .bike-card').forEach(function(card){
   var name=card.querySelector('.bike-name').textContent.trim();
-  card.querySelector('.bike-imgwrap').addEventListener('click',function(){openDetail(name)});
+  card.querySelector('.bike-imgwrap').addEventListener('click',function(e){if(e.target.closest('.bike-fav'))return;var im=card.querySelector('.bike-imgwrap img');lbImg.src=im.src;lbImg.alt=im.alt;lb.classList.add('open');document.body.style.overflow='hidden'});
   card.querySelector('.bike-name').addEventListener('click',function(){openDetail(name)});
   var info=card.querySelector('[data-detail]');
   if(info)info.addEventListener('click',function(e){e.stopPropagation();openDetail(name)});
