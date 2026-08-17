@@ -3175,17 +3175,22 @@ function openDetail(name){
   var main=document.getElementById('pdMainImg');
   function imgUrl(rel){return (rel.indexOf('http')===0||rel.indexOf('assets/')===0)?rel:CDN+rel}
   main.src=imgUrl(b.imgs[0]);main.alt=name;
-  b.imgs.forEach(function(rel,i){var src=imgUrl(rel);var t=document.createElement('div');t.className='pd-thumb'+(i===0?' active':'');var im=document.createElement('img');im.src=src;im.alt=name+' · vista '+(i+1);im.loading='lazy';t.appendChild(im);t.addEventListener('click',function(){main.src=src;th.querySelectorAll('.pd-thumb').forEach(function(x){x.classList.remove('active')});t.classList.add('active')});th.appendChild(t)});
+  b.imgs.forEach(function(rel,i){var src=imgUrl(rel);var t=document.createElement('div');t.className='pd-thumb'+(i===0?' active':'');var im=document.createElement('img');im.src=src;im.alt=name+' · vista '+(i+1);im.loading='lazy';t.appendChild(im);t.addEventListener('click',function(){pdZoomOff();main.src=src;th.querySelectorAll('.pd-thumb').forEach(function(x){x.classList.remove('active')});t.classList.add('active')});th.appendChild(t)});
   document.getElementById('pdBuy').onclick=function(){closeDetail();openCheckout(name,b.price)};
   document.getElementById('pdCita').onclick=function(){closeDetail();document.getElementById('cita').scrollIntoView({behavior:'smooth'})};
   document.getElementById('pdWa').href='https://wa.me/34943306834?text='+encodeURIComponent('Hola, me interesa la '+name+' ('+b.price+'). ¿Tenéis disponibilidad y tallas?');
   pd.classList.add('open');pd.scrollTop=0;document.body.style.overflow='hidden';
 }
-function closeDetail(){pd.classList.remove('open');document.body.style.overflow=''}
+function closeDetail(){pdZoomOff();pd.classList.remove('open');document.body.style.overflow=''}
 document.getElementById('pdBack').addEventListener('click',closeDetail);
 document.getElementById('pdClose').addEventListener('click',closeDetail);
 document.addEventListener('keydown',function(e){if(e.key==='Escape'&&pd.classList.contains('open')&&!lb.classList.contains('open'))closeDetail()});
-document.getElementById('pdMain').addEventListener('click',function(){var s=document.getElementById('pdMainImg');lbImg.src=s.src;lbImg.alt=s.alt;lb.classList.add('open');document.body.style.overflow='hidden'});
+var pdMainBox=document.getElementById('pdMain'),pdMainPic=document.getElementById('pdMainImg');
+function pdZoomOff(){pdMainPic.classList.remove('zoomed');pdMainPic.style.transform='';pdMainPic.style.transformOrigin='';pdMainBox.style.cursor=''}
+function pdZoomMove(e){var r=pdMainBox.getBoundingClientRect();var ox=Math.max(0,Math.min(100,(e.clientX-r.left)/r.width*100));var oy=Math.max(0,Math.min(100,(e.clientY-r.top)/r.height*100));pdMainPic.style.transformOrigin=ox.toFixed(1)+'% '+oy.toFixed(1)+'%';pdMainPic.style.transform='scale(2.2)'}
+pdMainBox.addEventListener('click',function(e){if(pdMainPic.classList.contains('zoomed')){pdZoomOff()}else{pdMainPic.classList.add('zoomed');pdMainBox.style.cursor='zoom-out';pdZoomMove(e)}});
+pdMainBox.addEventListener('mousemove',function(e){if(pdMainPic.classList.contains('zoomed'))pdZoomMove(e)});
+pdMainBox.addEventListener('mouseleave',pdZoomOff);
 document.querySelectorAll('#bikeGrid .bike-card').forEach(function(card){
   var name=card.querySelector('.bike-name').textContent.trim();
   card.querySelector('.bike-imgwrap').addEventListener('click',function(e){if(e.target.closest('.bike-fav'))return;openDetail(name)});
