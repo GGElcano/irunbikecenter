@@ -2374,8 +2374,20 @@ coForm.addEventListener('submit',function(e){
   d.bici=bici;d.precio=precio;d.id=id;d.estado='pendiente';d.origen='web-compra';d.negocio='irun-bike-center';d.created_at=new Date().toISOString();
   try{a.unshift(d);localStorage.setItem(PKEY,JSON.stringify(a))}catch(e){}
   coBtn.disabled=true;coBtn.textContent='Pedido enviado ✓';
+  var waMsg='Hola, quiero hacer un pedido desde la web:%0A'
+    +encodeURIComponent('🚲 '+bici+' · '+precio)+'%0A'
+    +encodeURIComponent('📦 '+id)+'%0A'
+    +(d.talla?encodeURIComponent('Talla: '+d.talla)+'%0A':'')
+    +encodeURIComponent('Entrega: '+(d.entrega||'Recogida en tienda'))+'%0A'
+    +(d.direccion?encodeURIComponent('Dirección: '+d.direccion+(d.cp?' ('+d.cp+')':''))+'%0A':'')
+    +encodeURIComponent('Nombre: '+d.nombre)+'%0A'
+    +encodeURIComponent('Teléfono: '+d.telefono)+'%0A'
+    +encodeURIComponent('Email: '+d.email)
+    +(d.comentarios?'%0A'+encodeURIComponent('Comentarios: '+d.comentarios):'');
+  var waUrl='https://wa.me/34943306834?text='+waMsg;
   st.className='f-status show ok';
-  st.innerHTML='<b>¡Pedido recibido!</b> '+bici+' · '+precio+'<br>📦 '+id+' · '+(d.entrega||'')+(d.talla?' · Talla '+d.talla:'')+'<br>Te contactamos para confirmar disponibilidad y forma de pago (tienda o transferencia). ¿Dudas? <a href="tel:+34943306834" style="color:inherit;text-decoration:underline">943 30 68 34</a>.';
+  st.innerHTML='<b>¡Pedido preparado!</b> '+bici+' · '+precio+'<br>📦 '+id+' · '+(d.entrega||'')+(d.talla?' · Talla '+d.talla:'')+'<br><a href="'+waUrl+'" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;margin:12px 0 6px;background:#25D366;color:#fff;font-weight:700;padding:12px 18px;border-radius:999px;text-decoration:none">📲 Enviar pedido por WhatsApp</a><br>Pulsa el botón para que la tienda reciba tu pedido al momento. ¿Dudas? <a href="tel:+34943306834" style="color:inherit;text-decoration:underline">943 30 68 34</a>.';
+  try{window.open(waUrl,'_blank')}catch(e){}
   co.scrollTop=0;
 });
 
