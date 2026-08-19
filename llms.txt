@@ -1,6 +1,6 @@
 # Irun Bike Center
 
-> Tienda y taller de bicicletas en Irun (Gipuzkoa). Distribuidor oficial CUBE; también Focus, Amflow y Steppenwolf. E-MTB, MTB, carretera, gravel e infantiles.
+> Tienda y taller de bicicletas en Irun (Gipuzkoa). Distribuidor oficial CUBE, Focus, Amflow y Steppenwolf. E-MTB, MTB, carretera, gravel e infantiles.
 
 Tienda hecha por ciclistas, con taller propio (reparación, mantenimiento y
 puesta a punto con cita previa), asesoramiento personalizado y comunidad
