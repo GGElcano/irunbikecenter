@@ -225,6 +225,12 @@ section{padding:100px 0}
 .cat-item.active{background:var(--ink);color:#fff}
 .cat-item .c{font-size:12px;font-weight:700;color:var(--muted)}
 .cat-item.active .c{color:rgba(255,255,255,.72)}
+.cat-item.open{background:var(--bg)}
+.cat-sub{padding-left:30px;font-size:13.5px;color:var(--muted);position:relative}
+.cat-sub::before{content:"";position:absolute;left:16px;top:50%;width:6px;height:6px;margin-top:-3px;border-radius:50%;background:var(--line)}
+.cat-sub.active{background:var(--red);color:#fff}
+.cat-sub.active::before{background:rgba(255,255,255,.75)}
+.cat-sub.active .c{color:rgba(255,255,255,.8)}
 .chk{display:flex;align-items:center;gap:10px;padding:7px 4px;cursor:pointer;font-size:14px;font-weight:600;color:var(--text);user-select:none;position:relative}
 .chk input{position:absolute;opacity:0;width:0;height:0}
 .chk .box{width:19px;height:19px;border-radius:6px;border:1.7px solid var(--line);display:grid;place-items:center;flex-shrink:0;transition:.15s;background:#fff}
@@ -531,6 +537,14 @@ footer{background:var(--ink);color:#fff;padding:70px 0 30px}
 .ch-card.active{border-color:var(--red)}
 .ch-card.active .ch-lab{background:var(--red);color:#fff}
 .ch-card.active .ch-lab .n{color:rgba(255,255,255,.8)}
+.sub-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:-16px 0 28px;scroll-margin-top:110px}
+.sub-row[hidden]{display:none}
+.sub-lab{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-right:2px}
+.sub-chip{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border-radius:999px;border:1.5px solid var(--line);background:#fff;font-family:inherit;font-size:13px;font-weight:700;color:var(--ink);cursor:pointer;transition:.18s}
+.sub-chip:hover{border-color:var(--red)}
+.sub-chip .n{font-size:12px;font-weight:700;color:var(--muted)}
+.sub-chip.active{background:var(--red);border-color:var(--red);color:#fff}
+.sub-chip.active .n{color:rgba(255,255,255,.8)}
 
 /* Botón flotante de filtros (móvil): los filtros siempre a mano */
 .fab-filt{display:none;position:fixed;left:20px;bottom:20px;z-index:180;align-items:center;gap:8px;padding:14px 18px;border-radius:999px;border:none;background:var(--ink);color:#fff;font-family:inherit;font-size:14px;font-weight:700;box-shadow:0 12px 30px rgba(13,14,16,.3);cursor:pointer;opacity:0;visibility:hidden;transform:translateY(12px);transition:opacity .28s,transform .28s,visibility .28s}
@@ -597,6 +611,9 @@ footer{background:var(--ink);color:#fff;padding:70px 0 30px}
   .cat-hero{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;margin:0 -20px 24px;padding:2px 20px 8px;scrollbar-width:none}
   .cat-hero::-webkit-scrollbar{display:none}
   .ch-card{flex:0 0 148px;scroll-snap-align:start}
+  .sub-row{margin:-12px 0 20px;gap:6px}
+  .sub-lab{width:100%;margin:0 0 2px}
+  .sub-chip{padding:7px 12px;font-size:12px}
   .ch-img{padding:8px 10px;aspect-ratio:16/11}
   .shop-toolbar{gap:10px}
   .sort-wrap{margin-left:auto}
@@ -717,6 +734,20 @@ setTimeout(hideLoader,3500);
       <button type="button" class="ch-card" data-cat-go="infantil" aria-label="Ver infantiles"><span class="ch-img"><img src="assets/cube-acid-240-disc-actionteam-1024.jpg" alt="Bicicletas infantiles" loading="lazy"></span><span class="ch-lab">Infantiles <span class="n" data-count="infantil"></span></span></button>
     </div>
 
+    <div class="sub-row" id="subMontana" hidden>
+      <span class="sub-lab">Montaña / MTB</span>
+      <button type="button" class="sub-chip" data-sub-go="montana">Todas <span class="n" data-count="montana"></span></button>
+      <button type="button" class="sub-chip" data-sub-go="mtb-doble">Doble suspensión <span class="n" data-count="mtb-doble"></span></button>
+      <button type="button" class="sub-chip" data-sub-go="mtb-rigida">Rígida <span class="n" data-count="mtb-rigida"></span></button>
+    </div>
+    <div class="sub-row" id="subElectrica" hidden>
+      <span class="sub-lab">Eléctricas</span>
+      <button type="button" class="sub-chip" data-sub-go="electrica">Todas <span class="n" data-count="electrica"></span></button>
+      <button type="button" class="sub-chip" data-sub-go="emtb-doble">E-MTB doble suspensión <span class="n" data-count="emtb-doble"></span></button>
+      <button type="button" class="sub-chip" data-sub-go="emtb-rigida">E-MTB rígida <span class="n" data-count="emtb-rigida"></span></button>
+      <button type="button" class="sub-chip" data-sub-go="etrekking">Paseo / trekking <span class="n" data-count="etrekking"></span></button>
+    </div>
+
     <div class="shop">
       <div class="shop-backdrop" id="shopBackdrop"></div>
       <aside class="shop-side" id="shopSide" aria-label="Filtros de búsqueda">
@@ -732,7 +763,12 @@ setTimeout(hideLoader,3500);
             <button type="button" class="cat-item" data-cat-f="carretera">Carretera <span class="c" data-count="carretera"></span></button>
             <button type="button" class="cat-item" data-cat-f="gravel">Gravel <span class="c" data-count="gravel"></span></button>
             <button type="button" class="cat-item" data-cat-f="montana">Montaña / MTB <span class="c" data-count="montana"></span></button>
+            <button type="button" class="cat-item cat-sub" data-cat-f="mtb-doble">Doble suspensión <span class="c" data-count="mtb-doble"></span></button>
+            <button type="button" class="cat-item cat-sub" data-cat-f="mtb-rigida">Rígida <span class="c" data-count="mtb-rigida"></span></button>
             <button type="button" class="cat-item" data-cat-f="electrica">Eléctricas <span class="c" data-count="electrica"></span></button>
+            <button type="button" class="cat-item cat-sub" data-cat-f="emtb-doble">E-MTB doble suspensión <span class="c" data-count="emtb-doble"></span></button>
+            <button type="button" class="cat-item cat-sub" data-cat-f="emtb-rigida">E-MTB rígida <span class="c" data-count="emtb-rigida"></span></button>
+            <button type="button" class="cat-item cat-sub" data-cat-f="etrekking">Paseo / trekking <span class="c" data-count="etrekking"></span></button>
             <button type="button" class="cat-item" data-cat-f="infantil">Infantiles <span class="c" data-count="infantil"></span></button>
           </div>
         </div>
@@ -955,9 +991,9 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="mtb" data-brand="cube" data-disc="montana" data-mat="aluminio" data-price="499" data-offer="0" data-kw="black cube gida metallicwhite mole mtb n prism r salmon">
+      <article class="bike-card reveal" data-cat="mtb" data-brand="cube" data-disc="montana mtb-rigida" data-mat="aluminio" data-price="499" data-offer="0" data-kw="black cube gida metallicwhite mole mtb n prism r salmon rigida hardtail mtb">
         <div class="bike-imgwrap">
-          <span class="bike-cat">MTB</span>
+          <span class="bike-cat">MTB rígida</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
           <img src="assets/cube-aim-one-mole-n-prism-1024.jpg" alt="Bicicleta CUBE Aim ONE (MTB rígida, aluminio)" loading="lazy">
         </div>
@@ -968,9 +1004,9 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="mtb" data-brand="cube" data-disc="montana" data-mat="aluminio" data-price="599" data-offer="0" data-kw="aloegreen black blue cube gida green grey lizard mtb n r topasblue">
+      <article class="bike-card reveal" data-cat="mtb" data-brand="cube" data-disc="montana mtb-rigida" data-mat="aluminio" data-price="599" data-offer="0" data-kw="aloegreen black blue cube gida green grey lizard mtb n r topasblue rigida hardtail mtb">
         <div class="bike-imgwrap">
-          <span class="bike-cat">MTB</span>
+          <span class="bike-cat">MTB rígida</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
           <img src="assets/cube-aim-pro-grey-n-black-1024.jpg" alt="Bicicleta CUBE Aim Pro (MTB rígida, aluminio)" loading="lazy">
         </div>
@@ -981,9 +1017,9 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="mtb" data-brand="cube" data-disc="montana" data-mat="carbono" data-price="4699" data-offer="0" data-kw="blackline cube doble mtb xc">
+      <article class="bike-card reveal" data-cat="mtb" data-brand="cube" data-disc="montana mtb-doble" data-mat="carbono" data-price="4699" data-offer="0" data-kw="blackline cube doble mtb xc doble suspension full suspension mtb">
         <div class="bike-imgwrap">
-          <span class="bike-cat">MTB Doble</span>
+          <span class="bike-cat">MTB doble</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
           <img src="assets/synqup_833100_S_00-1024x577.jpg" alt="Bicicleta CUBE AMS ZERO99 C:68X Race 29 (MTB doble XC, carbono)" loading="lazy">
         </div>
@@ -994,9 +1030,9 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="mtb" data-brand="cube" data-disc="montana" data-mat="carbono" data-price="1999" data-offer="0" data-kw="black carbon cube doble mtb n trail">
+      <article class="bike-card reveal" data-cat="mtb" data-brand="cube" data-disc="montana mtb-doble" data-mat="carbono" data-price="1999" data-offer="0" data-kw="black carbon cube doble mtb n trail doble suspension full suspension mtb">
         <div class="bike-imgwrap">
-          <span class="bike-cat">MTB Doble</span>
+          <span class="bike-cat">MTB doble</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
           <img src="assets/cube-stereo-hpc-race-carbon-n-black-1024.jpg" alt="Bicicleta CUBE Stereo HPC RACE (MTB doble trail, carbono)" loading="lazy">
         </div>
@@ -1007,20 +1043,20 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="mtb" data-brand="cube" data-disc="montana" data-mat="carbono" data-price="2999" data-offer="0" data-kw="cube enduro grey hintofmint mtb n">
+      <article class="bike-card reveal" data-cat="mtb" data-brand="cube" data-disc="montana mtb-doble" data-mat="carbono" data-price="2999" data-offer="0" data-kw="cube enduro grey hintofmint mtb n doble suspension full suspension mtb">
         <div class="bike-imgwrap">
-          <span class="bike-cat">MTB Enduro</span>
+          <span class="bike-cat">MTB doble</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
-          <img src="assets/cube-fritzz-c-62-tm-hintofmint-n-grey-1024.jpg" alt="Bicicleta CUBE FRITZZ C:62 TM (MTB enduro, carbono)" loading="lazy">
+          <img src="assets/cube-fritzz-c-62-tm-hintofmint-n-grey-1024.jpg" alt="Bicicleta CUBE FRITZZ C:62 TM (MTB enduro doble, carbono)" loading="lazy">
         </div>
         <div class="bike-body">
           <div class="bike-name">FRITZZ C:62 TM</div>
-          <div class="bike-sub">CUBE · MTB enduro · carbono</div>
+          <div class="bike-sub">CUBE · MTB enduro doble · carbono</div>
           <div class="bike-foot"><div class="bike-price">2.999 €<small>PVP</small></div><div class="bike-actions"><button class="bike-btn-buy" data-buy><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>Encargar</button><button class="bike-btn" data-detail>Ver ficha</button></div></div>
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="mtb" data-brand="cube" data-disc="montana infantil" data-mat="aluminio" data-price="449" data-offer="0" data-kw="24 actionteam cube infantil junior mtb">
+      <article class="bike-card reveal" data-cat="mtb" data-brand="cube" data-disc="montana infantil mtb-rigida" data-mat="aluminio" data-price="449" data-offer="0" data-kw="24 actionteam cube infantil junior mtb rigida hardtail mtb">
         <div class="bike-imgwrap">
           <span class="bike-cat">MTB Junior</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
@@ -1046,9 +1082,9 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="cube" data-disc="electrica" data-mat="aluminio" data-motor="bosch" data-price="2499" data-offer="0" data-kw="ashgrey cube e gida mtb n prism r">
+      <article class="bike-card reveal" data-cat="e" data-brand="cube" data-disc="electrica emtb-rigida" data-mat="aluminio" data-motor="bosch" data-price="2499" data-offer="0" data-kw="ashgrey cube e gida mtb n prism r rigida hardtail emtb e-mtb">
         <div class="bike-imgwrap">
-          <span class="bike-cat">E-MTB</span>
+          <span class="bike-cat">E-MTB rígida</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
           <img src="assets/cube-reaction-hybrid-performance-720-ashgrey-n-prism-1024.jpg" alt="Bicicleta CUBE Reaction Hybrid Performance 720 (E-MTB rígida, aluminio)" loading="lazy">
         </div>
@@ -1059,9 +1095,9 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="cube" data-disc="electrica" data-mat="aluminio" data-motor="bosch" data-price="2699" data-offer="0" data-kw="ashgrey black cube e gida mtb n prism r ruby">
+      <article class="bike-card reveal" data-cat="e" data-brand="cube" data-disc="electrica emtb-rigida" data-mat="aluminio" data-motor="bosch" data-price="2699" data-offer="0" data-kw="ashgrey black cube e gida mtb n prism r ruby rigida hardtail emtb e-mtb">
         <div class="bike-imgwrap">
-          <span class="bike-cat">E-MTB</span>
+          <span class="bike-cat">E-MTB rígida</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
           <img src="assets/cube-reaction-hybrid-performance-720-fe-ashgrey-n-prism-1024.jpg" alt="Bicicleta CUBE Reaction Hybrid Performance 720 FE (E-MTB rígida, aluminio)" loading="lazy">
         </div>
@@ -1072,9 +1108,9 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="cube" data-disc="electrica" data-mat="carbono" data-motor="bosch" data-price="4099" data-offer="0" data-kw="black blue cube doble e metallicwhite mtb n oldgrey">
+      <article class="bike-card reveal" data-cat="e" data-brand="cube" data-disc="electrica emtb-doble" data-mat="carbono" data-motor="bosch" data-price="4099" data-offer="0" data-kw="black blue cube doble e metallicwhite mtb n oldgrey doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
-          <span class="bike-cat">E-MTB</span>
+          <span class="bike-cat">E-MTB doble</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
           <img src="assets/cube-stereo-hybrid-one44-hpc-pro-800-oldgrey-n-black-1024.jpg" alt="Bicicleta CUBE Stereo Hybrid ONE44 HPC Pro 800 (E-MTB doble, carbono)" loading="lazy">
         </div>
@@ -1085,9 +1121,9 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="cube" data-disc="electrica" data-mat="carbono" data-motor="bosch" data-price="4399" data-offer="0" data-kw="coal cube doble e green mtb n">
+      <article class="bike-card reveal" data-cat="e" data-brand="cube" data-disc="electrica emtb-doble" data-mat="carbono" data-motor="bosch" data-price="4399" data-offer="0" data-kw="coal cube doble e green mtb n doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
-          <span class="bike-cat">E-MTB</span>
+          <span class="bike-cat">E-MTB doble</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
           <img src="assets/cube-stereo-hybrid-one44-hpc-race-800-coal-n-green-1024.jpg" alt="Bicicleta CUBE Stereo Hybrid ONE44 HPC Race 800 (E-MTB doble, carbono)" loading="lazy">
         </div>
@@ -1098,9 +1134,9 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="cube" data-disc="electrica" data-mat="carbono" data-motor="bosch" data-price="4799" data-offer="0" data-kw="black blue cube doble e mtb n nebula slabgrey">
+      <article class="bike-card reveal" data-cat="e" data-brand="cube" data-disc="electrica emtb-doble" data-mat="carbono" data-motor="bosch" data-price="4799" data-offer="0" data-kw="black blue cube doble e mtb n nebula slabgrey doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
-          <span class="bike-cat">E-MTB</span>
+          <span class="bike-cat">E-MTB doble</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
           <img src="assets/cube-stereo-hybrid-one44-hpc-exc-800-slabgrey-n-black-1024.jpg" alt="Bicicleta CUBE Stereo Hybrid ONE44 HPC EXC 800 (E-MTB doble, carbono)" loading="lazy">
         </div>
@@ -1111,9 +1147,9 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="cube" data-disc="electrica" data-mat="carbono" data-motor="bosch" data-price="4999" data-offer="0" data-kw="black blackline cube doble e jungali mtb n">
+      <article class="bike-card reveal" data-cat="e" data-brand="cube" data-disc="electrica emtb-doble" data-mat="carbono" data-motor="bosch" data-price="4999" data-offer="0" data-kw="black blackline cube doble e jungali mtb n doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
-          <span class="bike-cat">E-MTB</span>
+          <span class="bike-cat">E-MTB doble</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
           <img src="assets/cube-stereo-hybrid-one44-hpc-slx-800-blackline-1024.jpg" alt="Bicicleta CUBE Stereo Hybrid ONE44 HPC SLX 800 (E-MTB doble, carbono)" loading="lazy">
         </div>
@@ -1124,9 +1160,9 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="cube" data-disc="electrica" data-mat="carbono" data-motor="bosch" data-price="6999" data-offer="0" data-kw="cube doble e graphiteglitch grey mtb n">
+      <article class="bike-card reveal" data-cat="e" data-brand="cube" data-disc="electrica emtb-doble" data-mat="carbono" data-motor="bosch" data-price="6999" data-offer="0" data-kw="cube doble e graphiteglitch grey mtb n doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
-          <span class="bike-cat">E-MTB</span>
+          <span class="bike-cat">E-MTB doble</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
           <img src="assets/cube-stereo-hybrid-one44-hpc-super-tm-800-graphiteglitch-n-grey-1024.jpg" alt="Bicicleta CUBE Stereo Hybrid ONE44 HPC Super TM 800 (E-MTB doble, carbono)" loading="lazy">
         </div>
@@ -1137,28 +1173,28 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="cube" data-disc="electrica" data-mat="carbono" data-motor="bosch" data-price="4399" data-offer="0" data-kw="black cube e enduro metallicpetrol mtb n oatgrey yellow">
+      <article class="bike-card reveal" data-cat="e" data-brand="cube" data-disc="electrica emtb-doble" data-mat="carbono" data-motor="bosch" data-price="4399" data-offer="0" data-kw="black cube e enduro metallicpetrol mtb n oatgrey yellow doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
-          <span class="bike-cat">E-MTB Enduro</span>
+          <span class="bike-cat">E-MTB doble</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
-          <img src="assets/cube-stereo-hybrid-one77-hpc-race-800-oatgrey-n-yellow-1024.jpg" alt="Bicicleta CUBE Stereo Hybrid ONE77 HPC Race 800 (E-MTB enduro, carbono)" loading="lazy">
+          <img src="assets/cube-stereo-hybrid-one77-hpc-race-800-oatgrey-n-yellow-1024.jpg" alt="Bicicleta CUBE Stereo Hybrid ONE77 HPC Race 800 (E-MTB enduro doble, carbono)" loading="lazy">
         </div>
         <div class="bike-body">
           <div class="bike-name">Stereo Hybrid ONE77 HPC Race 800</div>
-          <div class="bike-sub">CUBE · E-MTB enduro · carbono</div>
+          <div class="bike-sub">CUBE · E-MTB enduro doble · carbono</div>
           <div class="bike-foot"><div class="bike-price">4.399 €<small>PVP</small></div><div class="bike-actions"><button class="bike-btn-buy" data-buy><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>Encargar</button><button class="bike-btn" data-detail>Ver ficha</button></div></div>
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="cube" data-disc="electrica" data-mat="carbono" data-motor="bosch" data-price="4999" data-offer="0" data-kw="black blackline cube e enduro hintofmint liquidred mtb n orange">
+      <article class="bike-card reveal" data-cat="e" data-brand="cube" data-disc="electrica emtb-doble" data-mat="carbono" data-motor="bosch" data-price="4999" data-offer="0" data-kw="black blackline cube e enduro hintofmint liquidred mtb n orange doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
-          <span class="bike-cat">E-MTB Enduro</span>
+          <span class="bike-cat">E-MTB doble</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
-          <img src="assets/cube-stereo-hybrid-one77-hpc-slx-800-blackline-1024.jpg" alt="Bicicleta CUBE Stereo Hybrid ONE77 HPC SLX 800 (E-MTB enduro, carbono)" loading="lazy">
+          <img src="assets/cube-stereo-hybrid-one77-hpc-slx-800-blackline-1024.jpg" alt="Bicicleta CUBE Stereo Hybrid ONE77 HPC SLX 800 (E-MTB enduro doble, carbono)" loading="lazy">
         </div>
         <div class="bike-body">
           <div class="bike-name">Stereo Hybrid ONE77 HPC SLX 800</div>
-          <div class="bike-sub">CUBE · E-MTB enduro · carbono</div>
+          <div class="bike-sub">CUBE · E-MTB enduro doble · carbono</div>
           <div class="bike-foot"><div class="bike-price">4.999 €<small>PVP</small></div><div class="bike-actions"><button class="bike-btn-buy" data-buy><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>Encargar</button><button class="bike-btn" data-detail>Ver ficha</button></div></div>
         </div>
       </article>
@@ -1181,54 +1217,54 @@ setTimeout(hideLoader,3500);
 
 
 
-      <article class="bike-card reveal" data-cat="e" data-brand="amflow" data-disc="electrica" data-mat="carbono" data-motor="dji" data-price="6999" data-offer="0" data-kw="emtb electrica ebike amflow dji avinox px enduro nueva gama">
+      <article class="bike-card reveal" data-cat="e" data-brand="amflow" data-disc="electrica emtb-doble" data-mat="carbono" data-motor="dji" data-price="6999" data-offer="0" data-kw="emtb electrica ebike amflow dji avinox px enduro nueva gama doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
-          <span class="bike-cat">E-MTB</span>
+          <span class="bike-cat">E-MTB doble</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
-          <img src="assets/amflow-px-carbon.jpg" alt="Bicicleta AMFLOW PX Carbon (E-MTB, motor DJI Avinox)" loading="lazy">
+          <img src="assets/amflow-px-carbon.jpg" alt="Bicicleta AMFLOW PX Carbon (E-MTB doble, motor DJI Avinox)" loading="lazy">
         </div>
         <div class="bike-body">
           <div class="bike-name">PX Carbon</div>
-          <div class="bike-sub">AMFLOW · E-MTB · motor DJI Avinox</div>
+          <div class="bike-sub">AMFLOW · E-MTB doble · motor DJI Avinox</div>
           <div class="bike-foot"><div class="bike-price">6.999 €<small>PVP</small></div><div class="bike-actions"><button class="bike-btn-buy" data-buy><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>Encargar</button><button class="bike-btn" data-detail>Ver ficha</button></div></div>
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="amflow" data-disc="electrica" data-mat="carbono" data-motor="dji" data-price="9999" data-offer="0" data-kw="emtb electrica ebike amflow dji avinox px pro tope gama enduro">
+      <article class="bike-card reveal" data-cat="e" data-brand="amflow" data-disc="electrica emtb-doble" data-mat="carbono" data-motor="dji" data-price="9999" data-offer="0" data-kw="emtb electrica ebike amflow dji avinox px pro tope gama enduro doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
-          <span class="bike-cat">E-MTB</span>
+          <span class="bike-cat">E-MTB doble</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
-          <img src="assets/amflow-px-carbon-pro.jpg" alt="Bicicleta AMFLOW PX Carbon Pro (E-MTB, motor DJI Avinox)" loading="lazy">
+          <img src="assets/amflow-px-carbon-pro.jpg" alt="Bicicleta AMFLOW PX Carbon Pro (E-MTB doble, motor DJI Avinox)" loading="lazy">
         </div>
         <div class="bike-body">
           <div class="bike-name">PX Carbon Pro</div>
-          <div class="bike-sub">AMFLOW · E-MTB · motor DJI Avinox</div>
+          <div class="bike-sub">AMFLOW · E-MTB doble · motor DJI Avinox</div>
           <div class="bike-foot"><div class="bike-price">9.999 €<small>PVP</small></div><div class="bike-actions"><button class="bike-btn-buy" data-buy><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>Encargar</button><button class="bike-btn" data-detail>Ver ficha</button></div></div>
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="amflow" data-disc="electrica" data-mat="carbono" data-motor="dji" data-price="4499" data-offer="0" data-kw="emtb electrica ebike amflow dji avinox pr bateria extraible nueva gama">
+      <article class="bike-card reveal" data-cat="e" data-brand="amflow" data-disc="electrica emtb-doble" data-mat="carbono" data-motor="dji" data-price="4499" data-offer="0" data-kw="emtb electrica ebike amflow dji avinox pr bateria extraible nueva gama doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
-          <span class="bike-cat">E-MTB</span>
+          <span class="bike-cat">E-MTB doble</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
-          <img src="assets/amflow-pr-carbon.jpg" alt="Bicicleta AMFLOW PR Carbon (E-MTB, motor DJI Avinox)" loading="lazy">
+          <img src="assets/amflow-pr-carbon.jpg" alt="Bicicleta AMFLOW PR Carbon (E-MTB doble, motor DJI Avinox)" loading="lazy">
         </div>
         <div class="bike-body">
           <div class="bike-name">PR Carbon</div>
-          <div class="bike-sub">AMFLOW · E-MTB · motor DJI Avinox</div>
+          <div class="bike-sub">AMFLOW · E-MTB doble · motor DJI Avinox</div>
           <div class="bike-foot"><div class="bike-price">4.499 €<small>PVP</small></div><div class="bike-actions"><button class="bike-btn-buy" data-buy><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>Encargar</button><button class="bike-btn" data-detail>Ver ficha</button></div></div>
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="amflow" data-disc="electrica" data-mat="carbono" data-motor="dji" data-price="5899" data-offer="0" data-kw="emtb electrica ebike amflow dji avinox pr pro bateria extraible nueva gama">
+      <article class="bike-card reveal" data-cat="e" data-brand="amflow" data-disc="electrica emtb-doble" data-mat="carbono" data-motor="dji" data-price="5899" data-offer="0" data-kw="emtb electrica ebike amflow dji avinox pr pro bateria extraible nueva gama doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
-          <span class="bike-cat">E-MTB</span>
+          <span class="bike-cat">E-MTB doble</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
-          <img src="assets/amflow-pr-carbon-pro.jpg" alt="Bicicleta AMFLOW PR Carbon Pro (E-MTB, motor DJI Avinox)" loading="lazy">
+          <img src="assets/amflow-pr-carbon-pro.jpg" alt="Bicicleta AMFLOW PR Carbon Pro (E-MTB doble, motor DJI Avinox)" loading="lazy">
         </div>
         <div class="bike-body">
           <div class="bike-name">PR Carbon Pro</div>
-          <div class="bike-sub">AMFLOW · E-MTB · motor DJI Avinox</div>
+          <div class="bike-sub">AMFLOW · E-MTB doble · motor DJI Avinox</div>
           <div class="bike-foot"><div class="bike-price">5.899 €<small>PVP</small></div><div class="bike-actions"><button class="bike-btn-buy" data-buy><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>Encargar</button><button class="bike-btn" data-detail>Ver ficha</button></div></div>
         </div>
       </article>
@@ -1237,28 +1273,28 @@ setTimeout(hideLoader,3500);
 
 
 
-      <article class="bike-card reveal" data-cat="e" data-brand="steppenwolf" data-disc="electrica" data-mat="carbono" data-motor="dji" data-price="5199" data-offer="0" data-kw="emtb electrica ebike steppenwolf tundra dji avinox carbono verde musgo rojo racing dos colores stock alemana">
+      <article class="bike-card reveal" data-cat="e" data-brand="steppenwolf" data-disc="electrica emtb-doble" data-mat="carbono" data-motor="dji" data-price="5199" data-offer="0" data-kw="emtb electrica ebike steppenwolf tundra dji avinox carbono verde musgo rojo racing dos colores stock alemana doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
-          <span class="bike-cat">E-MTB</span>
+          <span class="bike-cat">E-MTB doble</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
-          <img src="assets/steppenwolf-tundra-9-0-verde.jpg" alt="Bicicleta STEPPENWOLF Tundra 9.0 (E-MTB, motor DJI Avinox)" loading="lazy">
+          <img src="assets/steppenwolf-tundra-9-0-verde.jpg" alt="Bicicleta STEPPENWOLF Tundra 9.0 (E-MTB doble, motor DJI Avinox)" loading="lazy">
         </div>
         <div class="bike-body">
           <div class="bike-name">Tundra 9.0</div>
-          <div class="bike-sub">STEPPENWOLF · E-MTB · motor DJI Avinox</div>
+          <div class="bike-sub">STEPPENWOLF · E-MTB doble · motor DJI Avinox</div>
           <div class="bike-foot"><div class="bike-price">5.199 €<small>PVP</small></div><div class="bike-actions"><button class="bike-btn-buy" data-buy><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>Encargar</button><button class="bike-btn" data-detail>Ver ficha</button></div></div>
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="steppenwolf" data-disc="electrica" data-mat="carbono" data-motor="dji" data-price="7999" data-offer="0" data-kw="emtb electrica ebike steppenwolf tundra dji avinox carbono tope gama rockshox ultimate x0 alemana">
+      <article class="bike-card reveal" data-cat="e" data-brand="steppenwolf" data-disc="electrica emtb-doble" data-mat="carbono" data-motor="dji" data-price="7999" data-offer="0" data-kw="emtb electrica ebike steppenwolf tundra dji avinox carbono tope gama rockshox ultimate x0 alemana doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
-          <span class="bike-cat">E-MTB</span>
+          <span class="bike-cat">E-MTB doble</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
-          <img src="assets/steppenwolf-tundra-10-0.jpg" alt="Bicicleta STEPPENWOLF Tundra 10.0 (E-MTB, motor DJI Avinox)" loading="lazy">
+          <img src="assets/steppenwolf-tundra-10-0.jpg" alt="Bicicleta STEPPENWOLF Tundra 10.0 (E-MTB doble, motor DJI Avinox)" loading="lazy">
         </div>
         <div class="bike-body">
           <div class="bike-name">Tundra 10.0</div>
-          <div class="bike-sub">STEPPENWOLF · E-MTB · motor DJI Avinox</div>
+          <div class="bike-sub">STEPPENWOLF · E-MTB doble · motor DJI Avinox</div>
           <div class="bike-foot"><div class="bike-price">7.999 €<small>PVP</small></div><div class="bike-actions"><button class="bike-btn-buy" data-buy><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>Encargar</button><button class="bike-btn" data-detail>Ver ficha</button></div></div>
         </div>
       </article>
@@ -1332,28 +1368,28 @@ setTimeout(hideLoader,3500);
 
 
 
-      <article class="bike-card reveal" data-cat="e" data-brand="steppenwolf" data-disc="electrica" data-mat="aluminio" data-motor="shimano" data-price="4799" data-offer="0" data-kw="0 6 e mtb steppenwolf suv tundra">
+      <article class="bike-card reveal" data-cat="e" data-brand="steppenwolf" data-disc="electrica emtb-doble" data-mat="aluminio" data-motor="shimano" data-price="4799" data-offer="0" data-kw="0 6 e mtb steppenwolf suv tundra doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
-          <span class="bike-cat">E-MTB</span>
+          <span class="bike-cat">E-MTB doble</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
-          <img src="assets/sw-tundra-6-0-suv-1024.jpg" alt="Bicicleta STEPPENWOLF Tundra 6.0 SUV (E-MTB, aluminio)" loading="lazy">
+          <img src="assets/sw-tundra-6-0-suv-1024.jpg" alt="Bicicleta STEPPENWOLF Tundra 6.0 SUV (E-MTB doble, aluminio)" loading="lazy">
         </div>
         <div class="bike-body">
           <div class="bike-name">Tundra 6.0 SUV</div>
-          <div class="bike-sub">STEPPENWOLF · E-MTB · aluminio</div>
+          <div class="bike-sub">STEPPENWOLF · E-MTB doble · aluminio</div>
           <div class="bike-foot"><div class="bike-price">4.799 €<small>PVP</small></div><div class="bike-actions"><button class="bike-btn-buy" data-buy><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>Encargar</button><button class="bike-btn" data-detail>Ver ficha</button></div></div>
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="steppenwolf" data-disc="electrica" data-mat="carbono" data-motor="dji" data-price="9999" data-offer="0" data-kw="0 11 e mtb steppenwolf tundra">
+      <article class="bike-card reveal" data-cat="e" data-brand="steppenwolf" data-disc="electrica emtb-doble" data-mat="carbono" data-motor="dji" data-price="9999" data-offer="0" data-kw="0 11 e mtb steppenwolf tundra doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
-          <span class="bike-cat">E-MTB</span>
+          <span class="bike-cat">E-MTB doble</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
-          <img src="assets/sw-tundra-11-0-1024.jpg" alt="Bicicleta STEPPENWOLF Tundra 11.0 (E-MTB, carbono)" loading="lazy">
+          <img src="assets/sw-tundra-11-0-1024.jpg" alt="Bicicleta STEPPENWOLF Tundra 11.0 (E-MTB doble, carbono)" loading="lazy">
         </div>
         <div class="bike-body">
           <div class="bike-name">Tundra 11.0</div>
-          <div class="bike-sub">STEPPENWOLF · E-MTB · carbono</div>
+          <div class="bike-sub">STEPPENWOLF · E-MTB doble · carbono</div>
           <div class="bike-foot"><div class="bike-price">9.999 €<small>PVP</small></div><div class="bike-actions"><button class="bike-btn-buy" data-buy><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>Encargar</button><button class="bike-btn" data-detail>Ver ficha</button></div></div>
         </div>
       </article>
@@ -1366,7 +1402,7 @@ setTimeout(hideLoader,3500);
 
 
 
-      <article class="bike-card reveal" data-cat="e" data-brand="steppenwolf" data-disc="electrica" data-mat="aluminio" data-motor="dji" data-price="3499" data-offer="0" data-kw="0 9 e easy steppenwolf transterra trekking">
+      <article class="bike-card reveal" data-cat="e" data-brand="steppenwolf" data-disc="electrica etrekking" data-mat="aluminio" data-motor="dji" data-price="3499" data-offer="0" data-kw="0 9 e easy steppenwolf transterra trekking">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-Trekking</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
@@ -1382,7 +1418,7 @@ setTimeout(hideLoader,3500);
 
 
 
-      <article class="bike-card reveal" data-cat="e" data-brand="steppenwolf" data-disc="electrica" data-mat="aluminio" data-motor="dji" data-price="0" data-offer="0" data-kw="0 9 e sport steppenwolf transterra trekking">
+      <article class="bike-card reveal" data-cat="e" data-brand="steppenwolf" data-disc="electrica etrekking" data-mat="aluminio" data-motor="dji" data-price="0" data-offer="0" data-kw="0 9 e sport steppenwolf transterra trekking">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-Trekking</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
@@ -1395,7 +1431,7 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="steppenwolf" data-disc="electrica" data-mat="aluminio" data-motor="dji" data-price="0" data-offer="0" data-kw="1 9 e sport steppenwolf transterra trekking">
+      <article class="bike-card reveal" data-cat="e" data-brand="steppenwolf" data-disc="electrica etrekking" data-mat="aluminio" data-motor="dji" data-price="0" data-offer="0" data-kw="1 9 e sport steppenwolf transterra trekking">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-Trekking</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
@@ -1408,15 +1444,15 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="amflow" data-disc="electrica" data-mat="carbono" data-motor="dji" data-price="0" data-offer="0" data-kw="amflow tl carbon emtb electrica dji avinox trail">
+      <article class="bike-card reveal" data-cat="e" data-brand="amflow" data-disc="electrica emtb-doble" data-mat="carbono" data-motor="dji" data-price="0" data-offer="0" data-kw="amflow tl carbon emtb electrica dji avinox trail doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
-          <span class="bike-cat">E-MTB</span>
+          <span class="bike-cat">E-MTB doble</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
-          <img src="assets/amflow-tl-carbon-1024.jpg" alt="Bicicleta AMFLOW TL Carbon (E-MTB, carbono)" loading="lazy">
+          <img src="assets/amflow-tl-carbon-1024.jpg" alt="Bicicleta AMFLOW TL Carbon (E-MTB doble, carbono)" loading="lazy">
         </div>
         <div class="bike-body">
           <div class="bike-name">TL Carbon</div>
-          <div class="bike-sub">AMFLOW · E-MTB · carbono</div>
+          <div class="bike-sub">AMFLOW · E-MTB doble · carbono</div>
           <div class="bike-foot"><div class="bike-price">3.499 €<small>PVP</small></div><div class="bike-actions"><button class="bike-btn-buy" data-buy><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>Encargar</button><button class="bike-btn" data-detail>Ver ficha</button></div></div>
         </div>
       </article>
@@ -1512,7 +1548,7 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica" data-mat="aluminio" data-motor="bosch" data-price="3699" data-offer="0" data-kw="6 7 aventura e focus gris trekking verde x">
+      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica etrekking" data-mat="aluminio" data-motor="bosch" data-price="3699" data-offer="0" data-kw="6 7 aventura e focus gris trekking verde x">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-Trekking</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
@@ -1525,7 +1561,7 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica" data-mat="aluminio" data-motor="bosch" data-price="2999" data-offer="0" data-kw="6 7 aventura azul e focus marr n plata trekking">
+      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica etrekking" data-mat="aluminio" data-motor="bosch" data-price="2999" data-offer="0" data-kw="6 7 aventura azul e focus marr n plata trekking">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-Trekking</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
@@ -1538,7 +1574,7 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica" data-mat="aluminio" data-motor="bosch" data-price="4399" data-offer="0" data-kw="6 8 aventura e focus gris plata trekking verde">
+      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica etrekking" data-mat="aluminio" data-motor="bosch" data-price="4399" data-offer="0" data-kw="6 8 aventura e focus gris plata trekking verde">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-Trekking</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
@@ -1551,7 +1587,7 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica" data-mat="aluminio" data-motor="bosch" data-price="4899" data-offer="0" data-kw="6 9 aventura e focus gris trekking">
+      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica etrekking" data-mat="aluminio" data-motor="bosch" data-price="4899" data-offer="0" data-kw="6 9 aventura e focus gris trekking">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-Trekking</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
@@ -1564,7 +1600,7 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica" data-mat="aluminio" data-motor="bosch" data-price="4199" data-offer="0" data-kw="6 7 aventura azul e focus fs plata trekking">
+      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica etrekking" data-mat="aluminio" data-motor="bosch" data-price="4199" data-offer="0" data-kw="6 7 aventura azul e focus fs plata trekking">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-Trekking</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
@@ -1577,7 +1613,7 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica" data-mat="aluminio" data-motor="bosch" data-price="5199" data-offer="0" data-kw="6 8 aventura e focus fs gris plata trekking">
+      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica etrekking" data-mat="aluminio" data-motor="bosch" data-price="5199" data-offer="0" data-kw="6 8 aventura e focus fs gris plata trekking">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-Trekking</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
@@ -1590,7 +1626,7 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica" data-mat="aluminio" data-motor="bosch" data-price="5699" data-offer="0" data-kw="6 9 aventura e focus fs gris trekking">
+      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica etrekking" data-mat="aluminio" data-motor="bosch" data-price="5699" data-offer="0" data-kw="6 9 aventura e focus fs gris trekking">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-Trekking</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
@@ -1681,93 +1717,93 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica" data-mat="aluminio" data-motor="bosch" data-price="7999" data-offer="0" data-kw="0 6 e focus jam mtb plata">
+      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica emtb-doble" data-mat="aluminio" data-motor="bosch" data-price="7999" data-offer="0" data-kw="0 6 e focus jam mtb plata doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
-          <span class="bike-cat">E-MTB</span>
+          <span class="bike-cat">E-MTB doble</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
-          <img src="assets/focus-jam2-6-0-plata-1024.jpg" alt="Bicicleta FOCUS JAM² 6.0 (E-MTB, aluminio, color plata)" loading="lazy">
+          <img src="assets/focus-jam2-6-0-plata-1024.jpg" alt="Bicicleta FOCUS JAM² 6.0 (E-MTB doble, aluminio, color plata)" loading="lazy">
         </div>
         <div class="bike-body">
           <div class="bike-name">JAM² 6.0</div>
-          <div class="bike-sub">FOCUS · E-MTB · aluminio</div>
+          <div class="bike-sub">FOCUS · E-MTB doble · aluminio</div>
           <div class="bike-foot"><div class="bike-price">7.999 €<small>PVP</small></div><div class="bike-actions"><button class="bike-btn-buy" data-buy><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>Encargar</button><button class="bike-btn" data-detail>Ver ficha</button></div></div>
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica" data-mat="aluminio" data-motor="bosch" data-price="4699" data-offer="0" data-kw="6 7 blanco e focus jam mtb negro">
+      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica emtb-doble" data-mat="aluminio" data-motor="bosch" data-price="4699" data-offer="0" data-kw="6 7 blanco e focus jam mtb negro doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
-          <span class="bike-cat">E-MTB</span>
+          <span class="bike-cat">E-MTB doble</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
-          <img src="assets/focus-jam2-6-7-negro-1024.jpg" alt="Bicicleta FOCUS JAM² 6.7 (E-MTB, aluminio, color negro)" loading="lazy">
+          <img src="assets/focus-jam2-6-7-negro-1024.jpg" alt="Bicicleta FOCUS JAM² 6.7 (E-MTB doble, aluminio, color negro)" loading="lazy">
         </div>
         <div class="bike-body">
           <div class="bike-name">JAM² 6.7</div>
-          <div class="bike-sub">FOCUS · E-MTB · aluminio</div>
+          <div class="bike-sub">FOCUS · E-MTB doble · aluminio</div>
           <div class="bike-foot"><div class="bike-price">4.699 €<small>PVP</small></div><div class="bike-actions"><button class="bike-btn-buy" data-buy><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>Encargar</button><button class="bike-btn" data-detail>Ver ficha</button></div></div>
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica" data-mat="aluminio" data-motor="bosch" data-price="5699" data-offer="0" data-kw="6 8 e focus jam marr mtb n plata">
+      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica emtb-doble" data-mat="aluminio" data-motor="bosch" data-price="5699" data-offer="0" data-kw="6 8 e focus jam marr mtb n plata doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
-          <span class="bike-cat">E-MTB</span>
+          <span class="bike-cat">E-MTB doble</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
-          <img src="assets/focus-jam2-6-8-marron-1024.jpg" alt="Bicicleta FOCUS JAM² 6.8 (E-MTB, aluminio, color marrón)" loading="lazy">
+          <img src="assets/focus-jam2-6-8-marron-1024.jpg" alt="Bicicleta FOCUS JAM² 6.8 (E-MTB doble, aluminio, color marrón)" loading="lazy">
         </div>
         <div class="bike-body">
           <div class="bike-name">JAM² 6.8</div>
-          <div class="bike-sub">FOCUS · E-MTB · aluminio</div>
+          <div class="bike-sub">FOCUS · E-MTB doble · aluminio</div>
           <div class="bike-foot"><div class="bike-price">5.699 €<small>PVP</small></div><div class="bike-actions"><button class="bike-btn-buy" data-buy><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>Encargar</button><button class="bike-btn" data-detail>Ver ficha</button></div></div>
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica" data-mat="aluminio" data-motor="bosch" data-price="6699" data-offer="0" data-kw="6 9 e focus gris jam mtb negro">
+      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica emtb-doble" data-mat="aluminio" data-motor="bosch" data-price="6699" data-offer="0" data-kw="6 9 e focus gris jam mtb negro doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
-          <span class="bike-cat">E-MTB</span>
+          <span class="bike-cat">E-MTB doble</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
-          <img src="assets/focus-jam2-6-9-negro-1024.jpg" alt="Bicicleta FOCUS JAM² 6.9 (E-MTB, aluminio, color negro)" loading="lazy">
+          <img src="assets/focus-jam2-6-9-negro-1024.jpg" alt="Bicicleta FOCUS JAM² 6.9 (E-MTB doble, aluminio, color negro)" loading="lazy">
         </div>
         <div class="bike-body">
           <div class="bike-name">JAM² 6.9</div>
-          <div class="bike-sub">FOCUS · E-MTB · aluminio</div>
+          <div class="bike-sub">FOCUS · E-MTB doble · aluminio</div>
           <div class="bike-foot"><div class="bike-price">6.699 €<small>PVP</small></div><div class="bike-actions"><button class="bike-btn-buy" data-buy><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>Encargar</button><button class="bike-btn" data-detail>Ver ficha</button></div></div>
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica" data-mat="aluminio" data-motor="bosch" data-price="2999" data-offer="0" data-kw="6 7 e focus jarifa mtb negro verde x">
+      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica emtb-rigida" data-mat="aluminio" data-motor="bosch" data-price="2999" data-offer="0" data-kw="6 7 e focus jarifa mtb negro verde x rigida hardtail emtb e-mtb">
         <div class="bike-imgwrap">
-          <span class="bike-cat">E-MTB</span>
+          <span class="bike-cat">E-MTB rígida</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
-          <img src="assets/focus-jarifa2-6-7-x-negro-1024.jpg" alt="Bicicleta FOCUS JARIFA² 6.7 X (E-MTB, aluminio, color negro)" loading="lazy">
+          <img src="assets/focus-jarifa2-6-7-x-negro-1024.jpg" alt="Bicicleta FOCUS JARIFA² 6.7 X (E-MTB rígida, aluminio, color negro)" loading="lazy">
         </div>
         <div class="bike-body">
           <div class="bike-name">JARIFA² 6.7 X</div>
-          <div class="bike-sub">FOCUS · E-MTB · aluminio</div>
+          <div class="bike-sub">FOCUS · E-MTB rígida · aluminio</div>
           <div class="bike-foot"><div class="bike-price">2.999 €<small>PVP</small></div><div class="bike-actions"><button class="bike-btn-buy" data-buy><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>Encargar</button><button class="bike-btn" data-detail>Ver ficha</button></div></div>
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica" data-mat="aluminio" data-motor="bosch" data-price="2599" data-offer="0" data-kw="6 7 e focus jarifa mtb plata rojo">
+      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica emtb-rigida" data-mat="aluminio" data-motor="bosch" data-price="2599" data-offer="0" data-kw="6 7 e focus jarifa mtb plata rojo rigida hardtail emtb e-mtb">
         <div class="bike-imgwrap">
-          <span class="bike-cat">E-MTB</span>
+          <span class="bike-cat">E-MTB rígida</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
-          <img src="assets/focus-jarifa2-6-7-rojo-1024.jpg" alt="Bicicleta FOCUS JARIFA² 6.7 (E-MTB, aluminio, color rojo)" loading="lazy">
+          <img src="assets/focus-jarifa2-6-7-rojo-1024.jpg" alt="Bicicleta FOCUS JARIFA² 6.7 (E-MTB rígida, aluminio, color rojo)" loading="lazy">
         </div>
         <div class="bike-body">
           <div class="bike-name">JARIFA² 6.7</div>
-          <div class="bike-sub">FOCUS · E-MTB · aluminio</div>
+          <div class="bike-sub">FOCUS · E-MTB rígida · aluminio</div>
           <div class="bike-foot"><div class="bike-price">2.599 €<small>PVP</small></div><div class="bike-actions"><button class="bike-btn-buy" data-buy><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>Encargar</button><button class="bike-btn" data-detail>Ver ficha</button></div></div>
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica" data-mat="aluminio" data-motor="bosch" data-price="3299" data-offer="0" data-kw="6 8 e focus gris jarifa mtb verde">
+      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica emtb-rigida" data-mat="aluminio" data-motor="bosch" data-price="3299" data-offer="0" data-kw="6 8 e focus gris jarifa mtb verde rigida hardtail emtb e-mtb">
         <div class="bike-imgwrap">
-          <span class="bike-cat">E-MTB</span>
+          <span class="bike-cat">E-MTB rígida</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
-          <img src="assets/focus-jarifa2-6-8-gris-1024.jpg" alt="Bicicleta FOCUS JARIFA² 6.8 (E-MTB, aluminio, color gris)" loading="lazy">
+          <img src="assets/focus-jarifa2-6-8-gris-1024.jpg" alt="Bicicleta FOCUS JARIFA² 6.8 (E-MTB rígida, aluminio, color gris)" loading="lazy">
         </div>
         <div class="bike-body">
           <div class="bike-name">JARIFA² 6.8</div>
-          <div class="bike-sub">FOCUS · E-MTB · aluminio</div>
+          <div class="bike-sub">FOCUS · E-MTB rígida · aluminio</div>
           <div class="bike-foot"><div class="bike-price">3.299 €<small>PVP</small></div><div class="bike-actions"><button class="bike-btn-buy" data-buy><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>Encargar</button><button class="bike-btn" data-detail>Ver ficha</button></div></div>
         </div>
       </article>
@@ -1811,7 +1847,7 @@ setTimeout(hideLoader,3500);
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica" data-mat="aluminio" data-price="4999" data-offer="0" data-kw="6 8 abs city e focus gris planet">
+      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica etrekking" data-mat="aluminio" data-price="4999" data-offer="0" data-kw="6 8 abs city e focus gris planet">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-City</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
@@ -1827,106 +1863,106 @@ setTimeout(hideLoader,3500);
 
 
 
-      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica" data-mat="aluminio" data-motor="bosch" data-price="8499" data-offer="0" data-kw="0 6 e enduro focus mtb plata sam">
+      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica emtb-doble" data-mat="aluminio" data-motor="bosch" data-price="8499" data-offer="0" data-kw="0 6 e enduro focus mtb plata sam doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
-          <span class="bike-cat">E-MTB Enduro</span>
+          <span class="bike-cat">E-MTB doble</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
-          <img src="assets/focus-sam2-6-0-plata-1024.jpg" alt="Bicicleta FOCUS SAM² 6.0 (E-MTB Enduro, aluminio, color plata)" loading="lazy">
+          <img src="assets/focus-sam2-6-0-plata-1024.jpg" alt="Bicicleta FOCUS SAM² 6.0 (E-MTB enduro doble, aluminio, color plata)" loading="lazy">
         </div>
         <div class="bike-body">
           <div class="bike-name">SAM² 6.0</div>
-          <div class="bike-sub">FOCUS · E-MTB Enduro · aluminio</div>
+          <div class="bike-sub">FOCUS · E-MTB enduro doble · aluminio</div>
           <div class="bike-foot"><div class="bike-price">8.499 €<small>PVP</small></div><div class="bike-actions"><button class="bike-btn-buy" data-buy><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>Encargar</button><button class="bike-btn" data-detail>Ver ficha</button></div></div>
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica" data-mat="aluminio" data-motor="bosch" data-price="4502" data-offer="1" data-kw="6 8 e enduro focus gris mtb sam verde">
+      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica emtb-doble" data-mat="aluminio" data-motor="bosch" data-price="4502" data-offer="1" data-kw="6 8 e enduro focus gris mtb sam verde doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
-          <span class="bike-cat">E-MTB Enduro</span>
+          <span class="bike-cat">E-MTB doble</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
-          <img src="assets/focus-sam2-6-8-verde-1024.jpg" alt="Bicicleta FOCUS SAM² 6.8 (E-MTB Enduro, aluminio, color verde)" loading="lazy">
+          <img src="assets/focus-sam2-6-8-verde-1024.jpg" alt="Bicicleta FOCUS SAM² 6.8 (E-MTB enduro doble, aluminio, color verde)" loading="lazy">
         </div>
         <div class="bike-body">
           <div class="bike-name">SAM² 6.8</div>
-          <div class="bike-sub">FOCUS · E-MTB Enduro · aluminio</div>
+          <div class="bike-sub">FOCUS · E-MTB enduro doble · aluminio</div>
           <div class="bike-foot"><div class="bike-price">4.502 €<small>antes 5.699 €</small></div><div class="bike-actions"><button class="bike-btn-buy" data-buy><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>Encargar</button><button class="bike-btn" data-detail>Ver ficha</button></div></div>
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica" data-mat="aluminio" data-motor="bosch" data-price="7199" data-offer="0" data-kw="6 9 blanco e enduro focus mtb p rpura sam">
+      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica emtb-doble" data-mat="aluminio" data-motor="bosch" data-price="7199" data-offer="0" data-kw="6 9 blanco e enduro focus mtb p rpura sam doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
-          <span class="bike-cat">E-MTB Enduro</span>
+          <span class="bike-cat">E-MTB doble</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
-          <img src="assets/focus-sam2-6-9-purpura-1024.jpg" alt="Bicicleta FOCUS SAM² 6.9 (E-MTB Enduro, aluminio, color púrpura)" loading="lazy">
+          <img src="assets/focus-sam2-6-9-purpura-1024.jpg" alt="Bicicleta FOCUS SAM² 6.9 (E-MTB enduro doble, aluminio, color púrpura)" loading="lazy">
         </div>
         <div class="bike-body">
           <div class="bike-name">SAM² 6.9</div>
-          <div class="bike-sub">FOCUS · E-MTB Enduro · aluminio</div>
+          <div class="bike-sub">FOCUS · E-MTB enduro doble · aluminio</div>
           <div class="bike-foot"><div class="bike-price">7.199 €<small>PVP</small></div><div class="bike-actions"><button class="bike-btn-buy" data-buy><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>Encargar</button><button class="bike-btn" data-detail>Ver ficha</button></div></div>
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica" data-mat="aluminio" data-motor="bosch" data-price="4699" data-offer="0" data-kw="6 7 azul e focus gris mtb thron verde">
+      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica emtb-doble" data-mat="aluminio" data-motor="bosch" data-price="4699" data-offer="0" data-kw="6 7 azul e focus gris mtb thron verde doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
-          <span class="bike-cat">E-MTB</span>
+          <span class="bike-cat">E-MTB doble</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
-          <img src="assets/focus-thron2-6-7-verde-1024.jpg" alt="Bicicleta FOCUS THRON² 6.7 (E-MTB, aluminio, color verde)" loading="lazy">
+          <img src="assets/focus-thron2-6-7-verde-1024.jpg" alt="Bicicleta FOCUS THRON² 6.7 (E-MTB doble, aluminio, color verde)" loading="lazy">
         </div>
         <div class="bike-body">
           <div class="bike-name">THRON² 6.7</div>
-          <div class="bike-sub">FOCUS · E-MTB · aluminio</div>
+          <div class="bike-sub">FOCUS · E-MTB doble · aluminio</div>
           <div class="bike-foot"><div class="bike-price">4.699 €<small>PVP</small></div><div class="bike-actions"><button class="bike-btn-buy" data-buy><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>Encargar</button><button class="bike-btn" data-detail>Ver ficha</button></div></div>
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica" data-mat="aluminio" data-motor="bosch" data-price="4899" data-offer="0" data-kw="6 7 e eqp focus gris mtb plata thron verde">
+      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica emtb-doble" data-mat="aluminio" data-motor="bosch" data-price="4899" data-offer="0" data-kw="6 7 e eqp focus gris mtb plata thron verde doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
-          <span class="bike-cat">E-MTB</span>
+          <span class="bike-cat">E-MTB doble</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
-          <img src="assets/focus-thron2-6-7-eqp-verde-1024.jpg" alt="Bicicleta FOCUS THRON² 6.7 EQP (E-MTB, aluminio, color verde)" loading="lazy">
+          <img src="assets/focus-thron2-6-7-eqp-verde-1024.jpg" alt="Bicicleta FOCUS THRON² 6.7 EQP (E-MTB doble, aluminio, color verde)" loading="lazy">
         </div>
         <div class="bike-body">
           <div class="bike-name">THRON² 6.7 EQP</div>
-          <div class="bike-sub">FOCUS · E-MTB · aluminio</div>
+          <div class="bike-sub">FOCUS · E-MTB doble · aluminio</div>
           <div class="bike-foot"><div class="bike-price">4.899 €<small>PVP</small></div><div class="bike-actions"><button class="bike-btn-buy" data-buy><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>Encargar</button><button class="bike-btn" data-detail>Ver ficha</button></div></div>
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica" data-mat="aluminio" data-motor="bosch" data-price="5299" data-offer="0" data-kw="6 8 abs e focus gris mtb plata thron">
+      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica emtb-doble" data-mat="aluminio" data-motor="bosch" data-price="5299" data-offer="0" data-kw="6 8 abs e focus gris mtb plata thron doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
-          <span class="bike-cat">E-MTB</span>
+          <span class="bike-cat">E-MTB doble</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
-          <img src="assets/focus-thron2-6-8-abs-gris-1024.jpg" alt="Bicicleta FOCUS THRON² 6.8 ABS (E-MTB, aluminio, color gris)" loading="lazy">
+          <img src="assets/focus-thron2-6-8-abs-gris-1024.jpg" alt="Bicicleta FOCUS THRON² 6.8 ABS (E-MTB doble, aluminio, color gris)" loading="lazy">
         </div>
         <div class="bike-body">
           <div class="bike-name">THRON² 6.8 ABS</div>
-          <div class="bike-sub">FOCUS · E-MTB · aluminio</div>
+          <div class="bike-sub">FOCUS · E-MTB doble · aluminio</div>
           <div class="bike-foot"><div class="bike-price">5.299 €<small>PVP</small></div><div class="bike-actions"><button class="bike-btn-buy" data-buy><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>Encargar</button><button class="bike-btn" data-detail>Ver ficha</button></div></div>
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica" data-mat="aluminio" data-motor="bosch" data-price="5499" data-offer="0" data-kw="6 8 abs e eqp focus mtb plata thron">
+      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica emtb-doble" data-mat="aluminio" data-motor="bosch" data-price="5499" data-offer="0" data-kw="6 8 abs e eqp focus mtb plata thron doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
-          <span class="bike-cat">E-MTB</span>
+          <span class="bike-cat">E-MTB doble</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
-          <img src="assets/focus-thron2-6-8-eqp-abs-plata-1024.jpg" alt="Bicicleta FOCUS THRON² 6.8 EQP ABS (E-MTB, aluminio, color plata)" loading="lazy">
+          <img src="assets/focus-thron2-6-8-eqp-abs-plata-1024.jpg" alt="Bicicleta FOCUS THRON² 6.8 EQP ABS (E-MTB doble, aluminio, color plata)" loading="lazy">
         </div>
         <div class="bike-body">
           <div class="bike-name">THRON² 6.8 EQP ABS</div>
-          <div class="bike-sub">FOCUS · E-MTB · aluminio</div>
+          <div class="bike-sub">FOCUS · E-MTB doble · aluminio</div>
           <div class="bike-foot"><div class="bike-price">5.499 €<small>PVP</small></div><div class="bike-actions"><button class="bike-btn-buy" data-buy><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>Encargar</button><button class="bike-btn" data-detail>Ver ficha</button></div></div>
         </div>
       </article>
 
-      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica" data-mat="aluminio" data-motor="bosch" data-price="6699" data-offer="0" data-kw="6 9 abs e focus mtb plata thron">
+      <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica emtb-doble" data-mat="aluminio" data-motor="bosch" data-price="6699" data-offer="0" data-kw="6 9 abs e focus mtb plata thron doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
-          <span class="bike-cat">E-MTB</span>
+          <span class="bike-cat">E-MTB doble</span>
           <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
-          <img src="assets/focus-thron2-6-9-abs-plata-1024.jpg" alt="Bicicleta FOCUS THRON² 6.9 ABS (E-MTB, aluminio, color plata)" loading="lazy">
+          <img src="assets/focus-thron2-6-9-abs-plata-1024.jpg" alt="Bicicleta FOCUS THRON² 6.9 ABS (E-MTB doble, aluminio, color plata)" loading="lazy">
         </div>
         <div class="bike-body">
           <div class="bike-name">THRON² 6.9 ABS</div>
-          <div class="bike-sub">FOCUS · E-MTB · aluminio</div>
+          <div class="bike-sub">FOCUS · E-MTB doble · aluminio</div>
           <div class="bike-foot"><div class="bike-price">6.699 €<small>PVP</small></div><div class="bike-actions"><button class="bike-btn-buy" data-buy><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>Encargar</button><button class="bike-btn" data-detail>Ver ficha</button></div></div>
         </div>
       </article>
@@ -2490,14 +2526,28 @@ coForm.addEventListener('submit',function(e){
   }
 
   /* categoría (barra lateral + tarjetas grandes de tipo de bici) */
+  /* subcategorías: doble suspensión / rígida dentro de MTB y de E-MTB */
+  var SUBFAM={montana:['mtb-doble','mtb-rigida'],electrica:['emtb-doble','emtb-rigida','etrekking']};
+  function famOf(v){for(var k in SUBFAM){if(SUBFAM[k].indexOf(v)>=0)return k}return v}
+  var subRows={montana:document.getElementById('subMontana'),electrica:document.getElementById('subElectrica')};
   function syncCat(){
-    document.querySelectorAll('.cat-item').forEach(function(x){x.classList.toggle('active',x.getAttribute('data-cat-f')===st.cat)});
-    document.querySelectorAll('.ch-card').forEach(function(x){x.classList.toggle('active',x.getAttribute('data-cat-go')===st.cat)});
+    var fam=famOf(st.cat);
+    document.querySelectorAll('.cat-item').forEach(function(x){var v=x.getAttribute('data-cat-f');
+      x.classList.toggle('active',v===st.cat);
+      x.classList.toggle('open',v===fam&&v!==st.cat)});
+    document.querySelectorAll('.ch-card').forEach(function(x){x.classList.toggle('active',x.getAttribute('data-cat-go')===fam)});
+    document.querySelectorAll('.sub-chip').forEach(function(x){x.classList.toggle('active',x.getAttribute('data-sub-go')===st.cat)});
+    for(var k in subRows){if(subRows[k])subRows[k].hidden=(fam!==k)}
   }
   function setCat(v){st.cat=v;syncCat();apply();scrollCatalogo()}
   document.querySelectorAll('.cat-item').forEach(function(b){b.addEventListener('click',function(){setCat(b.getAttribute('data-cat-f'))})});
   document.querySelectorAll('.ch-card').forEach(function(b){b.addEventListener('click',function(){
     var v=b.getAttribute('data-cat-go');setCat(st.cat===v?'all':v);
+  })});
+  /* chips de subcategoría: no hacen scroll al grid para no perder de vista la fila */
+  document.querySelectorAll('.sub-chip').forEach(function(b){b.addEventListener('click',function(){
+    st.cat=b.getAttribute('data-sub-go');syncCat();apply();
+    var row=subRows[famOf(st.cat)];if(row)row.scrollIntoView({behavior:'smooth',block:'start'});
   })});
   /* logos de marca clicables: filtran el catálogo por esa marca */
   document.querySelectorAll('[data-brand-go]').forEach(function(a){a.addEventListener('click',function(e){
@@ -2686,37 +2736,37 @@ var BIKES={
   imgs:["assets/focus-izalco-max-9-9-gris-1600.jpg"],
   specs:[["Cuadro","MAX technology carbon, disc, 142x12 mm thru axle, flat mount 160/140 mm"],["Manetas","Shimano Dura-Ace Di2 ST-R9270"],["Desviador delantero","Shimano Dura-Ace Di2 FD-R9250"],["Cambio","Shimano Dura-Ace Di2 RD-R9250, 12-speed"],["Casete","Shimano CS-R9200, 11-34T"],["Cadena","Shimano CN-M9100"],["Bielas","Shimano Dura-Ace FC-R9200, with 4iiii Precision Power Meter, 52/36T"],["Pedalier","Shimano Dura-Ace Pressfit Road BB86"],["Manillar","Reserve One-Piece Cockpit, carbon, drop: 125 mm, reach: 75 mm, flare:  6°, stem angle: -6°"],["Dirección","ACROS IS 52/ IS52 (ICR), FOCUS integrated C.I.S."],["Sillín","fi'zi:k Vento Antares R1 Lite"],["Tija","FOCUS Aero Carbon, D-shape, set-back: 0 mm: XXS-L, 15mm: XL-XXL"],["Frenos","Shimano Dura-Ace BR-R9270 | -"],["Discos","Shimano  RT-CL900, front: 160 mm / rear: 140 mm (Size XXS-L), 160 mm (Size XL-XXL)"],["Juego de ruedas","DT Swiss ARC 1400 Dicut, carbon, rim height: 55 mm, width: 22-622"],["Neumáticos","Vittoria Corsa Pro, tubeless ready, 28-622 | Vittoria Corsa Pro, tubeless ready, 28-622"],["Peso","7.1 kg ( - )"],["Peso máx. sistema","110 kg"],["Tallas","L, M, S, XL, XS, XXL, XXS"]],
   note:"Colores: Gris. Imagen ilustrativa oficial del fabricante. Consulta disponibilidad y tallas en tienda."},
- "JAM² 6.0":{cat:"E-MTB",price:"7.999 €",brand:"FOCUS · E-MTB · aluminio",
+ "JAM² 6.0":{cat:"E-MTB doble",price:"7.999 €",brand:"FOCUS · E-MTB doble · aluminio",
   desc:"Si montas la JAM² 6.0 con fuerza, los roces son inevitables. Los neumáticos de trail blandos de 2,6 pulgadas de ancho con una carcasa resistente y los potentes frenos con discos de 200 mm te permiten rodar a toda velocidad con tranquilidad. E incluso fuera del sendero, tendrás pleno control y sabrás siempre dónde está tu bicicleta gracias a las opciones de montaje integradas para un Airtag o un Chipolo.",
   imgs:["assets/focus-jam2-6-0-plata-1600.jpg"],
   specs:[["Cuadro","7005 hydroformed aluminium, 150 mm F.O.L.D.  kinematics, 148x12 mm thru axle, Post Mount 180 mm"],["Extras","Tool bag (exluding size S & M), Hidden AirTag or Chipolo holder"],["Horquilla","Rock Shox Lyrik Ultimate, Debon Air+, Charger 3.1 RC2 w/ ButterCups, 160 mm"],["Amortiguador","Rock Shox Super Deluxe Select+, DebonAir+, 150 mm"],["Motor","Bosch Performance Line CX, 85 NM, 120 NM update via Flow App"],["Batería","Bosch PowerTube Li-Ion (600 Wh)"],["Pantalla","Bosch Kiox 300 + LED Remote"],["Manetas","SRAM AXS POD Controller"],["Cambio","SRAM GX Eagle Transmission AXS, 12-speed"],["Casete","SRAM GX Transmission, 10-52T"],["Cadena","SRAM GX Eagle"],["Bielas","SRAM GX Eagle, 165 mm"],["Plato","SRAM T-Type, 36 T"],["Manillar","FOCUS C.I.S. One Piece SL Cockpit, 800 mm, rise: 25 mm, Stem lenght: 50 mm"],["Puños","ODI Elite Pro"],["Dirección","ACROS ZS56/ZS66 (ICR), FOCUS C.I.S. Integrated"],["Sillín","fi'zi:k Aidon X5"],["Tija","OneUp V3, S / M /L / XL: 150 / 180 / 180 / 210 mm, 34,9 mm"],["Frenos","SRAM Code SLV, 4-piston | SRAM Code SLV, 4-piston"],["Discos","SRAM HS2, front:   200 mm / rear:   200 mm"],["Juego de ruedas","DT Swiss HX 1700, alloy, 29\""],["Neumáticos","Schwalbe Albert, Super Trail, ADDIX Ultra Soft, 29 x 2,6\" | Schwalbe Albert, Trail, ADDIX Soft, 29 x 2,6\""],["Peso","24.9 kg ( 600 Wh )"],["Peso máx. sistema","150 kg"],["Tallas","L, M, S, XL"]],
   note:"Colores: Plata. Imagen ilustrativa oficial del fabricante. Consulta disponibilidad y tallas en tienda."},
- "JAM² 6.7":{cat:"E-MTB",price:"4.699 €",brand:"FOCUS · E-MTB · aluminio",
+ "JAM² 6.7":{cat:"E-MTB doble",price:"4.699 €",brand:"FOCUS · E-MTB doble · aluminio",
   desc:"Si montas la JAM² 6.7 con fuerza, los roces son inevitables. Los neumáticos de trail blandos de 2,6 pulgadas de ancho con una carcasa resistente y los potentes frenos con discos de 200 mm te permiten rodar a toda velocidad con tranquilidad. E incluso fuera del sendero, tendrás pleno control y sabrás siempre dónde está tu bicicleta gracias a las opciones de montaje integradas para un Airtag o un Chipolo.",
   imgs:["assets/focus-jam2-6-7-negro-1600.jpg","assets/focus-jam2-6-7-blanco-1600.jpg"],
   specs:[["Cuadro","7005 hydroformed aluminium, 150 mm F.O.L.D.  kinematics, 148x12 mm thru axle, Post Mount 180 mm"],["Extras","Tool bag (exluding size S & M), Hidden AirTag or Chipolo holder"],["Horquilla","Rock Shox Psylo Silver RC, 160 mm"],["Amortiguador","Rock Shox Deluxe Select, DebonAir+, 150 mm"],["Motor","Bosch Performance Line CX, 85 NM, 120 NM update via Flow App"],["Pantalla","Bosch Purion 200"],["Manetas","Shimao Cues"],["Cambio","Shimano Cues, 10-speed"],["Casete","Shimano CS-LG300, 11-48T"],["Cadena","Shimano CN-LG500"],["Bielas","Samox, 165 mm"],["Plato","Samox, 36 T"],["Manillar","Alloy, width: 800 mm, rise: 30 mm"],["Puños","VP Lock-On Grips"],["Potencia","FOCUS C.I.S. 2.0, 40 mm"],["Dirección","ACROS ZS56/ZS66 (ICR), FOCUS C.I.S. Integrated"],["Sillín","Selle Italia X3 Boost"],["Tija","Post Moderne DP-212, S / M /L / XL: 125 / 170 / 170 / 200 mm, 34,9 mm"],["Frenos","Tektro Gemini SL, 4-piston | Tektro Gemini SL, 4-piston"],["Discos","Tektro TR, front:   203 mm / rear:   203 mm"],["Llanta del.","WTB STi30, alloy, 29\""],["Llanta tras.","WTB STi30, alloy, 29\""],["Buje del.","Shimano HB-TC500"],["Buje tras.","Shimano FH-TC500"],["Tallas","L, M, S, XL"]],
   note:"Colores: Negro · Blanco. Imagen ilustrativa oficial del fabricante. Consulta disponibilidad y tallas en tienda."},
- "JAM² 6.8":{cat:"E-MTB",price:"5.699 €",brand:"FOCUS · E-MTB · aluminio",
+ "JAM² 6.8":{cat:"E-MTB doble",price:"5.699 €",brand:"FOCUS · E-MTB doble · aluminio",
   desc:"Si montas la JAM² 6.8 con fuerza, los roces son inevitables. Los neumáticos de trail blandos de 2,6 pulgadas de ancho con una carcasa resistente y los potentes frenos con discos de 200 mm te permiten rodar a toda velocidad con tranquilidad. E incluso fuera del sendero, tendrás pleno control y sabrás siempre dónde está tu bicicleta gracias a las opciones de montaje integradas para un Airtag o un Chipolo.",
   imgs:["assets/focus-jam2-6-8-marron-1600.jpg","assets/focus-jam2-6-8-plata-1600.jpg"],
   specs:[["Cuadro","7005 hydroformed aluminium, 150 mm F.O.L.D.  kinematics, 148x12 mm thru axle, Post Mount 180 mm"],["Extras","Tool bag (exluding size S & M), Hidden AirTag or Chipolo holder"],["Horquilla","Rock Shox Lyrik Select, Debon Air+, Charger RC, 160 mm"],["Amortiguador","Rock Shox Super Deluxe Select, DebonAir+, 150 mm"],["Motor","Bosch Performance Line CX, 85 NM, 120 NM update via Flow App"],["Pantalla","Bosch Purion 200"],["Manetas","SRAM Eagle 70"],["Cambio","SRAM Eagle 70, 12-speed"],["Casete","SRAM GX Transmission, 10-52T"],["Cadena","Sram Eagle 70"],["Bielas","Samox, 165 mm"],["Plato","SRAM T-Type, 36 T"],["Manillar","Alloy, width: 800 mm, rise: 30 mm"],["Puños","VP Lock-On Grips"],["Potencia","FOCUS C.I.S. 2.0, 40 mm"],["Dirección","ACROS ZS56/ZS66 (ICR), FOCUS C.I.S. Integrated"],["Sillín","Focus"],["Tija","Post Moderne DP-212, S / M /L / XL: 125 / 170 / 170 / 200 mm, 34,9 mm"],["Frenos","SRAM DB8, 4-piston | SRAM DB8, 4-piston"],["Discos","SRAM Centerline, front:   200 mm / rear:   200 mm"],["Llanta del.","Raceface AR-30, alloy, 29\""],["Llanta tras.","Raceface AR-30, alloy, 29\""],["Buje del.","Formula DC-611"],["Buje tras.","Formula DC-648"],["Tallas","L, M, S, XL"]],
   note:"Colores: Marrón · Plata. Imagen ilustrativa oficial del fabricante. Consulta disponibilidad y tallas en tienda."},
- "JAM² 6.9":{cat:"E-MTB",price:"6.699 €",brand:"FOCUS · E-MTB · aluminio",
+ "JAM² 6.9":{cat:"E-MTB doble",price:"6.699 €",brand:"FOCUS · E-MTB doble · aluminio",
   desc:"Si montas la JAM² 6.9 con fuerza, los roces son inevitables. Los neumáticos de trail blandos de 2,6 pulgadas de ancho con una carcasa resistente y los potentes frenos con discos de 200 mm te permiten rodar a toda velocidad con tranquilidad. E incluso fuera del sendero, tendrás pleno control y sabrás siempre dónde está tu bicicleta gracias a las opciones de montaje integradas para un Airtag o un Chipolo.",
   imgs:["assets/focus-jam2-6-9-negro-1600.jpg","assets/focus-jam2-6-9-gris-1600.jpg"],
   specs:[["Cuadro","7005 hydroformed aluminium, 150 mm F.O.L.D.  kinematics, 148x12 mm thru axle, Post Mount 180 mm"],["Extras","Tool bag (exluding size S & M), Hidden AirTag or Chipolo holder"],["Horquilla","Fox 36 Performance Elite, Grip X2, 160 mm"],["Amortiguador","Fox Float X Performance, 150 mm"],["Motor","Bosch Performance Line CX, 85 NM, 120 NM update via Flow App"],["Pantalla","Bosch Kiox 300 + LED Remote"],["Manetas","Shimano Deore"],["Cambio","Shimano Deore XT, 12-speed"],["Casete","Shimano CS-M6100, 10-51T"],["Cadena","Shimano CN-M6100"],["Bielas","Samox, 165 mm"],["Plato","Samox, 36 T"],["Manillar","Alloy, width: 800 mm, rise: 30 mm"],["Puños","ODI Elite Pro"],["Potencia","FOCUS C.I.S. 2.0, 40 mm"],["Dirección","ACROS ZS56/ZS66 (ICR), FOCUS C.I.S. Integrated"],["Sillín","fi'zi:k Aidon X5"],["Tija","Post Moderne DP-212, S / M /L / XL: 125 / 170 / 170 / 200 mm, 34,9 mm"],["Frenos","TRP EVO Pro, 4-piston | TRP EVO Pro, 4-piston"],["Discos","TRP RC03E, front:   203 mm / rear:   203 mm"],["Juego de ruedas","DT Swiss H 1900, alloy, 29\""],["Neumáticos","Schwalbe Albert, Super Trail, ADDIX Ultra Soft, 29 x 2,6\" | Schwalbe Albert, Super Trail, ADDIX Soft, 29 x 2,6\""],["Peso máx. sistema","150 kg"],["Tallas","L, M, S, XL"]],
   note:"Colores: Negro · Gris. Imagen ilustrativa oficial del fabricante. Consulta disponibilidad y tallas en tienda."},
- "JARIFA² 6.7 X":{cat:"E-MTB",price:"2.999 €",brand:"FOCUS · E-MTB · aluminio",
+ "JARIFA² 6.7 X":{cat:"E-MTB rígida",price:"2.999 €",brand:"FOCUS · E-MTB rígida · aluminio",
   desc:"La JARIFA² 6.7 X combina el ADN del MTB y del trekking. Con tija telescópica, cubiertas de bicicleta de montaña y un manillar ancho, se mueve con soltura en los senderos más sencillos. La tecnología C.I.S. (Cockpit Integration Solution) ofrece un cockpit despejado. Con los cables preinstalados, las luces pueden montarse fácilmente en nuestras tiendas. La JARIFA² puede personalizarse fácilmente con portabultos, guardabarros, pata de cabra o sistema de luces gracias a sus puntos de montaje específicos.",
   imgs:["assets/focus-jarifa2-6-7-x-negro-1600.jpg","assets/focus-jarifa2-6-7-x-verde-1600.jpg"],
   specs:[["Cuadro","7005 hydroformed aluminium, 148x12 mm thru axle, Post Mount 180 mm"],["Horquilla","SR Suntour XCM 34, Coil, 120 mm"],["Motor","Bosch Performance Line CX, 85 NM, 120 NM update via Flow App"],["Pantalla","Bosch LED Remote"],["Manetas","Shimano Cues"],["Cambio","Shimano Cues, 9-speed"],["Casete","Shimano CS-LG400, 11-46T"],["Cadena","Shimano CN-LG500"],["Bielas","Samox, 165 mm"],["Plato","Samox, 36 T"],["Manillar","JD Riser, alloy, width: 760 mm, rise: 30 mm"],["Puños","MTB Grip"],["Potencia","FOCUS C.I.S. 2.0, 50 mm"],["Dirección","ACROS ZS56/ZS56 (ICR), FOCUS C.I.S. Integrated"],["Sillín","Selle Royal Vivo"],["Tija","Post Moderne DP-212, XS / S / M /L / XL: 100 / 100 / 125 / 150 / 150 mm, 34,9 mm"],["Frenos","Shimano MT420, 4-piston | Shimano MT420, 4-piston"],["Discos","Shimano EM600, front: 203 mm / rear: 203 mm"],["Buje del.","Shimano HB-TC500"],["Buje tras.","Shimano FH-TC500"],["Peso máx. sistema","150 kg"],["Tallas","L, M, S, XL, XS"]],
   note:"Colores: Negro · Verde. Imagen ilustrativa oficial del fabricante. Consulta disponibilidad y tallas en tienda."},
- "JARIFA² 6.7":{cat:"E-MTB",price:"2.599 €",brand:"FOCUS · E-MTB · aluminio",
+ "JARIFA² 6.7":{cat:"E-MTB rígida",price:"2.599 €",brand:"FOCUS · E-MTB rígida · aluminio",
   desc:"La JARIFA² 6.7 combina el ADN del MTB y del trekking. Con su tija telescópica y cubiertas de bicicleta de montaña se desenvuelve perfectamente por senderos que no sean complicados. Está homologada para remolques de dos ruedas y para un peso total del sistema (ciclista, equipaje y bicicleta) de hasta 150 kg. Para adaptarse a los ciclistas más pequeños, la JARIFA² en talla XS lleva ruedas de 27,5\" sin renunciar a la misma capacidad de batería que el resto de tallas. Con los cables preinstalados, las luces pueden montarse fácilmente en nuestras tiendas.",
   imgs:["assets/focus-jarifa2-6-7-rojo-1600.jpg","assets/focus-jarifa2-6-7-plata-1600.jpg"],
   specs:[["Cuadro","7005 hydroformed aluminium, 148x12 mm thru axle, Post Mount 180 mm"],["Horquilla","SR Suntour XCM 34, Coil, 120 mm"],["Motor","Bosch Performance Line, 75 NM"],["Pantalla","Bosch LED Remote"],["Manetas","Shimano Cues"],["Cambio","Shimano Cues, 9-speed"],["Casete","Shimano CS-LG400, 11-46T"],["Cadena","Shimano CN-LG500"],["Bielas","Samox, 165 mm"],["Plato","Samox, 36 T"],["Manillar","JD Riser, alloy, width: 760 mm, rise: 30 mm"],["Puños","MTB Grip"],["Potencia","FOCUS C.I.S. 2.0, 50 mm"],["Dirección","ACROS ZS56/ZS56 (ICR), FOCUS C.I.S. Integrated"],["Sillín","Selle Royal Vivo"],["Tija","Post Moderne DP-212, XS / S / M /L / XL: 100 / 100 / 125 / 150 / 150 mm, 34,9 mm"],["Frenos","Shimano MT420, 4-piston | Shimano MT420, 4-piston"],["Discos","Shimano EM600, front: 203 mm / rear: 203 mm"],["Buje del.","Shimano HB-TC500"],["Buje tras.","Shimano FH-TC500"],["Peso máx. sistema","150 kg"],["Tallas","L, M, S, XL, XS"]],
   note:"Colores: Rojo · Plata. Imagen ilustrativa oficial del fabricante. Consulta disponibilidad y tallas en tienda."},
- "JARIFA² 6.8":{cat:"E-MTB",price:"3.299 €",brand:"FOCUS · E-MTB · aluminio",
+ "JARIFA² 6.8":{cat:"E-MTB rígida",price:"3.299 €",brand:"FOCUS · E-MTB rígida · aluminio",
   desc:"La JARIFA² 6.8 combina el ADN del MTB y del trekking. Con tija telescópica, cubiertas de bicicleta de montaña y un manillar ancho, la JARIFA² se mueve con soltura en los senderos más sencillos. La tecnología C.I.S. (Cockpit Integration Solution) ofrece un cockpit despejado. Con los cables preinstalados, las luces pueden montarse fácilmente en nuestras tiendas. La JARIFA² puede personalizarse fácilmente con portabultos, guardabarros, pata de cabra o sistema de luces gracias a sus puntos de montaje específicos.",
   imgs:["assets/focus-jarifa2-6-8-gris-1600.jpg","assets/focus-jarifa2-6-8-verde-1600.jpg"],
   specs:[["Cuadro","7005 hydroformed aluminium, 148x12 mm thru axle, Post Mount 180 mm"],["Horquilla","SR Suntour XCM 34, Air, 120mm"],["Motor","Bosch Performance Line CX, 85 NM, 120 NM update via Flow App"],["Pantalla","Bosch Purion 200"],["Manetas","Shimano Cues"],["Cambio","Shimano Cues, 10-speed"],["Casete","Shimano CS-LG400, 11-48T"],["Cadena","Shimano CN-LG500"],["Bielas","Samox, 165 mm"],["Plato","Samox, 36 T"],["Manillar","JD Riser, alloy, width: 760 mm, rise: 30 mm"],["Puños","MTB Grip"],["Potencia","FOCUS C.I.S. 2.0, 50 mm"],["Dirección","ACROS ZS56/ZS56 (ICR), FOCUS C.I.S. Integrated"],["Sillín","DDK DVP8202"],["Tija","Post Moderne DP-212, XS / S / M /L / XL: 100 / 100 / 125 / 150 / 150 mm, 34,9 mm"],["Frenos","Shimano MT420, 4-piston | Shimano MT420, 4-piston"],["Discos","Shimano EM600, front: 203 mm / rear: 203 mm"],["Buje del.","Shimano HB-TC500"],["Buje tras.","Shimano FH-TC500"],["Peso máx. sistema","150 kg"],["Tallas","L, M, S, XL, XS"]],
@@ -2741,54 +2791,54 @@ var BIKES={
   imgs:["assets/focus-planet2-6-8-abs-gris-1600.jpg"],
   specs:[["Cuadro","7005 hydroformed aluminium, 3D forging, 148x12 mm thru axle, USB-C port, internal cable routing, post mount 180 mm"],["Horquilla","Suntour Mobie34 Air, 15 mm thru axle"],["Recorrido de la horquilla de suspensión","100 mm"],["Motor","Performance Line CX"],["Batería","Bosch PowerTube Li-Ion (625 Wh)"],["Pantalla","Bosch LED Remote + Intuvia 100"],["Manetas","Shimano Cues"],["Cambio","Shimano Cues"],["Cadena","KMC X10, 10-speed"],["Bielas","FSA CK-320, aluminium"],["Transmisión","vorne: 36, hinten: 11-48"],["Plato","Shimano"],["Pedalier","Integrated in Drive Unit"],["Manillar","Aluminium, 760 mm, flatbar, backsweep: 9°, 35,0 mm"],["Puños","Herrmans Click"],["Potencia","Aluminium, 70mm, 35degree"],["Dirección","ACROS ZS56/ZS66 (ICR), FOCUS C.I.S. Integrated, 1.5/1.8\" angle headset"],["Sillín","Selle Royal TCM"],["Tija","Aluminium, 31.6 mm"],["Frenos","Magura CT-ABS, 2-piston, hydraulic ABS disc brake | Magura CT-ABS, 2-piston, hydraulic ABS disc brake"],["Discos de freno delantero / trasero","203 mm"],["Disco de freno trasero","203 mm"],["Llanta del.","RODI TRYP25, 25-622"],["Llanta tras.","RODI TRYP25, 25-622"],["Tallas","L, M, S, XL"]],
   note:"Colores: Gris. Imagen ilustrativa oficial del fabricante. Consulta disponibilidad y tallas en tienda."},
- "SAM² 6.0":{cat:"E-MTB Enduro",price:"8.499 €",brand:"FOCUS · E-MTB Enduro · aluminio",
+ "SAM² 6.0":{cat:"E-MTB enduro doble",price:"8.499 €",brand:"FOCUS · E-MTB enduro doble · aluminio",
   desc:"La cinemática de la SAM² 6.0 está diseñada específicamente para amortiguadores de muelle y ajustada con precisión para el descenso. De este modo, podrás superar fácilmente jardines de roca, road gaps y secciones repletas de raíces. Encontrarás nuestras recomendaciones para una configuración perfecta de la suspensión en las preguntas frecuentes de la página de descripción general de la SAM².",
   imgs:["assets/focus-sam2-6-0-plata-1600.jpg"],
   specs:[["Cuadro","7005 hydroformed aluminium, 165 mm F.O.L.D.  kinematics, 148x12 mm thru axle, Post Mount 180 mm"],["Extras","Geometry adjustment of head angle and chainstay length, Tool bag (exluding size S), Hidden AirTag or Chipolo holder"],["Horquilla","Rock Shox ZEB Ultimate, Debon Air+, Charger 3.1 RC2 w/ ButterCups, 170 mm"],["Amortiguador","Rock Shox Vivid Ultimate, Coil: 350/450/500/600 lbs (S/M/L/XL), 165 mm"],["Motor","Bosch Performance Line CX, 85 NM, 120 NM update via Flow App"],["Batería","Bosch PowerTube Li-Ion (600 Wh)"],["Pantalla","Bosch Mini Remote + System Controller"],["Manetas","SRAM AXS POD Controller"],["Cambio","SRAM GX Eagle Transmission AXS, 12-speed"],["Casete","SRAM GX EAGLE Transmission, 10-52T"],["Cadena","SRAM GX Eagle Transmission"],["Bielas","SRAM GX Eagle Transmission, 165 mm"],["Plato","SRAM Eagle Transmission, 36 T"],["Manillar","OneUp Riser, width: 800 mm, rise: 35 mm"],["Puños","ODI Elite Pro"],["Potencia","FOCUS C.I.S. 2.0, 40 mm"],["Dirección","ACROS ZS56/ZS66 (ICR), FOCUS C.I.S. Integrated angle headset"],["Sillín","fi'zi:k Ridon X5"],["Tija","OneUp V3, S / M /L / XL: 150 / 180 / 210 / 210 mm, 34,9 mm"],["Frenos","SRAM Maven SVL, 4-piston | SRAM Maven SVL, 4-piston"],["Discos","SRAM HS2, front:   220 mm / rear:   220 mm"],["Juego de ruedas","DT Swiss HFR 1700, alloy, front: 29\", rear: 27,5\""],["Neumáticos","Schwalbe Magic Marry, Super DH, ADDIX Ultra Soft, 29 x 2,4\" | Schwalbe Magic Marry, Super DH, ADDIX Ultra Soft, 27,5 x 2"],["Peso","25.8 kg ( 600 Wh )"],["Tallas","L, M, S, XL"]],
   note:"Colores: Plata. Imagen ilustrativa oficial del fabricante. Consulta disponibilidad y tallas en tienda."},
- "SAM² 6.8":{cat:"E-MTB Enduro",price:"4.502 €",brand:"FOCUS · E-MTB Enduro · aluminio",
+ "SAM² 6.8":{cat:"E-MTB enduro doble",price:"4.502 €",brand:"FOCUS · E-MTB enduro doble · aluminio",
   desc:"Control total incluso a velocidades máximas y en los descensos más pronunciados: la SAM² 6.8 está diseñada para los pilotos de gravity más intrépidos. Las ruedas Mullet se adaptan perfectamente a este concepto, al tiempo que el ángulo ajustable de la dirección y los ajustes de las vainas ofrecen espacio para las preferencias personales.",
   imgs:["assets/focus-sam2-6-8-verde-1600.jpg","assets/focus-sam2-6-8-gris-1600.jpg"],
   specs:[["Cuadro","7005 hydroformed aluminium, 165 mm F.O.L.D.  kinematics, 148x12 mm thru axle, Post Mount 180 mm"],["Extras","Geometry adjustment of head angle and chainstay length, Tool bag (exluding size S), Hidden AirTag or Chipolo holder"],["Horquilla","Fox 38 Rhythm, Grip 3-Position, 170 mm"],["Amortiguador","Fox DHX Performance, Coil: 350/450/500/600 lbs (S/M/L/XL), 165 mm"],["Motor","Bosch Performance Line CX, 85 NM, 120 NM update via Flow App"],["Pantalla","Bosch Mini Remote + System Controller"],["Manetas","Shimano Deore"],["Cambio","Shimano Deore, 12-speed"],["Casete","Shimano CS-M6100, 10-51T"],["Cadena","Shimano CN-M6100"],["Bielas","Samox, 165 mm"],["Plato","Samox, 36 T"],["Manillar","Alloy, width: 800 mm, rise: 30 mm"],["Puños","VP Lock-On Grips"],["Potencia","FOCUS C.I.S. 2.0, 40 mm"],["Dirección","ACROS ZS56/ZS66 (ICR), FOCUS C.I.S. Integrated angle headset"],["Sillín","Focus"],["Tija","Post Moderne DP-212, S / M /L / XL: 125 / 170 / 200 / 200 mm, 34,9 mm"],["Frenos","Shimano Deore BR-M6120, 4-piston | Shimano Deore BR-M6120, 4-piston"],["Discos","Shimano SM-RT66, front:   220 mm / rear:   220 mm"],["Llanta del.","WTB STi30 TGH, alloy, 29\""],["Llanta tras.","WTB STi30 TGH, alloy, 27,5\""],["Buje del.","Formula DC-611"],["Buje tras.","Formula DC-648"],["Tallas","L, M, S, XL"]],
   note:"Colores: Verde · Gris. Oferta de la tienda (antes 5.699 €). Imagen ilustrativa oficial del fabricante. Consulta disponibilidad y tallas en tienda."},
- "SAM² 6.9":{cat:"E-MTB Enduro",price:"7.199 €",brand:"FOCUS · E-MTB Enduro · aluminio",
+ "SAM² 6.9":{cat:"E-MTB enduro doble",price:"7.199 €",brand:"FOCUS · E-MTB enduro doble · aluminio",
   desc:"La cinemática de la SAM² 6.9 está diseñada específicamente para amortiguadores de muelle y ajustada con precisión para el descenso. De este modo, podrás superar fácilmente jardines de roca, road gaps y secciones repletas de raíces. Encontrarás nuestras recomendaciones para una configuración perfecta de la suspensión en las preguntas frecuentes de la página de descripción general de la SAM².",
   imgs:["assets/focus-sam2-6-9-purpura-1600.jpg","assets/focus-sam2-6-9-blanco-1600.jpg"],
   specs:[["Cuadro","7005 hydroformed aluminium, 165 mm F.O.L.D.  kinematics, 148x12 mm thru axle, Post Mount 180 mm"],["Extras","Geometry adjustment of head angle and chainstay length, Tool bag (exluding size S), Hidden AirTag or Chipolo holder"],["Horquilla","Fox 38 Factory, Grip X2, 170 mm"],["Amortiguador","Fox DHX Performance, Coil: 350/450/500/600 lbs (S/M/L/XL), 165 mm"],["Motor","Bosch Performance Line CX, 85 NM, 120 NM update via Flow App"],["Pantalla","Bosch Mini Remote + System Controller"],["Manetas","SRAM Eagle 90 Transmission"],["Cambio","SRAM Eagle 90 Transmission, 12-speed"],["Casete","SRAM GX Transmission, 10-52T"],["Cadena","SRAM GX Eagle Transmission"],["Bielas","Samox, 165 mm"],["Plato","SRAM Eagle Transmission, 36 T"],["Manillar","OneUp Riser, width: 800 mm, rise: 35 mm"],["Puños","ODI Elite Pro"],["Potencia","FOCUS C.I.S. 2.0, 40 mm"],["Dirección","ACROS ZS56/ZS66 (ICR), FOCUS C.I.S. Integrated angle headset"],["Sillín","fi'zi:k Ridon X5"],["Tija","OneUp V3, S / M /L / XL: 150 / 180 / 210 / 210 mm, 34,9 mm"],["Frenos","TRP EVO Pro, 4-piston | TRP EVO Pro, 4-piston"],["Discos","TRP RS01E, front:   220 mm / rear:   220 mm"],["Juego de ruedas","DT Swiss HF 1900, alloy, front: 29\", rear: 27,5\""],["Neumáticos","Schwalbe Magic Marry, Super DH, Addix Ultra Soft, 29 x 2,4\" | Schwalbe Magic Marry, Super DH, ADDIX Ultra Soft, 27,5 x 2"],["Peso máx. sistema","150 kg"],["Tallas","L, M, S, XL"]],
   note:"Colores: Púrpura · Blanco. Imagen ilustrativa oficial del fabricante. Consulta disponibilidad y tallas en tienda."},
- "THRON² 6.7":{cat:"E-MTB",price:"4.699 €",brand:"FOCUS · E-MTB · aluminio",
+ "THRON² 6.7":{cat:"E-MTB doble",price:"4.699 €",brand:"FOCUS · E-MTB doble · aluminio",
   desc:"La cinemática F.O.L.D. con 130 mm de recorrido de la suspensión absorbe todos los baches de tu camino. Tanto si se trata de un sendero rápido y fluido como de una ruta de gravel accidentada, la mezcla perfecta de sensibilidad y fuerte resistencia global te permite disfrutar de todos tus recorridos. Las características son completamente progresivas lo que resulta en un chasis que ofrece mucha estabilidad haciéndote sentir seguro en cualquier terreno. Especialmente las bicis e-mountain con el peso adicional del motor y la batería se benefician de una mayor capacidad de progresión.",
   imgs:["assets/focus-thron2-6-7-verde-1600.jpg","assets/focus-thron2-6-7-azul-1600.jpg"],
   specs:[["Cuadro","7005 hydroformed aluminium, 3D forging, 130mm F.O.L.D. kinematics, 148x12 mm thru-axle, USB-C port, post mount 180 mm"],["Horquilla","SR Suntour Zeron 35 Air LOR, 110x15 mm"],["Recorrido de la horquilla de suspensión","130 mm"],["Amortiguador","SRAM Deluxe Select, 210/50 mm, hardware: 25,0 x 8,0 mm, no Bushing"],["Motor","Bosch Performance CX Gen4"],["Batería","Bosch 625 Intube (625Wh)"],["Pantalla","Bosch LED Remote"],["Manetas","Shimano Cues"],["Cambio","Shimano Cues"],["Casete","Shimano Deore CS-LG400, 11-speed"],["Cadena","Shimano CN-HG601, 11-speed"],["Bielas","Samox EC40 ISIS"],["Transmisión","front: 34, rear: 10-51"],["Plato","Shimano CSLG 400, 11-G."],["Pedalier","Integrated in Drive Unit"],["Manillar","Aluminium, 760 mm, flatbar, backsweep: 9°, 35,0 mm"],["Puños","VP VPG-122A"],["Potencia","Aluminium, 70mm, 35degree"],["Dirección","ACROS ZS56/ZS56 (ICR), FOCUS C.I.S. Integrated"],["Sillín","Selle Royal Groove SRX"],["Tija","Post Moderne dropper post PM-214, 34.9 mm"],["Frenos","Shimano MT420 | Shimano MT420"],["Discos de freno delantero / trasero","203 mm"],["Disco de freno trasero","203 mm"],["Tallas","L, M, S, XL"]],
   note:"Colores: Verde (4.699 €) · Gris (4.999 €) — sin foto oficial · Azul (4.699 €). Imagen ilustrativa oficial del fabricante. Consulta disponibilidad y tallas en tienda."},
- "THRON² 6.7 EQP":{cat:"E-MTB",price:"4.899 €",brand:"FOCUS · E-MTB · aluminio",
+ "THRON² 6.7 EQP":{cat:"E-MTB doble",price:"4.899 €",brand:"FOCUS · E-MTB doble · aluminio",
   desc:"La THRON² 6.7 EQP está hecha para explorar. Nuestros modelos EQP totalmente equipados incluyen sistema de iluminación, pata de cabra, portabultos y guardabarros perfectamente integrados. La parrilla portaequipajes puede transportar hasta 16 kg de carga. Además, el diseño C.I.S. (Cockpit Integration Solution – Solución Puesto de Mando Integrado) especialmente desarrollado garantiza un puesto de mando limpio y unos cambios y frenos de funcionamiento suave. Todos los cables van del manillar al cuadro por la potencia y la dirección.",
   imgs:["assets/focus-thron2-6-7-eqp-verde-1600.jpg","assets/focus-thron2-6-7-eqp-plata-1600.jpg"],
   specs:[["Cuadro","7005 hydroformed aluminium, 3D forging, 130mm F.O.L.D. kinematics, 148x12 mm thru-axle, post mount 180 mm"],["Horquilla","SR Suntour XCR 34 LO Air, 15x110 mm"],["Recorrido de la horquilla de suspensión","120 mm"],["Amortiguador","SR Suntour Edge Plus, 210/50 mm, hardware: 25.0 x 8.0 mm, no Bushing"],["Motor","Bosch Performance CX Smart, 85 Nm, 250 W"],["Batería","Bosch 625 Intube (625Wh)"],["Pantalla","Bosch Purion 200"],["Manetas","Shimano Cues"],["Cambio","Shimano Cues"],["Cadena","Shimano CN-HG601, 11-speed"],["Bielas","FSA CK-320, aluminium"],["Transmisión","vorne: 36, hinten: 11-45"],["Plato","Shimano CSLG 400, 11-G."],["Pedalier","Integrated in Drive Unit"],["Manillar","Aluminium, 760 mm, flatbar, backsweep: 9°, 35,0 mm"],["Puños","Herrmans Click"],["Potencia","Aluminium, 70mm, 35degree"],["Dirección","ACROS ZS56/ZS56 (ICR), FOCUS C.I.S. Integrated"],["Sillín","Selle Royal Vivo"],["Tija","Post Moderne dropper post PM-214, 34.9 mm"],["Frenos","Shimano MT420 | Shimano MT420"],["Discos de freno delantero / trasero","203 mm"],["Disco de freno trasero","203 mm"],["Llanta del.","RODI TRYP25, 25-622"],["Tallas","L, M, S, XL"]],
   note:"Colores: Gris (4.999 €) — sin foto oficial · Verde (4.899 €) · Plata (4.899 €). Imagen ilustrativa oficial del fabricante. Consulta disponibilidad y tallas en tienda."},
- "THRON² 6.8 ABS":{cat:"E-MTB",price:"5.299 €",brand:"FOCUS · E-MTB · aluminio",
+ "THRON² 6.8 ABS":{cat:"E-MTB doble",price:"5.299 €",brand:"FOCUS · E-MTB doble · aluminio",
   desc:"La THRON² 6.8 ABS garantiza una gran comodidad en las rutas largas por senderos. La suspensión,que presenta un ajuste específico para la THRON², suaviza los baches, mientras que las vainas largas proporcionan una tracción óptima en los ascensos. Encontrarás nuestras recomendaciones para configurar a la perfección el amortiguador en las preguntas frecuentes de la página de descripción general de la THRON².",
   imgs:["assets/focus-thron2-6-8-abs-gris-1600.jpg","assets/focus-thron2-6-8-abs-plata-1600.jpg"],
   specs:[["Cuadro","7005 hydroformed aluminium, 140 mm F.O.L.D.  kinematics, 148x12 mm thru axle, Post Mount 180 mm"],["Extras","Hidden AirTag or Chipolo holder, USB-C charging port, Integrated rear light, Front light cable pre-installed"],["Horquilla","Rock Shox Psylo Silver RC, 150 mm"],["Amortiguador","Rock Shox Deluxe Select, DebonAir+, 140 mm"],["Motor","Bosch Performance Line CX, 85 NM, 100 NM update via Flow App"],["Pantalla","Bosch Kiox 300 + LED Remote"],["Manetas","Shimano Deore"],["Cambio","Shimano Deore, 12-speed"],["Casete","Shimano CS-M6100, 10-51T"],["Cadena","Shimano CN-M6100"],["Bielas","Samox, 165 mm"],["Plato","Samox, 36 T"],["Manillar","JD Riser, alloy, width: 800 mm, rise: 30 mm"],["Puños","VP Lock-On Grips"],["Potencia","FOCUS C.I.S. 2.0, 50 mm"],["Dirección","ACROS ZS56/ZS66 (ICR), FOCUS C.I.S. Integrated"],["Sillín","Selle Italia X3 Boost"],["Frenos","TRP Trail EVO, 4-piston, ABS | TRP Trail EVO, 4-piston, ABS"],["Discos","TRP RS01E, front:   203 mm / rear:   203 mm"],["Llanta del.","WTB STi30, alloy, 29\""],["Llanta tras.","WTB STi30, alloy, 29\""],["Buje del.","Shimano HB-TC500"],["Buje tras.","Shimano FH-TC500"],["Neumáticos","Maxxis Minion DHF, TLE, EXO, 29 x 2,5\" | Maxxis Minion DHF, TLE, EXO, 29 x 2,5\""],["Tallas","L, M, S, XL"]],
   note:"Colores: Gris · Plata. Imagen ilustrativa oficial del fabricante. Consulta disponibilidad y tallas en tienda."},
- "THRON² 6.8 EQP ABS":{cat:"E-MTB",price:"5.499 €",brand:"FOCUS · E-MTB · aluminio",
+ "THRON² 6.8 EQP ABS":{cat:"E-MTB doble",price:"5.499 €",brand:"FOCUS · E-MTB doble · aluminio",
   desc:"Dispones de cuatro capacidades de batería para la máxima flexibilidad. Elige entre una batería de 600 Wh u 800 Wh, independientemente del tamaño del cuadro. Si se combina con una batería auxiliar PowerMore 250 Wh, la capacidad aumenta hasta 1050 Wh. La THRON² 6.8 EQP ABS incorpora la fiable y probada asistencia de Bosch: la 5.ª generación del motor Bosch Performance Line CX ofrece un par de 85 Nm.",
   imgs:["assets/focus-thron2-6-8-eqp-abs-plata-1600.jpg"],
   specs:[["Cuadro","7005 hydroformed aluminium, 140 mm F.O.L.D.  kinematics, 148x12 mm thru axle, Post Mount 180 mm"],["Extras","Hidden AirTag or Chipolo holder, USB-C charging port"],["Horquilla","SR Suntour Zeron 36 X Boost, 2CR, 150 mm"],["Amortiguador","SR Suntour Edge Evo R, 140 mm"],["Motor","Bosch Performance Line CX, 85 NM"],["Pantalla","Bosch Kiox 500 + LED Remote"],["Manetas","Shimano Deore"],["Cambio","Shimano Deore, 12-speed"],["Casete","Shimano CS-M6100, 10-51T"],["Cadena","Shimano CN-M6100"],["Bielas","Samox, 165 mm"],["Plato","Samox, 36 T"],["Pedalier","Integrated in Drive Unit"],["Manillar","Lee Chi Riser, alloy, with: 760, rise: 15 mm"],["Puños","VP Lock-On Grips"],["Potencia","FOCUS C.I.S. 2.0, 50 mm"],["Dirección","ACROS ZS56/ZS66 (ICR), FOCUS C.I.S. Integrated"],["Sillín","Focus"],["Frenos","Magura CT-ABS, 4-piston, ABS | Magura CT-ABS, 4-piston, ABS"],["Discos","Magura MDR-C, front:   203 mm / rear:   203 mm"],["Llanta del.","WTB STi30, alloy, 29\""],["Llanta tras.","WTB STi30, alloy, 29\""],["Buje del.","Shimano HB-TC500"],["Buje tras.","Shimano FH-TC500"],["Tallas","L, M, S, XL"]],
   note:"Colores: Plata. Imagen ilustrativa oficial del fabricante. Consulta disponibilidad y tallas en tienda."},
- "THRON² 6.9 ABS":{cat:"E-MTB",price:"6.699 €",brand:"FOCUS · E-MTB · aluminio",
+ "THRON² 6.9 ABS":{cat:"E-MTB doble",price:"6.699 €",brand:"FOCUS · E-MTB doble · aluminio",
   desc:"La THRON² 6.9 ABS garantiza una gran comodidad en las rutas largas por senderos. La suspensión,que presenta un ajuste específico para la THRON², suaviza los baches, mientras que las vainas largas proporcionan una tracción óptima en los ascensos. Encontrarás nuestras recomendaciones para configurar a la perfección el amortiguador en las preguntas frecuentes de la página de descripción general de la THRON².",
   imgs:["assets/focus-thron2-6-9-abs-plata-1600.jpg"],
   specs:[["Cuadro","7005 hydroformed aluminium, 140 mm F.O.L.D.  kinematics, 148x12 mm thru axle, Post Mount 180 mm"],["Extras","Hidden AirTag or Chipolo holder, USB-C charging port, Integrated rear light, Front light cable pre-installed"],["Horquilla","Fox 36 AWL HD, Rail, 150 mm"],["Amortiguador","Fox Float Rythm, 140 mm"],["Motor","Bosch Performance Line CX, 85 NM, 120 NM update via Flow App"],["Pantalla","Bosch Kiox 500 + LED Remote"],["Manetas","Shimano Deore XT"],["Cambio","Shimano Deore XT, 12-speed"],["Casete","Shimano CS-M6100, 10-51T"],["Cadena","Shimano CN-M6100"],["Bielas","Samox, 165 mm"],["Plato","Samox, 36 T"],["Manillar","JD Riser, alloy, width: 800 mm, rise: 30 mm"],["Puños","VP Lock-On Grips"],["Potencia","FOCUS C.I.S. 2.0, 50 mm"],["Dirección","ACROS ZS56/ZS66 (ICR), FOCUS C.I.S. Integrated"],["Sillín","fi'zi:k Aidon X5"],["Frenos","Magura MT-C, 4-piston, ABS | Magura MT-C, 4-piston, ABS"],["Discos","Magura MDR-C, front:   203 mm / rear:   203 mm"],["Llanta del.","WTB STi30, alloy, 29\""],["Llanta tras.","WTB STi30, alloy, 29\""],["Buje del.","Shimano HB-TC500"],["Buje tras.","Shimano FH-TC500"],["Neumáticos","Maxxis Minion DHF, TLE, EXO, 29 x 2,5\" | Maxxis Minion DHF, TLE, EXO, 29 x 2,5\""],["Tallas","L, M, S, XL"]],
   note:"Colores: Plata. Imagen ilustrativa oficial del fabricante. Consulta disponibilidad y tallas en tienda."},
  
  
- "Tundra 6.0 SUV":{cat:"E-MTB",price:"4.799 €",brand:"STEPPENWOLF · E-MTB · aluminio",
+ "Tundra 6.0 SUV":{cat:"E-MTB doble",price:"4.799 €",brand:"STEPPENWOLF · E-MTB doble · aluminio",
   desc:"La puerta de entrada a la gama Tundra: e-MTB SUV con motor Shimano EP6, pensada para monte y día a día.",
   imgs:["assets/sw-tundra-6-0-suv-1024.jpg"],
   specs:[["Cuadro","Aluminio 29\", doble suspensión 140 mm"],["Horquilla","RST Blade Coil, 140 mm"],["Amortiguador","RST Mono, 205x60 mm"],["Motor","Shimano EP6, 85 Nm"],["Batería","Darfon 708 Wh"],["Pantalla","Shimano SCEM600 inalámbrica (app E-Tube)"],["Cambio","Shimano Deore 12v"],["Frenos","Shimano MT420/410 hidráulicos, 4/2 pistones"],["Luces","Litemove 90 lux"],["Portabultos","Aluminio Steppenwolf, hasta 12 kg"],["Guardabarros","Aluminio, 68 mm"],["Peso","28,5 kg"],["Tallas","Consultar en tienda"]],
   note:"PVP oficial (catálogo de distribuidor Steppenwolf). Consulta disponibilidad y tallas en tienda."},
- "Tundra 11.0":{cat:"E-MTB",price:"9.999 €",brand:"STEPPENWOLF · E-MTB · carbono",
+ "Tundra 11.0":{cat:"E-MTB doble",price:"9.999 €",brand:"STEPPENWOLF · E-MTB doble · carbono",
   desc:"El tope de gama Tundra: cuadro de carbono, motor DJI Avinox y 170 mm de recorrido. La versión Premium absoluta.",
   imgs:["assets/sw-tundra-11-0-1024.jpg"],
   specs:[["Cuadro","Carbono"],["Motor","DJI Avinox"],["Recorrido","170 mm"],["Tallas","Consultar en tienda"]],
@@ -2808,7 +2858,7 @@ var BIKES={
   imgs:["assets/sw-transterra-sport-9-1-1024.jpg"],
   specs:[["Motor","DJI Avinox"],["Transmisión","Correa"],["Tallas","Consultar en tienda"]],
   note:"Imagen de la versión DJI con correa. Precio pendiente de confirmar: consultar en tienda. Consulta disponibilidad y tallas en tienda."},
- "TL Carbon":{cat:"E-MTB",price:"3.499 €",brand:"AMFLOW · E-MTB · carbono",
+ "TL Carbon":{cat:"E-MTB doble",price:"3.499 €",brand:"AMFLOW · E-MTB doble · carbono",
   desc:"La nueva Amflow ligera de trail: cuadro de carbono y motor DJI Avinox, equipada para la aventura.",
   imgs:["assets/amflow-tl-carbon-1024.jpg"],
   specs:[["Cuadro","Cuadro Amflow TL Carbon"],["Horquilla","FOX AWL Sport, 120 mm, amortiguador RAIL 2.0, ajuste LSR, Kabolt 15 × 110 mm, desplazamiento de 44 m"],["Cambio","Cambio trasero: TRP E.A.S.I. RD-T7010E-L, cambio trasero electrónico de 10/11 velocidades"],["Frenos","Frenos de disco hidráulicos Tektro TKD173, pinza de 4 pistones, personalizados para Amflow"],["Neumáticos","Maxxis Crossmark II 27.5 × 2.35, aro rígido/clincher/EXO/60 TPI"],["Sillín","Sillín Amflow Touring"],["Tallas","Consultar en tienda"]],
@@ -2894,7 +2944,7 @@ var BIKES={
   imgs:["assets/cube-stereo-hpc-race-carbon-n-black-1024.jpg"],
   specs:[["Cuadro","C:62® Monocoque Advanced Twin Mold Technology, Aluminium 6061 T6 Rear Triangle, ISCG 05, UDH™"],["Horquilla","RockShox Psylo Silver RC Air, Tapered, 15x110mm, 150mm"],["Frenos","Magura Louise, Front 4-Piston/Rear 4-Piston, Hydr. Disc Brake (203/203)"],["Cambio","Shimano XT RD-M8200-SGS, ShadowPlus, 12-Speed"],["Manetas","Shimano Deore SL-M6100-IR, Direct Attach, Rapidfire-Plus"],["Pedalier","Shimano BB-MT501, 73mm BSA"],["Bielas","Shimano Deore FC-M6200, Hollowtech II, 30T"],["Casete","Shimano Deore CS-M6200, 10-51T"],["Cadena","Shimano CN-M6100"],["Dirección","Acros AZF-675, ICR (Integrated Cable Routing), Top Zero-Stack 1 1/2\" (ZS 56mm), Bottom Zero-Stack 1 1/2\" (ZS 5"],["Potencia","Newmen Evolution 318.4, 31.8mm"],["Manillar","Newmen Beskar 318.40, 800mm"],["Puños","ACID Endure"],["Ruedas","Newmen Performance 30 base/base, 28/32 Spokes, 15x110mm/12x148mm, Tubeless Ready"],["Neumáticos","Conti Xynotal, Enduro Soft, Tubeless Ready, 2.4"],["Sillín","ACID Venec Lite"],["Tija","CUBE Dropper Post, Handlebar Lever, Internal Cable Routing, Travel Adjust, 31.6mm"],["Peso","16,3 kg"],["Tallas","M"]],
   note:"Pedido real de la tienda — carbon´n´black (tallas M). Consulta disponibilidad en tienda."},
- "FRITZZ C:62 TM":{cat:"MTB enduro",price:"2.999 €",brand:"CUBE · MTB enduro · carbono",
+ "FRITZZ C:62 TM":{cat:"MTB enduro doble",price:"2.999 €",brand:"CUBE · MTB enduro doble · carbono",
   desc:"El enduro de CUBE: carbono C:62, recorridos largos y componentes a prueba de bajadas. Para los que suben para bajar.",
   imgs:["assets/cube-fritzz-c-62-tm-hintofmint-n-grey-1024.jpg"],
   specs:[["Cuadro","C:62® Monocoque Advanced Twin Mold Technology, ISCG 05, UDH™, Air/Coil Shock Mount Flip-Chip, High Main Pivot "],["Horquilla","Fox 38 Float Performance GRIP, Tapered, 15x110mm, 170mm"],["Frenos","Magura Louise, Front 4-Piston/Rear 4-Piston, Hydr. Disc Brake (203/203)"],["Cambio","Sram Eagle™ 90 Transmission, 12-Speed"],["Manetas","Sram Eagle™ 90 Transmission"],["Pedalier","Sram DUB MTB Wide, 73mm BSA"],["Bielas","Sram Eagle™ 90 Transmission DUB, 32T"],["Casete","Sram XS-1270, 10-52T"],["Cadena","Sram GX Eagle™ Transmission"],["Dirección","Acros AZF-675, ICR (Integrated Cable Routing), Top Zero-Stack 1 1/2\" (ZS 56mm), Bottom Zero-Stack 1 1/2\" (ZS 5"],["Potencia","Newmen Evolution 318.4, 31.8mm"],["Manillar","Newmen Beskar 318.40, 800mm"],["Puños","ACID Endure"],["Ruedas","Newmen Performance 30 base/strong, 28/32 Spokes, 15x110mm / 12x148mm, Tubeless Ready"],["Sillín","ACID Venec Lite"],["Tija","CUBE Dropper Post, Handlebar Lever, Internal Cable Routing, Travel Adjust, 31.6mm"],["Peso","17,2 kg"],["Tallas","M"]],
@@ -2944,42 +2994,42 @@ var BIKES={
   imgs:["assets/cube-stereo-hybrid-one44-hpc-super-tm-800-graphiteglitch-n-grey-1024.jpg"],
   specs:[["Cuadro","C:62® Monocoque Advanced Twin Mold Technology, Aluminium 6061 T6 Rear Triangle, Efficient Trail Control, FSP 4"],["Horquilla","RockShox Zeb Ultimate Charger 3.2 RC2 Air, Tapered, 15x110mm, 150mm"],["Motor","Avinox M2S max. 130Nm (Boost 150 Nm)"],["Batería","Avinox 800Wh removable"],["Frenos","Sram Maven Ultimate, Hydr. Disc Brake (200/200)"],["Cambio","Sram X0 Eagle AXS™ Transmission, 12-Speed"],["Manetas","Sram AXS™ Pod Ultimate Controller"],["Bielas","Sram X0 Eagle™ E-MTB Crank, 36T"],["Casete","Sram XS-1295, 10-52T"],["Cadena","Sram X0 Eagle™ Transmission"],["Dirección","Acros AZF-675, ICR (Integrated Cable Routing), Top Zero-Stack 1 1/2\" (ZS 56mm), Bottom Zero-Stack 1 1/2\" (ZS 5"],["Potencia","CUBE Performance Stem E-MTB 35, FPI-Link"],["Manillar","Race Face ERA 35"],["Puños","ACID Endure"],["Ruedas","Newmen Beskar 30 TRQ base/strong, 28/32 Spokes, 15x110mm/12x148mm, Tubeless Ready"],["Sillín","ACID Venec EMTB Trail 140"],["Tija","CUBE Dropper Post, Handlebar Lever, Internal Cable Routing, 31.6mm"],["Pedales","ACID PP MTB"],["Peso","24,4 kg"],["Tallas","L, M"]],
   note:"Pedido real de la tienda — graphiteglitch´n´grey (tallas M, L). Consulta disponibilidad en tienda."},
- "Stereo Hybrid ONE77 HPC Race 800":{cat:"E-MTB enduro",price:"4.399 €",brand:"CUBE · E-MTB enduro · carbono",
+ "Stereo Hybrid ONE77 HPC Race 800":{cat:"E-MTB enduro doble",price:"4.399 €",brand:"CUBE · E-MTB enduro doble · carbono",
   desc:"Enduro eléctrico de carbono: 170 mm de recorrido, motor Bosch y 800 Wh para subir sin ayuda y bajar sin miedo.",
   imgs:["assets/cube-stereo-hybrid-one77-hpc-race-800-oatgrey-n-yellow-1024.jpg","assets/cube-stereo-hybrid-one77-hpc-race-800-metallicpetrol-n-black-1024.jpg"],
   specs:[["Cuadro","C:62® Monocoque Advanced Twin Mold Technology, Aluminium 6061 T6 Rear Triangle, Efficient Trail Control, FSP 4"],["Horquilla","RockShox Domain Gold RC3 Isolator Air, Tapered, 15x110mm, 170mm"],["Frenos","Magura Louise, Front 4-Piston/Rear 4-Piston, Hydr. Disc Brake (203/203)"],["Cambio","Sram Eagle 90 Transmission, 12-Speed"],["Manetas","Sram Eagle 70 Transmission, Single Click"],["Bielas","ACID MTB Hybrid Pro, 36T"],["Casete","Sram XS-1270, 10-52T"],["Cadena","Sram Eagle 70 Transmission"],["Dirección","Acros AZF-675, ICR (Integrated Cable Routing), Top Zero-Stack 1 1/2\" (ZS 56mm), Bottom Zero-Stack 1 1/2\" (ZS 5"],["Potencia","CUBE Performance Stem E-MTB 35, FPI-Link"],["Manillar","CUBE Rise Trail Bar 35 VariGrip System"],["Puños","ACID Endure VariGrip System"],["Ruedas","ACID SLX 30, 32/32 Spokes, 15x110mm/12x148mm, Tubeless Ready"],["Sillín","ACID Venec EMTB Trail 140"],["Tija","CUBE Dropper Post, Handlebar Lever, Internal Cable Routing, 31.6mm"],["Pedales","ACID PP MTB"],["Peso","25,1 kg"],["Tallas","L, M"]],
   note:"Pedido real de la tienda — oatgrey´n´yellow (tallas M, L) · metallicpetrol´n´black (tallas M, L). Consulta disponibilidad en tienda."},
- "Stereo Hybrid ONE77 HPC SLX 800":{cat:"E-MTB enduro",price:"4.999 €",brand:"CUBE · E-MTB enduro · carbono",
+ "Stereo Hybrid ONE77 HPC SLX 800":{cat:"E-MTB enduro doble",price:"4.999 €",brand:"CUBE · E-MTB enduro doble · carbono",
   desc:"El ONE77 con montaje SLX: suspensiones tope de gama y transmisión electrónica. El enduro eléctrico más capaz de CUBE.",
   imgs:["assets/cube-stereo-hybrid-one77-hpc-slx-800-blackline-1024.jpg","assets/cube-stereo-hybrid-one77-hpc-slx-800-liquidred-n-black-1024.jpg","assets/cube-stereo-hybrid-one77-hpc-slx-800-hintofmint-n-orange-1024.jpg"],
   specs:[["Cuadro","C:62® Monocoque Advanced Twin Mold Technology, Aluminium 6061 T6 Rear Triangle, Efficient Trail Control, FSP 4"],["Horquilla","Fox 38 Float Performance GRIP, Tapered, 15x110mm, E-Bike Optimized, 170mm"],["Frenos","Shimano XT BR-M8220, Hydr. Disc Brake (200/200)"],["Cambio","Shimano XT RD-M8200-SGS, ShadowPlus, 12-Speed"],["Manetas","Shimano Deore XT SL-M8210-IR, Direct Attach, Single Click"],["Bielas","ACID MTB Hybrid Pro, 36T"],["Casete","Shimano XT CS-M8200, 10-51T"],["Cadena","Shimano XT CN-M8100"],["Dirección","Acros AZF-675, ICR (Integrated Cable Routing), Top Zero-Stack 1 1/2\" (ZS 56mm), Bottom Zero-Stack 1 1/2\" (ZS 5"],["Potencia","CUBE Performance Stem E-MTB 35, FPI-Link"],["Manillar","CUBE Rise Trail Bar 35 VariGrip System"],["Puños","ACID Endure VariGrip System"],["Ruedas","Newmen Performance 30 base/strong, 28/32 Spokes, 15x110mm / 12x148mm, Tubeless Ready"],["Sillín","ACID Venec EMTB Trail 140"],["Tija","CUBE Dropper Post, Handlebar Lever, Internal Cable Routing, 31.6mm"],["Pedales","ACID PP MTB"],["Peso","24,5 kg"],["Tallas","L, M"]],
   note:"Pedido real de la tienda — blackline (tallas L) · liquidred´n´black (tallas M, L) · hintofmint´n´orange (tallas M, L). Consulta disponibilidad en tienda."},
- "PX Carbon":{cat:"E-MTB",price:"6.999 €",brand:"AMFLOW · E-MTB · carbono · DJI Avinox",
+ "PX Carbon":{cat:"E-MTB doble",price:"6.999 €",brand:"AMFLOW · E-MTB doble · carbono · DJI Avinox",
   desc:"La nueva gama ligera y potente de Amflow. Motor DJI Avinox M2S de 150 Nm y hasta 1.500 W de pico, con batería integrada de 700 Wh y cuadro de carbono de altas prestaciones. Enduro/all-mountain para exprimir cualquier sendero.",
   imgs:["assets/amflow-px-carbon.jpg"],
   specs:[["Cuadro","Carbono · 160/150 mm de recorrido"],["Motor","DJI Avinox M2S: Par nominal de 130 N·m, par máximo de 150 N·m"],["Cambio","Desviador SRAM S1000 Eagle Transmission"],["Frenos","Freno de disco hidráulico Magura Gustav Pro, pinzas de 4 pistones"],["Ruedas","Amflow XMA-30 versión Mullet"],["Neumáticos","Delantero: Schwalbe Magic Mary Radial, 29 × 2,5, Gravity Pro, Ultra Soft, tubeless ready"],["Manillar","Manillar de aleación de enduro Amflow"],["Tija","Espaciador de tija telescópica Amflow (recorrido ajustable: 0/5/10/15/20 mm)"],["Potencia","Potencia dividida para bicicleta de montaña Amflow"],["Tallas","M / L / XL / XXL"]],
   note:"PVP oficial de referencia. Consulta disponibilidad y tallas en tienda."},
- "PX Carbon Pro":{cat:"E-MTB",price:"9.999 €",brand:"AMFLOW · E-MTB · carbono · DJI Avinox",
+ "PX Carbon Pro":{cat:"E-MTB doble",price:"9.999 €",brand:"AMFLOW · E-MTB doble · carbono · DJI Avinox",
   desc:"El tope de gama de la familia PX. Todo el rendimiento del motor DJI Avinox M2S en un conjunto ultraligero (~21,4 kg en talla L) con la mejor equipación. Para quien no quiere renunciar a nada.",
   imgs:["assets/amflow-px-carbon-pro.jpg"],
   specs:[["Cuadro","Carbono · 160/150 mm"],["Peso","~21,4 kg (talla L)"],["Motor","DJI Avinox M2S: Par nominal de 130 N·m, par máximo de 150 N·m"],["Cambio","Desviador SRAM X0 Eagle Transmission"],["Frenos","Freno de disco hidráulico Magura Gustav Pro, pinzas de 4 pistones"],["Ruedas","Amflow XMC-30 versión Mullet"],["Neumáticos","Delantero: Schwalbe Magic Mary Radial, 29 × 2,5, Gravity Pro, Ultra Soft, tubeless ready"],["Manillar","Manillar de carbono de enduro Amflow"],["Tija","Espaciador de tija telescópica Amflow (recorrido ajustable: 0/5/10/15/20 mm)"],["Potencia","Potencia dividida para bicicleta de montaña Amflow"],["Tallas","M / L / XL / XXL"]],
   note:"PVP oficial de referencia. Consulta disponibilidad y tallas en tienda."},
- "PR Carbon":{cat:"E-MTB",price:"4.499 €",brand:"AMFLOW · E-MTB · carbono · DJI Avinox",
+ "PR Carbon":{cat:"E-MTB doble",price:"4.499 €",brand:"AMFLOW · E-MTB doble · carbono · DJI Avinox",
   desc:"La puerta de entrada al universo Avinox, novedad 2026 con batería EXTRAÍBLE. Motor DJI Avinox y batería de 800 Wh que puedes sacar para cargar cómodamente. Cuadro de carbono y mucha autonomía.",
   imgs:["assets/amflow-pr-carbon.jpg"],
   specs:[["Cuadro","Carbono · 160/150 mm"],["Motor","DJI Avinox M2: Par nominal de 110 N·m, par máximo de 125 N·m"],["Batería","Batería extraíble Avinox: 800 Wh"],["Horquilla","FOX AWL HD Sport, 160 mm"],["Amortiguador","FOX Float X Performance"],["Cambio","Desviador SRAM S1000 Eagle Transmission"],["Frenos","Freno de disco hidráulico Tektro TKD173, pinzas de 4 pistones, Amflow personalizado"],["Ruedas","Amflow XMA-30 versión Mullet"],["Neumáticos","Delantero: Maxxis Assegai, 29.0 × 2.50 M356RU 3C MaxxGrip/EXO+/TR"],["Manillar","Manillar de aleación de enduro Amflow"],["Tija","Espaciador de tija telescópica Amflow (recorrido ajustable: 0/5/10/15/20 mm)"],["Potencia","Potencia dividida para bicicleta de montaña Amflow"],["Tallas","M / L / XL / XXL"]],
   note:"PVP oficial de referencia. Consulta disponibilidad y tallas en tienda."},
- "PR Carbon Pro":{cat:"E-MTB",price:"5.899 €",brand:"AMFLOW · E-MTB · carbono · DJI Avinox",
+ "PR Carbon Pro":{cat:"E-MTB doble",price:"5.899 €",brand:"AMFLOW · E-MTB doble · carbono · DJI Avinox",
   desc:"La PR con equipación superior y batería extraíble de 800 Wh. 160/150 mm de recorrido y motor DJI Avinox para largas jornadas de montaña sin pensar en la autonomía.",
   imgs:["assets/amflow-pr-carbon-pro.jpg"],
   specs:[["Cuadro","Carbono · 160/150 mm"],["Peso","~24,2 kg"],["Motor","DJI Avinox M2S: Par nominal de 130 N·m, par máximo de 150 N·m"],["Batería","Batería extraíble Avinox: 800 Wh"],["Horquilla","FOX 36 Performance, 160 mm"],["Amortiguador","FOX Float X Performance"],["Cambio","Desviador SRAM S1000 Eagle Transmission"],["Frenos","Freno de disco hidráulico Magura Gustav Pro, pinzas de 4 pistones"],["Ruedas","Amflow XMA-30 versión Mullet"],["Neumáticos","Delantero: Schwalbe Magic Mary Radial, 29 × 2,5, Gravity Pro, Ultra Soft, tubeless ready"],["Manillar","Manillar de aleación de enduro Amflow"],["Tija","Espaciador de tija telescópica Amflow (recorrido ajustable: 0/5/10/15/20 mm)"],["Potencia","Potencia dividida para bicicleta de montaña Amflow"],["Tallas","M / L / XL / XXL"]],
   note:"PVP oficial de referencia. Consulta disponibilidad y tallas en tienda."},
- "Tundra 9.0":{cat:"E-MTB",price:"5.199 €",brand:"STEPPENWOLF · E-MTB · carbono · DJI Avinox",
+ "Tundra 9.0":{cat:"E-MTB doble",price:"5.199 €",brand:"STEPPENWOLF · E-MTB doble · carbono · DJI Avinox",
   desc:"El regreso de la mítica marca alemana, premiada por su relación calidad-precio en la prensa especializada. Doble suspensión de carbono 29˝ con 160 mm de recorrido, motor DJI Avinox de hasta 150 Nm y batería integrada de 800 Wh.",
   imgs:["assets/steppenwolf-tundra-9-0-verde.jpg","assets/steppenwolf-tundra-9-0-rojo.jpg"],
   specs:[["Cuadro","Carbono 29˝ · 160 mm"],["Motor","DJI Avinox M1/M2S · hasta 150 Nm"],["Batería","Avinox 800 Wh integrada"],["Transmisión","SRAM Eagle 12v"],["Frenos","Magura, disco hidráulico"],["Neumáticos","Maxxis"]],
   note:"En stock en dos colores: verde musgo y rojo racing. Consulta tallas en tienda."},
- "Tundra 10.0":{cat:"E-MTB",price:"7.999 €",brand:"STEPPENWOLF · E-MTB · carbono · DJI Avinox",
+ "Tundra 10.0":{cat:"E-MTB doble",price:"7.999 €",brand:"STEPPENWOLF · E-MTB doble · carbono · DJI Avinox",
   desc:"El tope de gama Tundra: cuadro de carbono 29˝ con 160 mm de recorrido, motor DJI Avinox con batería de 800 Wh, suspensión RockShox Ultimate (horquilla Lyrik y amortiguador Vivid) y transmisión inalámbrica SRAM X0. Ligereza sorprendente para una e-MTB de estas prestaciones.",
   imgs:["assets/steppenwolf-tundra-10-0.jpg"],
   specs:[["Cuadro","Carbono 29˝ · 160 mm"],["Motor","DJI Avinox M1/M2S · hasta 150 Nm"],["Batería","Avinox 800 Wh integrada"],["Horquilla","RockShox Lyrik Ultimate"],["Amortiguador","RockShox Vivid Ultimate"],["Transmisión","SRAM X0 Transmission inalámbrica"],["Peso","~21,8 kg (talla M)"],["Color","Titanium Grey"]],
