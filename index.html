@@ -263,6 +263,9 @@ section{padding:100px 0}
 .sort:focus{outline:none;border-color:var(--red)}
 .result-count{font-size:13px;font-weight:700;color:var(--muted);white-space:nowrap}
 .result-count b{color:var(--ink)}
+.fav-note{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--red);white-space:nowrap}
+.fav-note[hidden]{display:none}
+.fav-note svg{width:14px;height:14px;fill:var(--red);stroke:var(--red);stroke-width:1.6}
 .filt-toggle{display:none;align-items:center;gap:8px;padding:13px 18px;border-radius:12px;border:1.5px solid var(--ink);background:var(--ink);color:#fff;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer}
 .filt-toggle svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2}
 .filt-badge{background:var(--red);color:#fff;border-radius:999px;padding:1px 8px;font-size:12px;font-weight:800}
@@ -276,7 +279,11 @@ section{padding:100px 0}
 .bike-imgwrap img{width:100%;height:100%;min-width:0;min-height:0;object-fit:contain;transition:transform .5s cubic-bezier(.16,1,.3,1)}
 .bike-card:hover .bike-imgwrap img{transform:scale(1.06)}
 .bike-cat{position:absolute;top:14px;left:14px;z-index:2;background:var(--ink);color:#fff;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:6px 11px;border-radius:999px}
-.bike-fav{position:absolute;top:14px;right:14px;z-index:2;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:#fff;display:grid;place-items:center;color:var(--muted);transition:.2s}
+.bike-fav{position:absolute;top:14px;right:14px;z-index:2;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:#fff;display:grid;place-items:center;color:var(--muted);transition:.2s;padding:0;font:inherit;cursor:pointer}
+.bike-fav:hover{color:var(--red);border-color:var(--red);transform:scale(1.09)}
+.bike-fav:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+.bike-fav.on{color:var(--red);border-color:var(--red)}
+.bike-fav.on svg{fill:var(--red)}
 .bike-card:hover .bike-fav{color:var(--red);border-color:var(--red)}
 .bike-fav svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8}
 .bike-body{padding:20px 22px 24px;display:flex;flex-direction:column;flex:1}
@@ -824,6 +831,7 @@ setTimeout(hideLoader,3500);
           </div>
           <button type="button" class="filt-toggle" id="filtToggle"><svg viewBox="0 0 24 24"><path d="M3 5h18M6 12h12M10 19h4"/></svg> Filtros <span class="filt-badge" id="filtBadge" hidden>0</span></button>
           <span class="result-count"><b id="resCount">79</b> bicis</span>
+          <span class="fav-note" id="favNote" hidden><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg><b id="favCount">0</b> <span id="favWord">favoritas</span> arriba</span>
           <div class="sort-wrap">
             <label for="sortSel">Ordenar</label>
             <select class="sort" id="sortSel">
@@ -840,7 +848,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="road" data-brand="cube" data-disc="carretera" data-mat="carbono" data-price="5599" data-offer="0" data-kw="aero blackline carretera cube">
         <div class="bike-imgwrap">
           <span class="bike-cat">Carretera</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/synqup_128200_S_00-1024x619.jpg" alt="Bicicleta CUBE Litening AIR C:68X Race (Carretera aero, carbono)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -853,7 +861,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="road" data-brand="cube" data-disc="carretera" data-mat="carbono" data-price="4999" data-offer="0" data-kw="aero carbon carretera chrome cube n">
         <div class="bike-imgwrap">
           <span class="bike-cat">Carretera</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/cube-litening-aero-c-68x-race-carbon-n-chrome-1024.jpg" alt="Bicicleta CUBE Litening AERO C:68X Race (Carretera aero, carbono)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -866,7 +874,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="road" data-brand="cube" data-disc="carretera" data-mat="carbono" data-price="1699" data-offer="0" data-kw="carbon carretera coalchrome cube endurance frostymint mint n">
         <div class="bike-imgwrap">
           <span class="bike-cat">Endurance</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/cube-attain-c-62-race-carbon-n-coalchrome-1024.jpg" alt="Bicicleta CUBE Attain C:62 Race (Carretera endurance, carbono)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -879,7 +887,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="road" data-brand="cube" data-disc="carretera" data-mat="carbono" data-price="2499" data-offer="0" data-kw="black carretera cube endurance metallicwhite n">
         <div class="bike-imgwrap">
           <span class="bike-cat">Endurance</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/cube-attain-c-62-slx-metallicwhite-n-black-1024.jpg" alt="Bicicleta CUBE Attain C:62 SLX (Carretera endurance, carbono)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -892,7 +900,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="road" data-brand="cube" data-disc="carretera" data-mat="carbono" data-price="2999" data-offer="0" data-kw="carbon carretera cube endurance n white">
         <div class="bike-imgwrap">
           <span class="bike-cat">Endurance</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/cube-attain-c-62-slt-carbon-n-white-1024.jpg" alt="Bicicleta CUBE Attain C:62 SLT (Carretera endurance, carbono)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -905,7 +913,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="road" data-brand="cube" data-disc="gravel" data-mat="aluminio" data-price="1099" data-offer="0" data-kw="black cube gravel mysticpurple n">
         <div class="bike-imgwrap">
           <span class="bike-cat">Gravel</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/cube-nuroad-pro-mysticpurple-n-black-1024.jpg" alt="Bicicleta CUBE Nuroad Pro (Gravel, aluminio)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -918,7 +926,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="road" data-brand="cube" data-disc="gravel" data-mat="aluminio" data-price="1299" data-offer="0" data-kw="black bubblegum cube gravel n oatgrey">
         <div class="bike-imgwrap">
           <span class="bike-cat">Gravel</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/cube-nuroad-ex-oatgrey-n-black-1024.jpg" alt="Bicicleta CUBE Nuroad EX (Gravel, aluminio)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -931,7 +939,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="road" data-brand="cube" data-disc="gravel" data-mat="aluminio" data-price="1999" data-offer="0" data-kw="cmyk cube gravel n spaceship">
         <div class="bike-imgwrap">
           <span class="bike-cat">Gravel</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/cube-nuroad-slx-spaceship-n-cmyk-1024.jpg" alt="Bicicleta CUBE Nuroad SLX (Gravel, aluminio)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -944,7 +952,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="road" data-brand="cube" data-disc="gravel" data-mat="carbono" data-price="1999" data-offer="0" data-kw="carbon carbono cube gravel green hintofmint n shiftverde">
         <div class="bike-imgwrap">
           <span class="bike-cat">Gravel</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/cube-nuroad-c-62-one-carbon-n-shiftverde-1024.jpg" alt="Bicicleta CUBE Nuroad C:62 ONE (Gravel carbono, carbono)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -957,7 +965,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="road" data-brand="cube" data-disc="gravel" data-mat="carbono" data-price="2999" data-offer="0" data-kw="black carbono cube gravel n surfblue">
         <div class="bike-imgwrap">
           <span class="bike-cat">Gravel</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/cube-nuroad-c-62-ex-surfblue-n-black-1024.jpg" alt="Bicicleta CUBE Nuroad C:62 EX (Gravel carbono, carbono)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -970,7 +978,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="road" data-brand="cube" data-disc="gravel" data-mat="carbono" data-price="3299" data-offer="0" data-kw="carbono cube fibre gravel n wolf">
         <div class="bike-imgwrap">
           <span class="bike-cat">Gravel</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/cube-nuroad-c-62-exc-wolf-n-fibre-1024.jpg" alt="Bicicleta CUBE Nuroad C:62 EXC (Gravel carbono, carbono)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -983,7 +991,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="road" data-brand="cube" data-disc="gravel" data-mat="carbono" data-price="3999" data-offer="0" data-kw="black carbono cube glintsand gravel n">
         <div class="bike-imgwrap">
           <span class="bike-cat">Gravel</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/cube-nuroad-c-62-slx-glintsand-n-black-1024.jpg" alt="Bicicleta CUBE Nuroad C:62 SLX (Gravel carbono, carbono)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -996,7 +1004,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="mtb" data-brand="cube" data-disc="montana mtb-rigida montana-rigida mtb-sinmotor" data-mat="aluminio" data-price="499" data-offer="0" data-kw="black cube gida metallicwhite mole mtb n prism r salmon rigida hardtail mtb">
         <div class="bike-imgwrap">
           <span class="bike-cat">MTB rígida</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/cube-aim-one-mole-n-prism-1024.jpg" alt="Bicicleta CUBE Aim ONE (MTB rígida, aluminio)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1009,7 +1017,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="mtb" data-brand="cube" data-disc="montana mtb-rigida montana-rigida mtb-sinmotor" data-mat="aluminio" data-price="599" data-offer="0" data-kw="aloegreen black blue cube gida green grey lizard mtb n r topasblue rigida hardtail mtb">
         <div class="bike-imgwrap">
           <span class="bike-cat">MTB rígida</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/cube-aim-pro-grey-n-black-1024.jpg" alt="Bicicleta CUBE Aim Pro (MTB rígida, aluminio)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1022,7 +1030,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="mtb" data-brand="cube" data-disc="montana mtb-doble montana-doble mtb-sinmotor" data-mat="carbono" data-price="4699" data-offer="0" data-kw="blackline cube doble mtb xc doble suspension full suspension mtb">
         <div class="bike-imgwrap">
           <span class="bike-cat">MTB doble</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/synqup_833100_S_00-1024x577.jpg" alt="Bicicleta CUBE AMS ZERO99 C:68X Race 29 (MTB doble XC, carbono)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1035,7 +1043,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="mtb" data-brand="cube" data-disc="montana mtb-doble montana-doble mtb-sinmotor" data-mat="carbono" data-price="1999" data-offer="0" data-kw="black carbon cube doble mtb n trail doble suspension full suspension mtb">
         <div class="bike-imgwrap">
           <span class="bike-cat">MTB doble</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/cube-stereo-hpc-race-carbon-n-black-1024.jpg" alt="Bicicleta CUBE Stereo HPC RACE (MTB doble trail, carbono)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1048,7 +1056,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="mtb" data-brand="cube" data-disc="montana mtb-doble montana-doble mtb-sinmotor" data-mat="carbono" data-price="2999" data-offer="0" data-kw="cube enduro grey hintofmint mtb n doble suspension full suspension mtb">
         <div class="bike-imgwrap">
           <span class="bike-cat">MTB doble</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/cube-fritzz-c-62-tm-hintofmint-n-grey-1024.jpg" alt="Bicicleta CUBE FRITZZ C:62 TM (MTB enduro doble, carbono)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1061,7 +1069,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="mtb" data-brand="cube" data-disc="montana infantil mtb-rigida montana-rigida mtb-sinmotor" data-mat="aluminio" data-price="449" data-offer="0" data-kw="24 actionteam cube infantil junior mtb rigida hardtail mtb">
         <div class="bike-imgwrap">
           <span class="bike-cat">MTB Junior</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/cube-acid-240-disc-actionteam-1024.jpg" alt="Bicicleta CUBE Acid 240 Disc (MTB infantil 24, aluminio)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1074,7 +1082,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="mtb" data-brand="cube" data-disc="infantil" data-mat="aluminio" data-price="99" data-offer="0" data-kw="bici cube infantil n nebula pedales sin topasblue">
         <div class="bike-imgwrap">
           <span class="bike-cat">Infantil</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/cube-numove-120-walk-topasblue-n-nebula-1024.jpg" alt="Bicicleta CUBE Numove 120 walk (Bici sin pedales, aluminio)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1087,7 +1095,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="cube" data-disc="electrica emtb-rigida montana montana-rigida" data-mat="aluminio" data-motor="bosch" data-price="2499" data-offer="0" data-kw="ashgrey cube e gida mtb n prism r rigida hardtail emtb e-mtb">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-MTB rígida</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/cube-reaction-hybrid-performance-720-ashgrey-n-prism-1024.jpg" alt="Bicicleta CUBE Reaction Hybrid Performance 720 (E-MTB rígida, aluminio)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1100,7 +1108,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="cube" data-disc="electrica emtb-rigida montana montana-rigida" data-mat="aluminio" data-motor="bosch" data-price="2699" data-offer="0" data-kw="ashgrey black cube e gida mtb n prism r ruby rigida hardtail emtb e-mtb">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-MTB rígida</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/cube-reaction-hybrid-performance-720-fe-ashgrey-n-prism-1024.jpg" alt="Bicicleta CUBE Reaction Hybrid Performance 720 FE (E-MTB rígida, aluminio)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1113,7 +1121,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="cube" data-disc="electrica emtb-doble montana montana-doble" data-mat="carbono" data-motor="bosch" data-price="4099" data-offer="0" data-kw="black blue cube doble e metallicwhite mtb n oldgrey doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-MTB doble</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/cube-stereo-hybrid-one44-hpc-pro-800-oldgrey-n-black-1024.jpg" alt="Bicicleta CUBE Stereo Hybrid ONE44 HPC Pro 800 (E-MTB doble, carbono)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1126,7 +1134,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="cube" data-disc="electrica emtb-doble montana montana-doble" data-mat="carbono" data-motor="bosch" data-price="4399" data-offer="0" data-kw="coal cube doble e green mtb n doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-MTB doble</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/cube-stereo-hybrid-one44-hpc-race-800-coal-n-green-1024.jpg" alt="Bicicleta CUBE Stereo Hybrid ONE44 HPC Race 800 (E-MTB doble, carbono)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1139,7 +1147,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="cube" data-disc="electrica emtb-doble montana montana-doble" data-mat="carbono" data-motor="bosch" data-price="4799" data-offer="0" data-kw="black blue cube doble e mtb n nebula slabgrey doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-MTB doble</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/cube-stereo-hybrid-one44-hpc-exc-800-slabgrey-n-black-1024.jpg" alt="Bicicleta CUBE Stereo Hybrid ONE44 HPC EXC 800 (E-MTB doble, carbono)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1152,7 +1160,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="cube" data-disc="electrica emtb-doble montana montana-doble" data-mat="carbono" data-motor="bosch" data-price="4999" data-offer="0" data-kw="black blackline cube doble e jungali mtb n doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-MTB doble</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/cube-stereo-hybrid-one44-hpc-slx-800-blackline-1024.jpg" alt="Bicicleta CUBE Stereo Hybrid ONE44 HPC SLX 800 (E-MTB doble, carbono)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1165,7 +1173,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="cube" data-disc="electrica emtb-doble montana montana-doble" data-mat="carbono" data-motor="bosch" data-price="6999" data-offer="0" data-kw="cube doble e graphiteglitch grey mtb n doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-MTB doble</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/cube-stereo-hybrid-one44-hpc-super-tm-800-graphiteglitch-n-grey-1024.jpg" alt="Bicicleta CUBE Stereo Hybrid ONE44 HPC Super TM 800 (E-MTB doble, carbono)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1178,7 +1186,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="cube" data-disc="electrica emtb-doble montana montana-doble" data-mat="carbono" data-motor="bosch" data-price="4399" data-offer="0" data-kw="black cube e enduro metallicpetrol mtb n oatgrey yellow doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-MTB doble</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/cube-stereo-hybrid-one77-hpc-race-800-oatgrey-n-yellow-1024.jpg" alt="Bicicleta CUBE Stereo Hybrid ONE77 HPC Race 800 (E-MTB enduro doble, carbono)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1191,7 +1199,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="cube" data-disc="electrica emtb-doble montana montana-doble" data-mat="carbono" data-motor="bosch" data-price="4999" data-offer="0" data-kw="black blackline cube e enduro hintofmint liquidred mtb n orange doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-MTB doble</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/cube-stereo-hybrid-one77-hpc-slx-800-blackline-1024.jpg" alt="Bicicleta CUBE Stereo Hybrid ONE77 HPC SLX 800 (E-MTB enduro doble, carbono)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1222,7 +1230,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="amflow" data-disc="electrica emtb-doble montana montana-doble" data-mat="carbono" data-motor="dji" data-price="6999" data-offer="0" data-kw="emtb electrica ebike amflow dji avinox px enduro nueva gama doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-MTB doble</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/amflow-px-carbon.jpg" alt="Bicicleta AMFLOW PX Carbon (E-MTB doble, motor DJI Avinox)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1235,7 +1243,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="amflow" data-disc="electrica emtb-doble montana montana-doble" data-mat="carbono" data-motor="dji" data-price="9999" data-offer="0" data-kw="emtb electrica ebike amflow dji avinox px pro tope gama enduro doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-MTB doble</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/amflow-px-carbon-pro.jpg" alt="Bicicleta AMFLOW PX Carbon Pro (E-MTB doble, motor DJI Avinox)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1248,7 +1256,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="amflow" data-disc="electrica emtb-doble montana montana-doble" data-mat="carbono" data-motor="dji" data-price="4499" data-offer="0" data-kw="emtb electrica ebike amflow dji avinox pr bateria extraible nueva gama doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-MTB doble</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/amflow-pr-carbon.jpg" alt="Bicicleta AMFLOW PR Carbon (E-MTB doble, motor DJI Avinox)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1261,7 +1269,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="amflow" data-disc="electrica emtb-doble montana montana-doble" data-mat="carbono" data-motor="dji" data-price="5899" data-offer="0" data-kw="emtb electrica ebike amflow dji avinox pr pro bateria extraible nueva gama doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-MTB doble</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/amflow-pr-carbon-pro.jpg" alt="Bicicleta AMFLOW PR Carbon Pro (E-MTB doble, motor DJI Avinox)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1278,7 +1286,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="steppenwolf" data-disc="electrica emtb-doble montana montana-doble" data-mat="carbono" data-motor="dji" data-price="5199" data-offer="0" data-kw="emtb electrica ebike steppenwolf tundra dji avinox carbono verde musgo rojo racing dos colores stock alemana doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-MTB doble</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/steppenwolf-tundra-9-0-verde.jpg" alt="Bicicleta STEPPENWOLF Tundra 9.0 (E-MTB doble, motor DJI Avinox)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1291,7 +1299,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="steppenwolf" data-disc="electrica emtb-doble montana montana-doble" data-mat="carbono" data-motor="dji" data-price="7999" data-offer="0" data-kw="emtb electrica ebike steppenwolf tundra dji avinox carbono tope gama rockshox ultimate x0 alemana doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-MTB doble</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/steppenwolf-tundra-10-0.jpg" alt="Bicicleta STEPPENWOLF Tundra 10.0 (E-MTB doble, motor DJI Avinox)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1373,7 +1381,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="steppenwolf" data-disc="electrica emtb-doble montana montana-doble" data-mat="aluminio" data-motor="shimano" data-price="4799" data-offer="0" data-kw="0 6 e mtb steppenwolf suv tundra doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-MTB doble</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/sw-tundra-6-0-suv-1024.jpg" alt="Bicicleta STEPPENWOLF Tundra 6.0 SUV (E-MTB doble, aluminio)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1386,7 +1394,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="steppenwolf" data-disc="electrica emtb-doble montana montana-doble" data-mat="carbono" data-motor="dji" data-price="9999" data-offer="0" data-kw="0 11 e mtb steppenwolf tundra doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-MTB doble</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/sw-tundra-11-0-1024.jpg" alt="Bicicleta STEPPENWOLF Tundra 11.0 (E-MTB doble, carbono)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1407,7 +1415,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="steppenwolf" data-disc="electrica etrekking" data-mat="aluminio" data-motor="dji" data-price="3499" data-offer="0" data-kw="0 9 e easy steppenwolf transterra trekking">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-Trekking</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/sw-transterra-easy-9-0-1024.jpg" alt="Bicicleta STEPPENWOLF Transterra Easy 9.0 (E-Trekking, aluminio)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1423,7 +1431,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="steppenwolf" data-disc="electrica etrekking" data-mat="aluminio" data-motor="dji" data-price="0" data-offer="0" data-kw="0 9 e sport steppenwolf transterra trekking">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-Trekking</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/sw-transterra-sport-9-0-1024.jpg" alt="Bicicleta STEPPENWOLF Transterra Sport 9.0 (E-Trekking, aluminio)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1436,7 +1444,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="steppenwolf" data-disc="electrica etrekking" data-mat="aluminio" data-motor="dji" data-price="0" data-offer="0" data-kw="1 9 e sport steppenwolf transterra trekking">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-Trekking</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/sw-transterra-sport-9-1-1024.jpg" alt="Bicicleta STEPPENWOLF Transterra Sport 9.1 (E-Trekking, aluminio)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1449,7 +1457,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="amflow" data-disc="electrica emtb-doble montana montana-doble" data-mat="carbono" data-motor="dji" data-price="0" data-offer="0" data-kw="amflow tl carbon emtb electrica dji avinox trail doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-MTB doble</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/amflow-tl-carbon-1024.jpg" alt="Bicicleta AMFLOW TL Carbon (E-MTB doble, carbono)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1462,7 +1470,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="road" data-brand="focus" data-disc="gravel" data-mat="aluminio" data-price="1399" data-offer="0" data-kw="6 atlas focus gravel gris">
         <div class="bike-imgwrap">
           <span class="bike-cat">Gravel</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/focus-atlas-6-6-gris-1024.jpg" alt="Bicicleta FOCUS ATLAS 6.6 (Gravel, aluminio, color gris)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1475,7 +1483,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="road" data-brand="focus" data-disc="gravel" data-mat="aluminio" data-price="1799" data-offer="1" data-kw="6 7 atlas focus gravel gris plata">
         <div class="bike-imgwrap">
           <span class="bike-cat">Gravel</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/focus-atlas-6-7-plata-1024.jpg" alt="Bicicleta FOCUS ATLAS 6.7 (Gravel, aluminio, color plata)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1488,7 +1496,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="road" data-brand="focus" data-disc="gravel" data-mat="aluminio" data-price="1999" data-offer="0" data-kw="6 8 atlas eqp focus gravel gris marr n">
         <div class="bike-imgwrap">
           <span class="bike-cat">Gravel</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/focus-atlas-6-8-eqp-gris-1024.jpg" alt="Bicicleta FOCUS ATLAS 6.8 EQP (Gravel, aluminio, color gris)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1501,7 +1509,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="road" data-brand="focus" data-disc="gravel" data-mat="aluminio" data-price="1999" data-offer="1" data-kw="6 9 atlas focus gravel p rpura verde">
         <div class="bike-imgwrap">
           <span class="bike-cat">Gravel</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/focus-atlas-6-9-purpura-1024.jpg" alt="Bicicleta FOCUS ATLAS 6.9 (Gravel, aluminio, color púrpura)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1514,7 +1522,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="road" data-brand="focus" data-disc="gravel" data-mat="carbono" data-price="2699" data-offer="1" data-kw="7 8 atlas focus gravel gris p rpura">
         <div class="bike-imgwrap">
           <span class="bike-cat">Gravel</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/focus-atlas-8-7-purpura-1024.jpg" alt="Bicicleta FOCUS ATLAS 8.7 (Gravel, carbono, color púrpura)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1527,7 +1535,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="road" data-brand="focus" data-disc="gravel" data-mat="carbono" data-price="3499" data-offer="0" data-kw="8 atlas azul focus gravel plata">
         <div class="bike-imgwrap">
           <span class="bike-cat">Gravel</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/focus-atlas-8-8-azul-1024.jpg" alt="Bicicleta FOCUS ATLAS 8.8 (Gravel, carbono, color azul)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1540,7 +1548,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="road" data-brand="focus" data-disc="gravel" data-mat="carbono" data-price="5299" data-offer="0" data-kw="8 9 atlas focus gravel negro">
         <div class="bike-imgwrap">
           <span class="bike-cat">Gravel</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/focus-atlas-8-9-negro-1024.jpg" alt="Bicicleta FOCUS ATLAS 8.9 (Gravel, carbono, color negro)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1553,7 +1561,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica etrekking" data-mat="aluminio" data-motor="bosch" data-price="3699" data-offer="0" data-kw="6 7 aventura e focus gris trekking verde x">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-Trekking</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/focus-aventura2-6-7-x-verde-1024.jpg" alt="Bicicleta FOCUS AVENTURA² 6.7 X (E-Trekking, aluminio, color verde)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1566,7 +1574,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica etrekking" data-mat="aluminio" data-motor="bosch" data-price="2999" data-offer="0" data-kw="6 7 aventura azul e focus marr n plata trekking">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-Trekking</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/focus-aventura2-6-7-azul-1024.jpg" alt="Bicicleta FOCUS AVENTURA² 6.7 (E-Trekking, aluminio, color azul)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1579,7 +1587,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica etrekking" data-mat="aluminio" data-motor="bosch" data-price="4399" data-offer="0" data-kw="6 8 aventura e focus gris plata trekking verde">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-Trekking</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/focus-aventura2-6-8-verde-1024.jpg" alt="Bicicleta FOCUS AVENTURA² 6.8 (E-Trekking, aluminio, color verde)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1592,7 +1600,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica etrekking" data-mat="aluminio" data-motor="bosch" data-price="4899" data-offer="0" data-kw="6 9 aventura e focus gris trekking">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-Trekking</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/focus-aventura2-6-9-gris-1024.jpg" alt="Bicicleta FOCUS AVENTURA² 6.9 (E-Trekking, aluminio, color gris)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1605,7 +1613,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica etrekking" data-mat="aluminio" data-motor="bosch" data-price="4199" data-offer="0" data-kw="6 7 aventura azul e focus fs plata trekking">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-Trekking</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/focus-aventura2-fs-6-7-azul-1024.jpg" alt="Bicicleta FOCUS AVENTURA² FS 6.7 (E-Trekking, aluminio, color azul)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1618,7 +1626,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica etrekking" data-mat="aluminio" data-motor="bosch" data-price="5199" data-offer="0" data-kw="6 8 aventura e focus fs gris plata trekking">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-Trekking</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/focus-aventura2-fs-6-8-gris-1024.jpg" alt="Bicicleta FOCUS AVENTURA² FS 6.8 (E-Trekking, aluminio, color gris)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1631,7 +1639,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica etrekking" data-mat="aluminio" data-motor="bosch" data-price="5699" data-offer="0" data-kw="6 9 aventura e focus fs gris trekking">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-Trekking</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/focus-aventura2-fs-6-9-gris-1024.jpg" alt="Bicicleta FOCUS AVENTURA² FS 6.9 (E-Trekking, aluminio, color gris)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1644,7 +1652,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="road" data-brand="focus" data-disc="carretera" data-mat="carbono" data-price="2499" data-offer="1" data-kw="7 8 carretera focus gris izalco max">
         <div class="bike-imgwrap">
           <span class="bike-cat">Carretera</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/focus-izalco-max-8-7-gris-1024.jpg" alt="Bicicleta FOCUS IZALCO MAX 8.7 (Carretera, carbono, color gris)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1657,7 +1665,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="road" data-brand="focus" data-disc="carretera" data-mat="carbono" data-price="3299" data-offer="0" data-kw="8 azul carretera focus izalco max negro">
         <div class="bike-imgwrap">
           <span class="bike-cat">Carretera</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/focus-izalco-max-8-8-azul-1024.jpg" alt="Bicicleta FOCUS IZALCO MAX 8.8 (Carretera, carbono, color azul)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1670,7 +1678,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="road" data-brand="focus" data-disc="carretera" data-mat="carbono" data-price="4299" data-offer="0" data-kw="8 9 carretera focus izalco max negro rojo">
         <div class="bike-imgwrap">
           <span class="bike-cat">Carretera</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/focus-izalco-max-8-9-rojo-1024.jpg" alt="Bicicleta FOCUS IZALCO MAX 8.9 (Carretera, carbono, color rojo)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1683,7 +1691,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="road" data-brand="focus" data-disc="carretera" data-mat="carbono" data-price="5999" data-offer="0" data-kw="7 9 carretera focus izalco max negro plata">
         <div class="bike-imgwrap">
           <span class="bike-cat">Carretera</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/focus-izalco-max-9-7-plata-1024.jpg" alt="Bicicleta FOCUS IZALCO MAX 9.7 (Carretera, carbono, color plata)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1696,7 +1704,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="road" data-brand="focus" data-disc="carretera" data-mat="carbono" data-price="6799" data-offer="0" data-kw="8 9 carretera focus izalco max p rpura">
         <div class="bike-imgwrap">
           <span class="bike-cat">Carretera</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/focus-izalco-max-9-8-purpura-1024.jpg" alt="Bicicleta FOCUS IZALCO MAX 9.8 (Carretera, carbono, color púrpura)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1709,7 +1717,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="road" data-brand="focus" data-disc="carretera" data-mat="carbono" data-price="8499" data-offer="0" data-kw="9 carretera focus gris izalco max">
         <div class="bike-imgwrap">
           <span class="bike-cat">Carretera</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/focus-izalco-max-9-9-gris-1024.jpg" alt="Bicicleta FOCUS IZALCO MAX 9.9 (Carretera, carbono, color gris)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1722,7 +1730,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica emtb-doble montana montana-doble" data-mat="aluminio" data-motor="bosch" data-price="7999" data-offer="0" data-kw="0 6 e focus jam mtb plata doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-MTB doble</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/focus-jam2-6-0-plata-1024.jpg" alt="Bicicleta FOCUS JAM² 6.0 (E-MTB doble, aluminio, color plata)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1735,7 +1743,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica emtb-doble montana montana-doble" data-mat="aluminio" data-motor="bosch" data-price="4699" data-offer="0" data-kw="6 7 blanco e focus jam mtb negro doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-MTB doble</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/focus-jam2-6-7-negro-1024.jpg" alt="Bicicleta FOCUS JAM² 6.7 (E-MTB doble, aluminio, color negro)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1748,7 +1756,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica emtb-doble montana montana-doble" data-mat="aluminio" data-motor="bosch" data-price="5699" data-offer="0" data-kw="6 8 e focus jam marr mtb n plata doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-MTB doble</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/focus-jam2-6-8-marron-1024.jpg" alt="Bicicleta FOCUS JAM² 6.8 (E-MTB doble, aluminio, color marrón)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1761,7 +1769,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica emtb-doble montana montana-doble" data-mat="aluminio" data-motor="bosch" data-price="6699" data-offer="0" data-kw="6 9 e focus gris jam mtb negro doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-MTB doble</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/focus-jam2-6-9-negro-1024.jpg" alt="Bicicleta FOCUS JAM² 6.9 (E-MTB doble, aluminio, color negro)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1774,7 +1782,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica emtb-rigida montana montana-rigida" data-mat="aluminio" data-motor="bosch" data-price="2999" data-offer="0" data-kw="6 7 e focus jarifa mtb negro verde x rigida hardtail emtb e-mtb">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-MTB rígida</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/focus-jarifa2-6-7-x-negro-1024.jpg" alt="Bicicleta FOCUS JARIFA² 6.7 X (E-MTB rígida, aluminio, color negro)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1787,7 +1795,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica emtb-rigida montana montana-rigida" data-mat="aluminio" data-motor="bosch" data-price="2599" data-offer="0" data-kw="6 7 e focus jarifa mtb plata rojo rigida hardtail emtb e-mtb">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-MTB rígida</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/focus-jarifa2-6-7-rojo-1024.jpg" alt="Bicicleta FOCUS JARIFA² 6.7 (E-MTB rígida, aluminio, color rojo)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1800,7 +1808,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica emtb-rigida montana montana-rigida" data-mat="aluminio" data-motor="bosch" data-price="3299" data-offer="0" data-kw="6 8 e focus gris jarifa mtb verde rigida hardtail emtb e-mtb">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-MTB rígida</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/focus-jarifa2-6-8-gris-1024.jpg" alt="Bicicleta FOCUS JARIFA² 6.8 (E-MTB rígida, aluminio, color gris)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1813,7 +1821,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="road" data-brand="focus" data-disc="carretera" data-mat="carbono" data-price="2499" data-offer="0" data-kw="7 8 blanco endurance focus paralane">
         <div class="bike-imgwrap">
           <span class="bike-cat">Endurance</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/focus-paralane-8-7-blanco-1024.jpg" alt="Bicicleta FOCUS PARALANE 8.7 (Endurance, carbono, color blanco)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1826,7 +1834,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="road" data-brand="focus" data-disc="carretera" data-mat="carbono" data-price="3499" data-offer="0" data-kw="8 endurance focus gris negro paralane">
         <div class="bike-imgwrap">
           <span class="bike-cat">Endurance</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/focus-paralane-8-8-negro-1024.jpg" alt="Bicicleta FOCUS PARALANE 8.8 (Endurance, carbono, color negro)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1839,7 +1847,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="road" data-brand="focus" data-disc="carretera" data-mat="carbono" data-price="3999" data-offer="0" data-kw="8 9 endurance focus negro paralane">
         <div class="bike-imgwrap">
           <span class="bike-cat">Endurance</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/focus-paralane-8-9-negro-1024.jpg" alt="Bicicleta FOCUS PARALANE 8.9 (Endurance, carbono, color negro)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1852,7 +1860,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica etrekking" data-mat="aluminio" data-motor="bosch" data-price="4999" data-offer="0" data-kw="6 8 abs city e focus gris planet">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-City</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/focus-planet2-6-8-abs-gris-1024.jpg" alt="Bicicleta FOCUS Planet² 6.8 ABS (E-City, aluminio, color gris)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1868,7 +1876,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica emtb-doble montana montana-doble" data-mat="aluminio" data-motor="bosch" data-price="8499" data-offer="0" data-kw="0 6 e enduro focus mtb plata sam doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-MTB doble</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/focus-sam2-6-0-plata-1024.jpg" alt="Bicicleta FOCUS SAM² 6.0 (E-MTB enduro doble, aluminio, color plata)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1881,7 +1889,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica emtb-doble montana montana-doble" data-mat="aluminio" data-motor="bosch" data-price="4502" data-offer="1" data-kw="6 8 e enduro focus gris mtb sam verde doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-MTB doble</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/focus-sam2-6-8-verde-1024.jpg" alt="Bicicleta FOCUS SAM² 6.8 (E-MTB enduro doble, aluminio, color verde)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1894,7 +1902,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica emtb-doble montana montana-doble" data-mat="aluminio" data-motor="bosch" data-price="7199" data-offer="0" data-kw="6 9 blanco e enduro focus mtb p rpura sam doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-MTB doble</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/focus-sam2-6-9-purpura-1024.jpg" alt="Bicicleta FOCUS SAM² 6.9 (E-MTB enduro doble, aluminio, color púrpura)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1907,7 +1915,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica emtb-doble montana montana-doble" data-mat="aluminio" data-motor="bosch" data-price="4699" data-offer="0" data-kw="6 7 azul e focus gris mtb thron verde doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-MTB doble</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/focus-thron2-6-7-verde-1024.jpg" alt="Bicicleta FOCUS THRON² 6.7 (E-MTB doble, aluminio, color verde)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1920,7 +1928,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica emtb-doble montana montana-doble" data-mat="aluminio" data-motor="bosch" data-price="4899" data-offer="0" data-kw="6 7 e eqp focus gris mtb plata thron verde doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-MTB doble</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/focus-thron2-6-7-eqp-verde-1024.jpg" alt="Bicicleta FOCUS THRON² 6.7 EQP (E-MTB doble, aluminio, color verde)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1933,7 +1941,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica emtb-doble montana montana-doble" data-mat="aluminio" data-motor="bosch" data-price="5299" data-offer="0" data-kw="6 8 abs e focus gris mtb plata thron doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-MTB doble</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/focus-thron2-6-8-abs-gris-1024.jpg" alt="Bicicleta FOCUS THRON² 6.8 ABS (E-MTB doble, aluminio, color gris)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1946,7 +1954,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica emtb-doble montana montana-doble" data-mat="aluminio" data-motor="bosch" data-price="5499" data-offer="0" data-kw="6 8 abs e eqp focus mtb plata thron doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-MTB doble</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/focus-thron2-6-8-eqp-abs-plata-1024.jpg" alt="Bicicleta FOCUS THRON² 6.8 EQP ABS (E-MTB doble, aluminio, color plata)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -1959,7 +1967,7 @@ setTimeout(hideLoader,3500);
       <article class="bike-card reveal" data-cat="e" data-brand="focus" data-disc="electrica emtb-doble montana montana-doble" data-mat="aluminio" data-motor="bosch" data-price="6699" data-offer="0" data-kw="6 9 abs e focus mtb plata thron doble suspension full suspension emtb e-mtb">
         <div class="bike-imgwrap">
           <span class="bike-cat">E-MTB doble</span>
-          <span class="bike-fav"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></span>
+          <button type="button" class="bike-fav" aria-pressed="false" aria-label="Guardar en favoritas" title="Guardar en favoritas"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg></button>
           <img src="assets/focus-thron2-6-9-abs-plata-1024.jpg" alt="Bicicleta FOCUS THRON² 6.9 ABS (E-MTB doble, aluminio, color plata)" loading="lazy">
         </div>
         <div class="bike-body">
@@ -2463,6 +2471,11 @@ coForm.addEventListener('submit',function(e){
   var cards=[].slice.call(grid.querySelectorAll('.bike-card'));
   var PMAX=10000;
   var norm=function(s){return (s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'')};
+  /* favoritas: se guardan en el navegador del visitante y se colocan siempre las primeras */
+  var FAVK='ibc_favs';
+  function favLoad(){try{var a=JSON.parse(localStorage.getItem(FAVK)||'[]');return (a instanceof Array)?a:[]}catch(e){return []}}
+  function favSave(a){try{localStorage.setItem(FAVK,JSON.stringify(a))}catch(e){}}
+  var favs=favLoad();
   var eur=function(n){return String(n).replace(/\B(?=(\d{3})+(?!\d))/g,'.')+' €'};
 
   /* índice por tarjeta */
@@ -2476,7 +2489,34 @@ coForm.addEventListener('submit',function(e){
     c._motor=c.dataset.motor||'';
     c._offer=c.dataset.offer==='1';
     c._order=i;
+    c._name=name.trim();
+    c._fav=favs.indexOf(c._name)>=0;
     c._hay=norm([name,sub,c._brand,c.dataset.disc,c._mat,c._motor,c.dataset.kw].join(' '));
+  });
+
+  /* corazón de cada tarjeta */
+  var elFavNote=document.getElementById('favNote'),elFavCount=document.getElementById('favCount');
+  function paintFav(c){var b=c.querySelector('.bike-fav');if(!b)return;
+    b.classList.toggle('on',c._fav);
+    b.setAttribute('aria-pressed',c._fav?'true':'false');
+    var t=c._fav?'Quitar de favoritas':'Guardar en favoritas';
+    b.setAttribute('aria-label',t);b.setAttribute('title',t);}
+  var elFavWord=document.getElementById('favWord');
+  function favNote(){var n=0;cards.forEach(function(c){if(c._fav)n++});
+    if(elFavCount)elFavCount.textContent=n;
+    if(elFavWord)elFavWord.textContent=(n===1?'favorita':'favoritas');
+    if(elFavNote)elFavNote.hidden=(n===0);}
+  cards.forEach(function(c){
+    var b=c.querySelector('.bike-fav');if(!b)return;
+    paintFav(c);
+    b.addEventListener('click',function(e){
+      e.stopPropagation();e.preventDefault();
+      c._fav=!c._fav;
+      var i=favs.indexOf(c._name);
+      if(c._fav){if(i<0)favs.push(c._name)}else if(i>=0)favs.splice(i,1);
+      favSave(favs);paintFav(c);favNote();apply();
+      if(c._fav)grid.scrollIntoView({behavior:'smooth',block:'start'});
+    });
   });
 
   var st={q:'',cat:'all',brand:{},mat:{},motor:{},offer:false,pmin:0,pmax:PMAX,sort:'destacado'};
@@ -2520,6 +2560,8 @@ coForm.addEventListener('submit',function(e){
     else if(s==='price-desc')sorted.sort(function(a,b){return b._price-a._price});
     else if(s==='name')sorted.sort(function(a,b){return a.querySelector('.bike-name').textContent.localeCompare(b.querySelector('.bike-name').textContent,'es')});
     else sorted.sort(function(a,b){return a._order-b._order});
+    var favFirst=sorted.filter(function(c){return c._fav});
+    if(favFirst.length)sorted=favFirst.concat(sorted.filter(function(c){return !c._fav}));
     var hidden=cards.filter(function(c){return vis.indexOf(c)<0}).sort(function(a,b){return a._order-b._order});
     sorted.concat(hidden).forEach(function(c){grid.appendChild(c)});
     if(elCount)elCount.textContent=vis.length;
@@ -2615,7 +2657,8 @@ coForm.addEventListener('submit',function(e){
   if(back)back.addEventListener('click',closeSide);
   document.addEventListener('keydown',function(e){if(e.key==='Escape'&&side.classList.contains('open'))closeSide()});
   /* init */
-  priceUI('min');if(elCount)elCount.textContent=cards.length;syncCat();updateCounts();updateBadge();
+  priceUI('min');if(elCount)elCount.textContent=cards.length;syncCat();updateCounts();updateBadge();favNote();
+  if(favs.length)apply();
 })();
 
 /* Lightbox galería */
