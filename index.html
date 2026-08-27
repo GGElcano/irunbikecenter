@@ -560,6 +560,9 @@ footer{background:var(--ink);color:#fff;padding:70px 0 30px}
 .fab-filt .fb{min-width:20px;height:20px;padding:0 6px;border-radius:999px;background:var(--red);color:#fff;font-size:11px;font-weight:800;display:grid;place-items:center}
 .fab-filt .fb[hidden],.filt-badge[hidden]{display:none}
 
+.foot-legal{display:inline-flex;flex-wrap:wrap;gap:6px 16px}
+.foot-legal a,.foot-legal button{color:inherit;font:inherit;background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+.foot-legal a:hover,.foot-legal a:focus-visible,.foot-legal button:hover,.foot-legal button:focus-visible{color:var(--red)}
 /* Aviso de cookies */
 .ck-banner{position:fixed;left:16px;right:16px;bottom:16px;z-index:900;max-width:520px;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 22px 60px rgba(13,14,16,.22);padding:20px 22px;display:none}
 .ck-banner.show{display:block}
@@ -2308,7 +2311,13 @@ setTimeout(hideLoader,3500);
     </div>
     <div class="foot-bottom">
       <span>© 2026 Irun Bike Center · Distribuidor oficial CUBE, Focus, Amflow y Steppenwolf</span>
-      <span>Irun · Gipuzkoa · <a href="#" id="ckOpen" style="color:inherit;text-decoration:underline;text-underline-offset:2px">Cookies</a></span>
+      <span>Irun Bike Center, S.L. · NIF B56935950 · C. Juan Thalamas Labandibar 33, 20305 Irun (Gipuzkoa)</span>
+      <span class="foot-legal">
+        <a href="/aviso-legal/">Aviso legal</a>
+        <a href="/privacidad/">Privacidad</a>
+        <a href="/cookies/">Cookies</a>
+        <button type="button" id="ckOpen">Configurar cookies</button>
+      </span>
     </div>
   </div>
 </footer>
@@ -2389,7 +2398,8 @@ setTimeout(hideLoader,3500);
         </div>
       </div>
       <button type="submit" class="f-submit" id="coBtn">Enviar encargo</button>
-      <p class="co-legal">Sin pago online: reservas la bici y confirmamos disponibilidad, talla y forma de pago (en tienda o por transferencia) contigo. Sin compromiso.</p>
+      <p class="co-legal">Sin pago online: reservas la bici y confirmamos disponibilidad, talla y forma de pago (en tienda o por transferencia) contigo. Sin compromiso. Precios con IVA incluido; los gastos de envío, si eliges entrega a domicilio, te los confirmamos antes de cerrar el encargo. Si la compra se cierra a distancia tienes <a href="/aviso-legal/#venta">14 días para desistir</a>.</p>
+            <p class="f-legal" style="margin-top:10px;font-size:12.5px;line-height:1.55;color:var(--muted)"><strong>Protección de datos:</strong> trata tus datos <strong>Irun Bike Center, S.L.</strong> (NIF B56935950) para tramitar tu encargo y contactarte (base: tu solicitud, art. 6.1.b RGPD). Al pulsar «Enviar encargo» se prepara un mensaje de WhatsApp: los datos no salen de tu móvil hasta que tú lo envías. No cedemos tus datos a terceros salvo al transportista si eliges envío a domicilio. Puedes ejercer tus derechos de acceso, rectificación, supresión y oposición en <a href="mailto:info@irunbikecenter.com">info@irunbikecenter.com</a>. Más detalle en la <a href="/privacidad/">política de privacidad</a>.</p>
     </form>
   </div>
 </div>
@@ -3143,7 +3153,7 @@ document.querySelectorAll('#bikeGrid .bike-card').forEach(function(card){
 <!-- Aviso de cookies: sale una vez y recuerda la elección. Si se rechaza, el mapa de Google no se carga -->
 <div class="ck-banner" id="ckBanner" role="dialog" aria-live="polite" aria-label="Aviso de cookies">
   <h4>Usamos cookies</h4>
-  <p>Esta web usa almacenamiento propio para que funcionen el carrito y tus favoritos. Si aceptas, cargamos también el mapa de Google, que instala cookies suyas. Si lo rechazas, la web funciona igual y el mapa no se carga.</p>
+  <p>Esta web usa almacenamiento propio para que funcionen el carrito y tus favoritos. Si aceptas, cargamos también el mapa de Google, que instala cookies suyas. Si lo rechazas, la web funciona igual y el mapa no se carga. Las tipografías se cargan siempre desde Google Fonts y no instalan cookies. Más detalle en la <a href="/cookies/" style="color:inherit">política de cookies</a>.</p>
   <div class="ck-btns">
     <button type="button" class="ck-ok" id="ckOk">Aceptar</button>
     <button type="button" id="ckNo">Rechazar</button>
