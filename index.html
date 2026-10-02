@@ -3372,5 +3372,7 @@ document.querySelectorAll('#bikeGrid .bike-card').forEach(function(card){
   else window.addEventListener('load',function(){ setTimeout(arranca,300); });
 })();
 </script>
+<script>/* Contador de visitas anonimo (sin cookies ni almacenamiento): solo apunta de donde llega la visita */
+(function(){try{var r=document.referrer;if(r&&/^https?:\/\/([^\/]*\.)?irunbikecenter\.com/i.test(r))return;var q=new URLSearchParams(location.search);navigator.sendBeacon('https://ibc-contador.ggelcano.workers.dev/v',JSON.stringify({r:r,u:q.get('utm_source')||'',p:location.pathname}))}catch(e){}})();</script>
 </body>
 </html>

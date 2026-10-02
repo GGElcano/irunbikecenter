@@ -91,7 +91,7 @@ tbody tr:last-child td { border-bottom: none; }
         </tbody>
       </table>
     </div>
-    <p>Este sitio <strong>no utiliza cookies analíticas ni publicitarias</strong>, ni propias ni de terceros, y no realiza seguimiento entre sitios.</p>
+    <p>Este sitio <strong>no utiliza cookies analíticas ni publicitarias</strong>, ni propias ni de terceros, y no realiza seguimiento entre sitios. Para saber cuántas visitas llegan y desde dónde usa un contador anónimo que no instala cookies ni guarda nada en el navegador.</p>
     <h3>Cookies y contenidos de terceros (solo con consentimiento)</h3>
     <p>Se cargan <strong>únicamente si el usuario las acepta</strong> en el aviso de cookies. Mientras no lo haga, el mapa no se carga y en su lugar aparece un aviso con un botón para activarlo; no se realiza ninguna petición a los servidores del tercero.</p>
     <div class="lg-tabla">
@@ -130,5 +130,7 @@ tbody tr:last-child td { border-bottom: none; }
     <p>Irun Bike Center, S.L. &middot; NIF B56935950 &middot; Calle Juan Thalamas Labandibar, 33, 20305 Irun (Gipuzkoa)</p>
   </footer>
 </div>
+<script>/* Contador de visitas anonimo (sin cookies ni almacenamiento): solo apunta de donde llega la visita */
+(function(){try{var r=document.referrer;if(r&&/^https?:\/\/([^\/]*\.)?irunbikecenter\.com/i.test(r))return;var q=new URLSearchParams(location.search);navigator.sendBeacon('https://ibc-contador.ggelcano.workers.dev/v',JSON.stringify({r:r,u:q.get('utm_source')||'',p:location.pathname}))}catch(e){}})();</script>
 </body>
 </html>

@@ -95,6 +95,7 @@ tbody tr:last-child td { border-bottom: none; }
       <li><strong>Gestionar las solicitudes de encargo</strong> enviadas desde el catálogo: comprobar la disponibilidad y la talla, confirmar el precio, la forma de pago y la entrega, y contactar con el cliente para cerrar el encargo.</li>
       <li><strong>Gestionar las peticiones de cita del taller</strong> y las consultas de asesoramiento.</li>
       <li><strong>Mostrar nuestra ubicación</strong> mediante un mapa de Google Maps incrustado, que solo se carga si el usuario acepta las cookies de terceros.</li>
+      <li><strong>Contar las visitas de forma anónima:</strong> un contador propio anota cuántas visitas llegan a la web, desde dónde (por ejemplo, desde Google o desde un asistente como ChatGPT o Gemini) y por qué página entran. No usa cookies, no guarda nada en el navegador y no registra la dirección IP ni ningún dato que identifique al visitante.</li>
       <li><strong>Recordar preferencias del propio navegador</strong> (favoritos, carrito y elección sobre cookies) mediante almacenamiento local. Esa información no sale del equipo del usuario.</li>
     </ul>
     <p><strong>Cómo viajan los datos del formulario de encargo:</strong> al rellenarlo, los datos se guardan en el almacenamiento local del navegador del propio usuario y se prepara un mensaje de WhatsApp dirigido a la tienda. <strong>El envío solo se produce si el usuario pulsa el enlace de WhatsApp</strong>; en ese momento el contenido del mensaje se transmite a través de WhatsApp (Meta Platforms Ireland Ltd.) conforme a las condiciones de ese servicio. El sitio web no almacena los encargos en ningún servidor propio.</p>
@@ -117,6 +118,7 @@ tbody tr:last-child td { border-bottom: none; }
     <p>Los datos no se comunican a terceros salvo obligación legal. Para el funcionamiento del sitio se emplean proveedores que actúan como encargados del tratamiento y que pueden acceder a datos técnicos:</p>
     <ul>
       <li><strong>GitHub, Inc.</strong> — proveedor de alojamiento del sitio (GitHub Pages). Trata datos técnicos de navegación. Puede implicar transferencias internacionales amparadas en las Cláusulas Contractuales Tipo aprobadas por la Comisión Europea.</li>
+      <li><strong>Cloudflare, Inc.</strong>: aloja el contador anónimo de visitas. Para entregarlo trata de forma técnica y pasajera la conexión del visitante, sin que el contador guarde la dirección IP. Puede implicar transferencias internacionales amparadas en las Cláusulas Contractuales Tipo y en el marco Data Privacy Framework UE-EE. UU.</li>
       <li><strong>WhatsApp / Meta Platforms Ireland Ltd.</strong> — canal por el que el usuario decide enviar su encargo. El contenido del mensaje se trata conforme a las condiciones de WhatsApp.</li>
       <li><strong>Google LLC / Google Ireland Ltd.</strong> — mapa de Google Maps (solo si el usuario lo acepta) y tipografías de Google Fonts (en cada visita, sin instalar cookies). Implica una comunicación técnica con servidores de Google que incluye la dirección IP y puede suponer una transferencia internacional a Estados Unidos, amparada en las Cláusulas Contractuales Tipo y en el marco Data Privacy Framework UE-EE. UU.</li>
       <li><strong>Gestoría y asesoría fiscal</strong> del responsable, para el cumplimiento de las obligaciones contables y tributarias.</li>
@@ -161,5 +163,7 @@ tbody tr:last-child td { border-bottom: none; }
     <p>Irun Bike Center, S.L. &middot; NIF B56935950 &middot; Calle Juan Thalamas Labandibar, 33, 20305 Irun (Gipuzkoa)</p>
   </footer>
 </div>
+<script>/* Contador de visitas anonimo (sin cookies ni almacenamiento): solo apunta de donde llega la visita */
+(function(){try{var r=document.referrer;if(r&&/^https?:\/\/([^\/]*\.)?irunbikecenter\.com/i.test(r))return;var q=new URLSearchParams(location.search);navigator.sendBeacon('https://ibc-contador.ggelcano.workers.dev/v',JSON.stringify({r:r,u:q.get('utm_source')||'',p:location.pathname}))}catch(e){}})();</script>
 </body>
 </html>
