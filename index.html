@@ -2527,20 +2527,10 @@ setTimeout(hideLoader,3500);
         <div class="f-field"><label>Teléfono</label><input name="telefono" type="tel" placeholder="6XX XXX XXX" required></div>
         <div class="f-field"><label>Email</label><input name="email" type="email" placeholder="tu@email.com" required></div>
       </div>
-      <div class="f-field" style="margin-bottom:14px"><label>Entrega</label><select name="entrega" id="coEntrega">
-        <option>Recoger en tienda (Irun)</option>
-        <option>Envío a domicilio</option>
-      </select></div>
-      <div id="coEnvio" style="display:none">
-        <div class="f-field" style="margin-bottom:14px"><label>Dirección</label><input name="direccion" type="text"></div>
-        <div class="f-row c2">
-          <div class="f-field"><label>Código postal</label><input name="cp" type="text"></div>
-          <div class="f-field"><label>Población</label><input name="poblacion" type="text"></div>
-        </div>
-      </div>
+      <div class="f-field" style="margin-bottom:14px"><label>Entrega</label><p style="margin:0;padding:12px 14px;border:1px solid #ddd;border-radius:10px;background:#f7f7f7;font-weight:600">Recogida en tienda (Irun)</p><input type="hidden" name="entrega" value="Recogida en tienda (Irun)"><p style="margin:6px 0 0;font-size:13px;color:var(--muted)">No hacemos envíos: la bici se recoge en la tienda de Irun.</p></div>
       <button type="submit" class="f-submit" id="coBtn">Enviar encargo</button>
-      <p class="co-legal">Sin pago online: reservas la bici y confirmamos disponibilidad, talla y forma de pago (en tienda o por transferencia) contigo. Sin compromiso. Precios con IVA incluido; los gastos de envío, si eliges entrega a domicilio, te los confirmamos antes de cerrar el encargo. Si la compra se cierra a distancia tienes <a href="/aviso-legal/#venta">14 días para desistir</a>.</p>
-            <p class="f-legal" style="margin-top:10px;font-size:12.5px;line-height:1.55;color:var(--muted)"><strong>Protección de datos:</strong> trata tus datos <strong>Irun Bike Center, S.L.</strong> (NIF B56935950) para tramitar tu encargo y contactarte (base: tu solicitud, art. 6.1.b RGPD). Al pulsar «Enviar encargo» se prepara un mensaje de WhatsApp: los datos no salen de tu móvil hasta que tú lo envías. No cedemos tus datos a terceros salvo al transportista si eliges envío a domicilio. Puedes ejercer tus derechos de acceso, rectificación, supresión y oposición en <a href="mailto:info@irunbikecenter.com">info@irunbikecenter.com</a>. Más detalle en la <a href="/privacidad/">política de privacidad</a>.</p>
+      <p class="co-legal">Sin pago online: reservas la bici y confirmamos disponibilidad, talla y forma de pago (en tienda o por transferencia) contigo. Sin compromiso. Precios con IVA incluido. La bici se recoge en la tienda de Irun. Si la compra se cierra a distancia tienes <a href="/aviso-legal/#venta">14 días para desistir</a>.</p>
+            <p class="f-legal" style="margin-top:10px;font-size:12.5px;line-height:1.55;color:var(--muted)"><strong>Protección de datos:</strong> trata tus datos <strong>Irun Bike Center, S.L.</strong> (NIF B56935950) para tramitar tu encargo y contactarte (base: tu solicitud, art. 6.1.b RGPD). Al pulsar «Enviar encargo» se prepara un mensaje de WhatsApp: los datos no salen de tu móvil hasta que tú lo envías. No cedemos tus datos a terceros. Puedes ejercer tus derechos de acceso, rectificación, supresión y oposición en <a href="mailto:info@irunbikecenter.com">info@irunbikecenter.com</a>. Más detalle en la <a href="/privacidad/">política de privacidad</a>.</p>
     </form>
   </div>
 </div>
@@ -2565,7 +2555,7 @@ function openCheckout(name,price){
   document.getElementById('coPrice').textContent=price;
   document.getElementById('coTitle').textContent='Tu encargo';
   var st=document.getElementById('coStatus');st.className='f-status';st.textContent='';
-  coForm.reset();document.getElementById('coEnvio').style.display='none';
+  coForm.reset();
   coBtn.disabled=false;coBtn.textContent='Confirmar pedido';
   co.classList.add('open');document.body.style.overflow='hidden';
   co.scrollTop=0;
@@ -2582,15 +2572,11 @@ function closeCo(){co.classList.remove('open');document.body.style.overflow=''}
 document.getElementById('coClose').addEventListener('click',closeCo);
 co.addEventListener('click',function(e){if(e.target===co)closeCo()});
 document.addEventListener('keydown',function(e){if(e.key==='Escape'&&co.classList.contains('open'))closeCo()});
-document.getElementById('coEntrega').addEventListener('change',function(){
-  document.getElementById('coEnvio').style.display=this.value==='Envío a domicilio'?'':'none';
-});
 coForm.addEventListener('submit',function(e){
   e.preventDefault();
   var st=document.getElementById('coStatus');
   var d=Object.fromEntries(new FormData(coForm).entries());
   if(!d.nombre||!d.telefono||!d.email){st.className='f-status show err';st.textContent='Completa nombre, teléfono y email.';co.scrollTop=0;return}
-  if(d.entrega==='Envío a domicilio'&&(!d.direccion||!d.cp)){st.className='f-status show err';st.textContent='Para envío a domicilio indica al menos dirección y código postal.';co.scrollTop=0;return}
   var bici=document.getElementById('coBike').textContent,precio=document.getElementById('coPrice').textContent;
   var a=(function(){try{return JSON.parse(localStorage.getItem(PKEY)||'[]')}catch(e){return[]}})();
   var ymd=new Date().toISOString().slice(0,10).replace(/-/g,'');
@@ -2603,7 +2589,6 @@ coForm.addEventListener('submit',function(e){
     +encodeURIComponent('📦 '+id)+'%0A'
     +(d.talla?encodeURIComponent('Talla: '+d.talla)+'%0A':'')
     +encodeURIComponent('Entrega: '+(d.entrega||'Recogida en tienda'))+'%0A'
-    +(d.direccion?encodeURIComponent('Dirección: '+d.direccion+(d.cp?' ('+d.cp+')':''))+'%0A':'')
     +encodeURIComponent('Nombre: '+d.nombre)+'%0A'
     +encodeURIComponent('Teléfono: '+d.telefono)+'%0A'
     +encodeURIComponent('Email: '+d.email)
